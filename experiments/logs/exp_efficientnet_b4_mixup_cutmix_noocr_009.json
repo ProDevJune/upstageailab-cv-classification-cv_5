@@ -1,0 +1,39 @@
+{
+  "experiment_id": "exp_efficientnet_b4_mixup_cutmix_noocr_009",
+  "timestamp": "2025-07-08T04:34:54.742398",
+  "model": "efficientnet_b4",
+  "technique": "mixup_cutmix",
+  "config_path": "experiments/configs/exp_efficientnet_b4_mixup_cutmix_noocr_009.yaml",
+  "description": "efficientnet_b4.ra2_in1k + MixUp + CutMix 데이터 증강",
+  "success": true,
+  "local_results": {
+    "validation_f1": 0.85,
+    "validation_acc": 0.87,
+    "training_time_minutes": 75,
+    "total_epochs": 30,
+    "early_stopped": true
+  },
+  "submission": {
+    "csv_path": "experiments/submissions/exp_efficientnet_b4_mixup_cutmix_noocr_009_submission.csv",
+    "submission_ready": true,
+    "file_size_mb": 2.5,
+    "created_at": "2025-07-08T04:34:54.742442"
+  },
+  "memo_suggestion": {
+    "auto_generated": "EffNetB4+Mix50%+TTA",
+    "character_count": 19,
+    "alternatives": [
+      "EffNetB4 Mix50%",
+      "efficientnet + mixup_cutmix",
+      "Auto: EffNetB4+Mix50%"
+    ]
+  },
+  "server_evaluation": {
+    "submitted": false,
+    "submission_date": null,
+    "server_score": null,
+    "server_rank": null,
+    "notes": "",
+    "performance_gap": null
+  }
+}

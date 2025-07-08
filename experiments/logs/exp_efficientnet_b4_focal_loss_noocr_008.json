@@ -1,0 +1,39 @@
+{
+  "experiment_id": "exp_efficientnet_b4_focal_loss_noocr_008",
+  "timestamp": "2025-07-08T06:13:39.067463",
+  "model": "efficientnet_b4",
+  "technique": "focal_loss",
+  "config_path": "experiments/configs/exp_efficientnet_b4_focal_loss_noocr_008.yaml",
+  "description": "efficientnet_b4.ra2_in1k + Focal Loss (hard sample 집중)",
+  "success": true,
+  "local_results": {
+    "validation_f1": 0.85,
+    "validation_acc": 0.87,
+    "training_time_minutes": 75,
+    "total_epochs": 30,
+    "early_stopped": true
+  },
+  "submission": {
+    "csv_path": "experiments/submissions/exp_efficientnet_b4_focal_loss_noocr_008_submission.csv",
+    "submission_ready": true,
+    "file_size_mb": 2.5,
+    "created_at": "2025-07-08T06:13:39.067514"
+  },
+  "memo_suggestion": {
+    "auto_generated": "EffNetB4+Focal+TTA",
+    "character_count": 18,
+    "alternatives": [
+      "EffNetB4 Focal",
+      "efficientnet + focal_loss",
+      "Auto: EffNetB4+Focal"
+    ]
+  },
+  "server_evaluation": {
+    "submitted": false,
+    "submission_date": null,
+    "server_score": null,
+    "server_rank": null,
+    "notes": "",
+    "performance_gap": null
+  }
+}

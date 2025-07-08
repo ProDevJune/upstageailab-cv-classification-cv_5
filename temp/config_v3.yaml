@@ -1,0 +1,104 @@
+# 🏆 Phase 1 고급 기법 통합 Configuration - v3 시스템
+# 기존 v2 시스템 기반으로 Focal Loss, Label Smoothing, CutMix/MixUp 추가
+
+# Model Configuration
+model_name: 'swin_base_patch4_window12_384.ms_in1k' # timm model name
+pretrained: True # timm pretrained 가중치 사용 여부
+fine_tuning: "full" # fine-tuning 방법론
+  # full : pretrained=True, pretrained가중치를 전부 재학습시킨다. 
+  # head : pretrained=True, model backbone 부분은 freeze하고 head 부분을 재학습시킨다.
+  # custom : pretrained=True, backbone에서도 일부분을 재학습시킨다.
+  # scratch : pretrained=False, 모델 구조만 사용하고 모든 가중치를 처음부터 학습시킨다.
+
+# 🔥 Phase 1 고급 손실 함수 설정
+criterion: 'FocalLoss' # CrossEntropyLoss, FocalLoss, LabelSmoothingCrossEntropy
+focal_loss:
+  alpha: 1.0 # 클래스 가중치 (None이면 자동 계산)
+  gamma: 2.0 # focusing parameter (클수록 hard example에 더 집중)
+  reduction: 'mean'
+label_smoothing:
+  smoothing: 0.1 # 0.0이면 비활성화, 0.1은 일반적인 값
+
+# Optimizer
+optimizer_name: 'AdamW'
+lr: 0.0001 # 1e-4
+weight_decay: 0.00001 # 1e-5
+
+# Scheduler  
+scheduler_name: 'CosineAnnealingLR'
+
+# Other variables
+random_seed: 256
+n_folds: 0 # number of folds for cross-validation
+val_split_ratio: 0.15 # train-val split 비율
+stratify: True # validation set 분할 시 stratify 전략 사용 여부
+image_size: 384 # 만약 multi-scale train/test 시 None으로 설정
+
+# Normalization
+norm_mean: [0.5, 0.5, 0.5]
+norm_std: [0.5, 0.5, 0.5]
+
+# Techniques
+class_imbalance: 
+  aug_class: [1, 13, 14]
+  max_samples: 78
+online_augmentation: True
+augmentation: # normal augmentation
+  eda: True
+  dilation: False
+  erosion: False
+  # 🔥 Phase 1: CutMix & MixUp 활성화
+  mixup: True # MixUp 활성화
+  cutmix: True # CutMix 활성화
+
+# 🔥 Phase 1: CutMix & MixUp 고급 설정
+mixup_cutmix:
+  mixup_alpha: 1.0 # MixUp mixing parameter (베타 분포의 알파 값)
+  cutmix_alpha: 1.0 # CutMix mixing parameter
+  cutmix_minmax: null # CutMix 최소/최대 비율 제한 (null이면 베타 분포 사용)
+  prob: 0.5 # MixUp/CutMix 적용 확률 (0.5면 50% 확률로 적용)
+  switch_prob: 0.5 # MixUp과 CutMix 간 전환 확률 (0.5면 각각 25% 확률)
+  mode: 'batch' # 'batch' 또는 'elem' (배치 단위 또는 요소 단위 적용)
+  correct_lam: True # lambda 보정 (실제 mixing 비율로 조정)
+  label_smoothing: 0.1 # MixUp/CutMix용 라벨 스무딩
+
+# dynamic augmentation에 따라 동적으로 증강기법을 변환하는 방법
+dynamic_augmentation:
+  enabled: True
+  policies:
+    weak:
+      end_epoch: 5
+      augs: ['basic']
+    middle:
+      end_epoch: 15
+      augs: ['middle', 'mixup'] # 🔥 MixUp 추가
+    strong:
+      end_epoch: 300
+      augs: ['aggressive','eda', 'cutmix'] # 🔥 CutMix 추가
+
+val_TTA: True # Validation 시, Test Time Augmentation 사용 여부
+test_TTA: True # Inference 시, Test Time Augmentation 사용 여부
+tta_dropout: False # inference 시에도 model.train() 모드를 사용해 dropout을 활성화하는 방법
+mixed_precision: True # Mixed Precision 학습 사용 여부
+
+# Model hyperparameters
+timm:
+  activation: None # ReLU, LeakyReLU, ELU, SELU, GELU, Tanh, PReLU, SiLU
+
+custom_layer: # custom classifier head를 사용하고 싶은 경우 설정
+  # head_type: "simple_dropout"
+  # drop: 0.2
+  # activation: 'GELU'
+
+# Training hyperparameters
+epochs: 10000 # max epoch
+patience: 20 # early stopping patience
+batch_size: 32 # image_size, model_size, GPU RAM 에 따라 OOM이 발생하지 않도록 설정.
+
+# W&B
+wandb:
+  project: "upstage-img-clf-v3"
+  log: False # log using wandb
+
+# Paths
+data_dir: "/Users/jayden/Developer/Projects/cv-classification/data"

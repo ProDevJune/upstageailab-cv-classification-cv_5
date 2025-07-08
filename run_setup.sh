@@ -1,0 +1,1 @@
+python set_permissions.py

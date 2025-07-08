@@ -1,0 +1,39 @@
+{
+  "experiment_id": "exp_swin_transformer_baseline_noocr_001",
+  "timestamp": "2025-07-08T12:22:07.192415",
+  "model": "swin_transformer",
+  "technique": "baseline",
+  "config_path": "experiments/configs/exp_swin_transformer_baseline_noocr_001.yaml",
+  "description": "swin_base_patch4_window12_384.ms_in1k + 기본 CrossEntropy 손실",
+  "success": true,
+  "local_results": {
+    "validation_f1": 0.85,
+    "validation_acc": 0.87,
+    "training_time_minutes": 90,
+    "total_epochs": 30,
+    "early_stopped": true
+  },
+  "submission": {
+    "csv_path": "experiments/submissions/exp_swin_transformer_baseline_noocr_001_submission.csv",
+    "submission_ready": true,
+    "file_size_mb": 2.5,
+    "created_at": "2025-07-08T12:22:07.192453"
+  },
+  "memo_suggestion": {
+    "auto_generated": "SwinB384+Base+TTA",
+    "character_count": 17,
+    "alternatives": [
+      "SwinB384 Base",
+      "swin + baseline",
+      "Auto: SwinB384+Base"
+    ]
+  },
+  "server_evaluation": {
+    "submitted": false,
+    "submission_date": null,
+    "server_score": null,
+    "server_rank": null,
+    "notes": "",
+    "performance_gap": null
+  }
+}

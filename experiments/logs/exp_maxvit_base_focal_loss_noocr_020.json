@@ -1,0 +1,19 @@
+{
+  "experiment_id": "exp_maxvit_base_focal_loss_noocr_020",
+  "timestamp": "2025-07-08T12:51:49.335940",
+  "model": "maxvit_base",
+  "technique": "focal_loss",
+  "config_path": "experiments/configs/exp_maxvit_base_focal_loss_noocr_020.yaml",
+  "description": "maxvit_base_tf_384.in1k + Focal Loss (hard sample 집중)",
+  "success": false,
+  "error_message": "프로세스 종료 코드: 1",
+  "local_results": null,
+  "submission": {
+    "csv_path": null,
+    "submission_ready": false,
+    "file_size_mb": 0,
+    "created_at": null
+  },
+  "memo_suggestion": null,
+  "server_evaluation": null
+}

@@ -1,0 +1,51 @@
+avg_f1: 0.8558536094339642
+best_f1: 0.9195605616001671
+device: "\U0001F34E MPS"
+experiments:
+- accuracy: 84.23921370502418
+  augment: minimal
+  batch_size: 25
+  device: "\U0001F34E MPS"
+  experiment_id: sim_001
+  f1_score: 0.9195605616001671
+  lr: 0.001
+  model: resnet34
+  training_time: 25.07656090274272
+- accuracy: 89.56803806567075
+  augment: moderate
+  batch_size: 25
+  device: "\U0001F34E MPS"
+  experiment_id: sim_002
+  f1_score: 0.8382023244740957
+  lr: 0.0001
+  model: resnet50
+  training_time: 33.814962299807334
+- accuracy: 86.4310796032672
+  augment: strong
+  batch_size: 25
+  device: "\U0001F34E MPS"
+  experiment_id: sim_003
+  f1_score: 0.8129334830986968
+  lr: 1.0e-05
+  model: efficientnet_b3
+  training_time: 17.177359450304575
+- accuracy: 79.96703983038174
+  augment: moderate
+  batch_size: 25
+  device: "\U0001F34E MPS"
+  experiment_id: sim_004
+  f1_score: 0.7944346747543404
+  lr: 0.0001
+  model: resnet34
+  training_time: 43.18958351181249
+- accuracy: 82.01582505303048
+  augment: minimal
+  batch_size: 25
+  device: "\U0001F34E MPS"
+  experiment_id: sim_005
+  f1_score: 0.9141370032425212
+  lr: 0.001
+  model: resnet50
+  training_time: 20.723166254137062
+timestamp: '2025-07-04T14:50:14.733056'
+total_experiments: 5

@@ -1,0 +1,781 @@
+experiment_id,timestamp,platform,device,status,model_name,image_size,lr,batch_size,augmentation_level,TTA,epochs_run,final_f1,val_accuracy,training_time_min,config_path,model_path,submission_path,error_message
+exp_quick_001_2507041446,2025-07-04 14:46:06,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.001,25,moderate,False,34.0,0.7400491741202003,85.29349797441346,24.551362197861884,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_001_2507041446.yaml,models/exp_quick_001_2507041446.pth,data/submissions/exp_quick_001_2507041446.csv,
+exp_quick_002_2507041446,2025-07-04 14:46:08,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.0001,25,moderate,False,43.0,0.8106734134427435,93.30381002940176,49.22438864561549,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_002_2507041446.yaml,models/exp_quick_002_2507041446.pth,data/submissions/exp_quick_002_2507041446.csv,
+exp_quick_003_2507041446,2025-07-04 14:46:11,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.001,25,moderate,False,80.0,0.8908040155742324,75.34202592566132,40.597892194234106,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_003_2507041446.yaml,models/exp_quick_003_2507041446.pth,data/submissions/exp_quick_003_2507041446.csv,
+exp_quick_004_2507041446,2025-07-04 14:46:13,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.0001,25,moderate,False,95.0,0.7872194933110503,83.76524929407367,10.880207133353627,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_004_2507041446.yaml,models/exp_quick_004_2507041446.pth,data/submissions/exp_quick_004_2507041446.csv,
+exp_quick_005_2507041446,2025-07-04 14:46:15,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.0001,25,minimal,False,38.0,0.7171979904783602,79.78644535950473,40.076987553356545,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_005_2507041446.yaml,models/exp_quick_005_2507041446.pth,data/submissions/exp_quick_005_2507041446.csv,
+exp_quick_001_2507041459,2025-07-04 14:59:11,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.001,25,moderate,False,47.0,0.7519697957733494,81.78948666440027,41.79407718935576,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_001_2507041459.yaml,models/exp_quick_001_2507041459.pth,data/submissions/exp_quick_001_2507041459.csv,
+exp_quick_002_2507041459,2025-07-04 14:59:13,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.0001,25,moderate,False,26.0,0.7772351121869737,82.42185905502933,24.065866349870905,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_002_2507041459.yaml,models/exp_quick_002_2507041459.pth,data/submissions/exp_quick_002_2507041459.csv,
+exp_quick_003_2507041459,2025-07-04 14:59:15,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.001,25,moderate,False,37.0,0.7729120016925257,70.21615991364088,26.515905967277135,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_003_2507041459.yaml,models/exp_quick_003_2507041459.pth,data/submissions/exp_quick_003_2507041459.csv,
+exp_quick_004_2507041459,2025-07-04 14:59:17,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.0001,25,moderate,False,26.0,0.7606536883367646,89.06305775840026,32.36807688489215,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_004_2507041459.yaml,models/exp_quick_004_2507041459.pth,data/submissions/exp_quick_004_2507041459.csv,
+exp_quick_005_2507041459,2025-07-04 14:59:19,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.001,25,minimal,False,37.0,0.8341648462189072,80.41097376773594,55.379160843083234,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_005_2507041459.yaml,models/exp_quick_005_2507041459.pth,data/submissions/exp_quick_005_2507041459.csv,
+exp_quick_006_2507041459,2025-07-04 14:59:21,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.0001,25,moderate,False,57.0,0.7996856497874818,90.46803601526196,47.136898509677664,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_006_2507041459.yaml,models/exp_quick_006_2507041459.pth,data/submissions/exp_quick_006_2507041459.csv,
+exp_quick_007_2507041459,2025-07-04 14:59:23,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.001,25,moderate,False,66.0,0.7992448955947132,79.64438076533595,22.75261224705076,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_007_2507041459.yaml,models/exp_quick_007_2507041459.pth,data/submissions/exp_quick_007_2507041459.csv,
+exp_quick_008_2507041459,2025-07-04 14:59:25,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.001,25,strong,False,41.0,0.7895549651570899,94.38429064321198,11.556578637513253,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_008_2507041459.yaml,models/exp_quick_008_2507041459.pth,data/submissions/exp_quick_008_2507041459.csv,
+exp_quick_009_2507041459,2025-07-04 14:59:27,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.0001,25,moderate,False,29.0,0.7408320748072342,81.02134701184906,53.573359837377,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_009_2507041459.yaml,models/exp_quick_009_2507041459.pth,data/submissions/exp_quick_009_2507041459.csv,
+exp_quick_010_2507041459,2025-07-04 14:59:29,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.0001,25,moderate,False,72.0,0.8193046773841297,79.56614660733983,24.015456672802657,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_010_2507041459.yaml,models/exp_quick_010_2507041459.pth,data/submissions/exp_quick_010_2507041459.csv,
+exp_quick_001_2507041637,2025-07-04 16:37:08,darwin_mps,mps,failed,resnet34.tv_in1k,224,0.001,25,moderate,False,,,,0.0727348963419596,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_001_2507041637.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 14, in <module>
+    import timm
+ModuleNotFoundError: No module named 'timm'
+"
+exp_quick_002_2507041637,2025-07-04 16:37:12,darwin_mps,mps,failed,resnet34.tv_in1k,224,0.0001,25,moderate,False,,,,0.021556015809377,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_002_2507041637.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 14, in <module>
+    import timm
+ModuleNotFoundError: No module named 'timm'
+"
+exp_quick_003_2507041637,2025-07-04 16:37:14,darwin_mps,mps,failed,resnet50.tv2_in1k,224,0.001,25,moderate,False,,,,0.02149418592453,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_003_2507041637.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 14, in <module>
+    import timm
+ModuleNotFoundError: No module named 'timm'
+"
+exp_quick_004_2507041637,2025-07-04 16:37:15,darwin_mps,mps,failed,resnet50.tv2_in1k,224,0.0001,25,moderate,False,,,,0.0215460975964864,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_004_2507041637.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 14, in <module>
+    import timm
+ModuleNotFoundError: No module named 'timm'
+"
+exp_quick_005_2507041637,2025-07-04 16:37:16,darwin_mps,mps,failed,resnet50.tv2_in1k,320,0.001,25,minimal,False,,,,0.0217247009277343,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_005_2507041637.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 14, in <module>
+    import timm
+ModuleNotFoundError: No module named 'timm'
+"
+exp_quick_001_2507041638,2025-07-04 16:38:44,darwin_mps,mps,failed,resnet34.tv_in1k,224,0.001,25,moderate,False,,,,0.0311317483584086,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_001_2507041638.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 15, in <module>
+    from sklearn.model_selection import train_test_split
+ModuleNotFoundError: No module named 'sklearn'
+"
+exp_quick_002_2507041638,2025-07-04 16:38:46,darwin_mps,mps,failed,resnet34.tv_in1k,224,0.0001,25,moderate,False,,,,0.0243997494379679,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_002_2507041638.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 15, in <module>
+    from sklearn.model_selection import train_test_split
+ModuleNotFoundError: No module named 'sklearn'
+"
+exp_quick_003_2507041638,2025-07-04 16:38:48,darwin_mps,mps,failed,resnet50.tv2_in1k,224,0.001,25,moderate,False,,,,0.0240447163581848,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_003_2507041638.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 15, in <module>
+    from sklearn.model_selection import train_test_split
+ModuleNotFoundError: No module named 'sklearn'
+"
+exp_quick_004_2507041638,2025-07-04 16:38:49,darwin_mps,mps,failed,resnet50.tv2_in1k,224,0.0001,25,moderate,False,,,,0.024204667409261,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_004_2507041638.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 15, in <module>
+    from sklearn.model_selection import train_test_split
+ModuleNotFoundError: No module named 'sklearn'
+"
+exp_quick_005_2507041638,2025-07-04 16:38:51,darwin_mps,mps,failed,resnet34.tv_in1k,320,0.0001,25,strong,False,,,,0.0240658442179361,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_005_2507041638.yaml,,,"Training failed: Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 15, in <module>
+    from sklearn.model_selection import train_test_split
+ModuleNotFoundError: No module named 'sklearn'
+"
+exp_quick_001_2507041650,2025-07-04 16:50:26,darwin_mps,mps,failed,resnet34.tv_in1k,224,0.001,25,moderate,False,,,,25.041654864947,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_quick_001_2507041650.yaml,,,"Training failed: wandb: Currently logged in as: lyjune37 (lyjune37-juneictlab) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.21.0
+wandb: Run data is saved locally in /Users/jayden/Developer/Projects/cv-classification/wandb/run-20250704_165029-wx712i0u
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 2507041650-resnet34.tv_in1k-opt_AdamW-sch_CosineAnnealingLR-img224-onaug_dilation_eda-clsaug_1-TTA_0-MP_0
+wandb: ⭐️ View project at https://wandb.ai/lyjune37-juneictlab/upstage-img-clf
+wandb: 🚀 View run at https://wandb.ai/lyjune37-juneictlab/upstage-img-clf/runs/wx712i0u
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/albumentations/core/validation.py:114: UserWarning: ShiftScaleRotate is a special case of Affine transform. Please use Affine transform instead.
+  original_init(self, **validated_kwargs)
+
+  0%|          | 0/50 [00:00<?, ?it/s]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+  2%|▏         | 1/50 [01:00<49:43, 60.88s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+  4%|▍         | 2/50 [02:01<48:38, 60.81s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+  6%|▌         | 3/50 [03:02<47:41, 60.88s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+  8%|▊         | 4/50 [04:04<46:56, 61.24s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 10%|█         | 5/50 [05:05<45:48, 61.08s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 12%|█▏        | 6/50 [06:06<44:44, 61.01s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 14%|█▍        | 7/50 [07:06<43:41, 60.98s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 16%|█▌        | 8/50 [08:07<42:39, 60.93s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 18%|█▊        | 9/50 [09:09<41:52, 61.28s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 20%|██        | 10/50 [10:12<41:04, 61.61s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 22%|██▏       | 11/50 [11:13<39:55, 61.43s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 24%|██▍       | 12/50 [12:14<38:49, 61.30s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 26%|██▌       | 13/50 [13:15<37:46, 61.25s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 28%|██▊       | 14/50 [14:16<36:40, 61.13s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 30%|███       | 15/50 [15:17<35:37, 61.06s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 32%|███▏      | 16/50 [16:18<34:34, 61.02s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 34%|███▍      | 17/50 [17:18<33:32, 60.98s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 36%|███▌      | 18/50 [18:19<32:29, 60.92s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 38%|███▊      | 19/50 [19:20<31:28, 60.91s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 40%|████      | 20/50 [20:21<30:26, 60.90s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 42%|████▏     | 21/50 [21:22<29:26, 60.93s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 44%|████▍     | 22/50 [22:23<28:26, 60.96s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 46%|████▌     | 23/50 [23:24<27:23, 60.88s/it]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+ 48%|████▊     | 24/50 [24:26<26:35, 61.37s/it]
+ 48%|████▊     | 24/50 [24:27<26:29, 61.13s/it]
+
+Prediction:   0%|          | 0/10 [00:00<?, ?it/s]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+Prediction:  10%|█         | 1/10 [00:03<00:31,  3.47s/it]
+Prediction:  50%|█████     | 5/10 [00:03<00:02,  1.86it/s]
+Prediction:  90%|█████████ | 9/10 [00:03<00:00,  3.90it/s]
+Prediction:  90%|█████████ | 9/10 [00:22<00:00,  3.90it/s]
+Prediction: 100%|██████████| 10/10 [00:23<00:00,  2.37s/it]
+
+Prediction:   0%|          | 0/126 [00:00<?, ?it/s]/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
+Prediction:   0%|          | 0/126 [00:00<?, ?it/s]
+wandb: ERROR Problem finishing run
+Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 196, in <module>
+    test_preds = predict(model, test_loader, device)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_evalute.py"", line 35, in predict
+    for images, _ in tqdm(loader, desc=""Prediction""):
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/tqdm/std.py"", line 1181, in __iter__
+    for obj in iterable:
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py"", line 493, in __iter__
+    return self._get_iterator()
+           ^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py"", line 424, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/torch/utils/data/dataloader.py"", line 1171, in __init__
+    w.start()
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py"", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/context.py"", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/context.py"", line 288, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/popen_spawn_posix.py"", line 32, in __init__
+    super().__init__(process_obj)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/popen_fork.py"", line 19, in __init__
+    self._launch(process_obj)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/popen_spawn_posix.py"", line 54, in _launch
+    child_r, parent_w = os.pipe()
+                        ^^^^^^^^^
+OSError: [Errno 24] Too many open files
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 220, in <module>
+    run.finish()
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 398, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 443, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 2212, in finish
+    return self._finish(exit_code)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 398, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 2240, in _finish
+    self._atexit_cleanup(exit_code=exit_code)
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 2435, in _atexit_cleanup
+    self._on_finish()
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/wandb_run.py"", line 2687, in _on_finish
+    wait_with_progress(
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/mailbox/wait_with_progress.py"", line 24, in wait_with_progress
+    return wait_all_with_progress(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/mailbox/wait_with_progress.py"", line 87, in wait_all_with_progress
+    return asyncio_compat.run(progress_loop_with_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/lib/asyncio_compat.py"", line 30, in run
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py"", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py"", line 401, in __get_result
+    raise self._exception
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py"", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/lib/asyncio_compat.py"", line 74, in run
+    return asyncio.run(self._run_or_cancel(fn))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py"", line 189, in run
+    with Runner(debug=debug) as runner:
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py"", line 59, in __enter__
+    self._lazy_init()
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py"", line 137, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py"", line 810, in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py"", line 699, in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/unix_events.py"", line 64, in __init__
+    super().__init__(selector)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/selector_events.py"", line 56, in __init__
+    self._make_self_pipe()
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/selector_events.py"", line 107, in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/socket.py"", line 657, in socketpair
+    a, b = _socket.socketpair(family, type, proto)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 24] Too many open files
+Exception ignored in atexit callback: <bound method TemporaryDirectory.cleanup of <TemporaryDirectory '/var/folders/cb/z0ty2p1573zgph3nyy7sy7880000gn/T/tmpp52wuwb4wandb-media'>>
+Traceback (most recent call last):
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/tempfile.py"", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/tempfile.py"", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 647, in _rmtree_safe_fd
+    onerror(os.scandir, path, sys.exc_info())
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 643, in _rmtree_safe_fd
+    with os.scandir(topfd) as scandir_it:
+         ^^^^^^^^^^^^^^^^^
+OSError: [Errno 24] Too many open files: '/var/folders/cb/z0ty2p1573zgph3nyy7sy7880000gn/T/tmpp52wuwb4wandb-media'
+Exception ignored in atexit callback: <bound method TemporaryDirectory.cleanup of <TemporaryDirectory '/var/folders/cb/z0ty2p1573zgph3nyy7sy7880000gn/T/tmp57dda7_3wandb-artifacts'>>
+Traceback (most recent call last):
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/tempfile.py"", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/tempfile.py"", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 647, in _rmtree_safe_fd
+    onerror(os.scandir, path, sys.exc_info())
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 643, in _rmtree_safe_fd
+    with os.scandir(topfd) as scandir_it:
+         ^^^^^^^^^^^^^^^^^
+OSError: [Errno 24] Too many open files: '/var/folders/cb/z0ty2p1573zgph3nyy7sy7880000gn/T/tmp57dda7_3wandb-artifacts'
+Exception ignored in atexit callback: <bound method TemporaryDirectory.cleanup of <TemporaryDirectory '/var/folders/cb/z0ty2p1573zgph3nyy7sy7880000gn/T/tmp7668rc8q'>>
+Traceback (most recent call last):
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/tempfile.py"", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/tempfile.py"", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 647, in _rmtree_safe_fd
+    onerror(os.scandir, path, sys.exc_info())
+  File ""/opt/homebrew/Cellar/python@3.11/3.11.13/Frameworks/Python.framework/Versions/3.11/lib/python3.11/shutil.py"", line 643, in _rmtree_safe_fd
+    with os.scandir(topfd) as scandir_it:
+         ^^^^^^^^^^^^^^^^^
+OSError: [Errno 24] Too many open files: '/var/folders/cb/z0ty2p1573zgph3nyy7sy7880000gn/T/tmp7668rc8q'
+"
+exp_full_001_2507041730,2025-07-04 17:30:19,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.001,25,moderate,False,30.0,0.9156,91.95,10.440975614388783,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_001_2507041730.yaml,models/exp_full_001_2507041730.pth,data/submissions/exp_full_001_2507041730.csv,
+exp_full_002_2507041730,2025-07-04 17:40:45,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.0001,25,moderate,False,30.0,0.9174,91.95,8.564033250013987,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_002_2507041730.yaml,models/exp_full_002_2507041730.pth,data/submissions/exp_full_002_2507041730.csv,
+exp_full_003_2507041730,2025-07-04 17:49:19,darwin_mps,mps,completed,resnet34.tv_in1k,224,1e-05,25,moderate,False,30.0,0.9254,92.8,7.225779680411021,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_003_2507041730.yaml,models/exp_full_003_2507041730.pth,data/submissions/exp_full_003_2507041730.csv,
+exp_full_004_2507041730,2025-07-04 17:56:33,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.001,25,moderate,False,15.0,0.8921,89.83,9.086602262655894,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_004_2507041730.yaml,models/exp_full_004_2507041730.pth,data/submissions/exp_full_004_2507041730.csv,
+exp_full_005_2507041730,2025-07-04 18:05:38,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.0001,25,moderate,False,30.0,0.937,93.64,9.87671851317088,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_005_2507041730.yaml,models/exp_full_005_2507041730.pth,data/submissions/exp_full_005_2507041730.csv,
+exp_full_006_2507041730,2025-07-04 18:15:30,darwin_mps,mps,completed,resnet50.tv2_in1k,224,1e-05,25,moderate,False,15.0,0.898,90.25,10.15869031747182,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_006_2507041730.yaml,models/exp_full_006_2507041730.pth,data/submissions/exp_full_006_2507041730.csv,
+exp_full_007_2507041730,2025-07-04 18:25:40,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.001,25,moderate,False,30.0,0.917,91.53,15.630029618740082,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_007_2507041730.yaml,models/exp_full_007_2507041730.pth,data/submissions/exp_full_007_2507041730.csv,
+exp_full_008_2507041730,2025-07-04 18:41:18,darwin_mps,mps,completed,resnet50.tv2_in1k,224,1e-05,25,minimal,False,45.0,0.9136,91.53,22.876461482048036,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_008_2507041730.yaml,models/exp_full_008_2507041730.pth,data/submissions/exp_full_008_2507041730.csv,
+exp_full_009_2507041730,2025-07-04 19:04:10,darwin_mps,mps,failed,resnet34.tv_in1k,224,0.001,25,strong,False,,,,7.921320199966431,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_009_2507041730.yaml,,,"Training failed: wandb: Currently logged in as: lyjune37 (lyjune37-juneictlab) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.21.0
+wandb: Run data is saved locally in /Users/jayden/Developer/Projects/cv-classification/wandb/run-20250704_190414-yyrena0e
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 2507041904-resnet34.tv_in1k-opt_AdamW-sch_CosineAnnealingLR-img224-onaug_dilation_eda_erosion_mixup-clsaug_1-TTA_0-MP_0
+wandb: ⭐️ View project at https://wandb.ai/lyjune37-juneictlab/upstage-img-clf
+wandb: 🚀 View run at https://wandb.ai/lyjune37-juneictlab/upstage-img-clf/runs/yyrena0e
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/albumentations/core/validation.py:114: UserWarning: ShiftScaleRotate is a special case of Affine transform. Please use Affine transform instead.
+  original_init(self, **validated_kwargs)
+
+  0%|          | 0/1000 [00:00<?, ?it/s]
+  0%|          | 1/1000 [00:14<3:59:30, 14.38s/it]
+  0%|          | 2/1000 [00:28<3:59:43, 14.41s/it]
+  0%|          | 3/1000 [00:43<4:00:49, 14.49s/it]
+  0%|          | 4/1000 [00:57<4:00:58, 14.52s/it]
+  0%|          | 5/1000 [01:12<4:01:19, 14.55s/it]
+  1%|          | 6/1000 [01:27<4:01:48, 14.60s/it]
+  1%|          | 7/1000 [01:41<4:02:13, 14.64s/it]
+  1%|          | 8/1000 [01:56<4:03:50, 14.75s/it]
+  1%|          | 9/1000 [02:11<4:05:04, 14.84s/it]
+  1%|          | 10/1000 [02:26<4:02:44, 14.71s/it]
+  1%|          | 11/1000 [02:41<4:02:09, 14.69s/it]
+  1%|          | 12/1000 [02:55<4:00:29, 14.61s/it]
+  1%|▏         | 13/1000 [03:10<4:00:42, 14.63s/it]
+  1%|▏         | 14/1000 [03:24<3:58:36, 14.52s/it]
+  2%|▏         | 15/1000 [03:38<3:57:42, 14.48s/it]
+  2%|▏         | 16/1000 [03:53<3:57:43, 14.50s/it]
+  2%|▏         | 17/1000 [04:08<3:59:46, 14.64s/it]
+  2%|▏         | 18/1000 [04:23<4:01:20, 14.75s/it]
+  2%|▏         | 19/1000 [04:38<4:01:00, 14.74s/it]
+  2%|▏         | 20/1000 [04:52<4:00:46, 14.74s/it]
+  2%|▏         | 21/1000 [05:06<3:57:08, 14.53s/it]
+  2%|▏         | 22/1000 [05:20<3:53:15, 14.31s/it]
+  2%|▏         | 23/1000 [05:34<3:50:04, 14.13s/it]
+  2%|▏         | 24/1000 [05:47<3:45:48, 13.88s/it]
+  2%|▎         | 25/1000 [06:01<3:43:04, 13.73s/it]
+  3%|▎         | 26/1000 [06:14<3:41:09, 13.62s/it]
+  3%|▎         | 27/1000 [06:27<3:37:18, 13.40s/it]
+  3%|▎         | 28/1000 [06:40<3:35:31, 13.30s/it]
+  3%|▎         | 29/1000 [06:53<3:35:42, 13.33s/it]
+  3%|▎         | 30/1000 [07:07<3:36:22, 13.38s/it]
+  3%|▎         | 31/1000 [07:20<3:34:40, 13.29s/it]
+  3%|▎         | 32/1000 [07:33<3:34:58, 13.33s/it]
+  3%|▎         | 32/1000 [07:34<3:48:59, 14.19s/it]
+
+Prediction:   0%|          | 0/10 [00:00<?, ?it/s]
+Prediction:  10%|█         | 1/10 [00:00<00:01,  8.30it/s]
+Prediction:  30%|███       | 3/10 [00:00<00:00, 12.30it/s]
+Prediction:  50%|█████     | 5/10 [00:00<00:00, 13.61it/s]
+Prediction:  70%|███████   | 7/10 [00:00<00:00, 14.22it/s]
+Prediction:  90%|█████████ | 9/10 [00:00<00:00, 14.53it/s]
+Prediction: 100%|██████████| 10/10 [00:00<00:00, 14.13it/s]
+
+Prediction:   0%|          | 0/126 [00:00<?, ?it/s]
+Prediction:   2%|▏         | 2/126 [00:00<00:10, 12.38it/s]
+Prediction:   3%|▎         | 4/126 [00:00<00:10, 12.03it/s]
+Prediction:   5%|▍         | 6/126 [00:00<00:09, 12.06it/s]
+Prediction:   6%|▋         | 8/126 [00:00<00:09, 12.17it/s]
+Prediction:   8%|▊         | 10/126 [00:00<00:09, 12.33it/s]
+Prediction:  10%|▉         | 12/126 [00:00<00:09, 12.29it/s]
+Prediction:  11%|█         | 14/126 [00:01<00:09, 12.32it/s]
+Prediction:  13%|█▎        | 16/126 [00:01<00:08, 12.34it/s]
+Prediction:  14%|█▍        | 18/126 [00:01<00:08, 12.32it/s]
+Prediction:  16%|█▌        | 20/126 [00:01<00:08, 12.33it/s]
+Prediction:  17%|█▋        | 22/126 [00:01<00:08, 12.33it/s]
+Prediction:  19%|█▉        | 24/126 [00:01<00:08, 12.34it/s]
+Prediction:  21%|██        | 26/126 [00:02<00:08, 12.37it/s]
+Prediction:  22%|██▏       | 28/126 [00:02<00:07, 12.40it/s]
+Prediction:  24%|██▍       | 30/126 [00:02<00:07, 12.33it/s]
+Prediction:  25%|██▌       | 32/126 [00:02<00:07, 12.35it/s]
+Prediction:  27%|██▋       | 34/126 [00:02<00:07, 12.25it/s]
+Prediction:  29%|██▊       | 36/126 [00:02<00:07, 12.17it/s]
+Prediction:  30%|███       | 38/126 [00:03<00:07, 12.16it/s]
+Prediction:  32%|███▏      | 40/126 [00:03<00:07, 12.15it/s]
+Prediction:  33%|███▎      | 42/126 [00:03<00:06, 12.19it/s]
+Prediction:  35%|███▍      | 44/126 [00:03<00:06, 12.22it/s]
+Prediction:  37%|███▋      | 46/126 [00:03<00:06, 12.27it/s]
+Prediction:  38%|███▊      | 48/126 [00:03<00:06, 12.21it/s]
+Prediction:  40%|███▉      | 50/126 [00:04<00:06, 12.30it/s]
+Prediction:  41%|████▏     | 52/126 [00:04<00:06, 12.29it/s]
+Prediction:  43%|████▎     | 54/126 [00:04<00:05, 12.18it/s]
+Prediction:  44%|████▍     | 56/126 [00:04<00:05, 12.12it/s]
+Prediction:  46%|████▌     | 58/126 [00:04<00:05, 12.20it/s]
+Prediction:  48%|████▊     | 60/126 [00:04<00:05, 12.21it/s]
+Prediction:  49%|████▉     | 62/126 [00:05<00:05, 12.12it/s]
+Prediction:  51%|█████     | 64/126 [00:05<00:05, 12.12it/s]
+Prediction:  52%|█████▏    | 66/126 [00:05<00:04, 12.10it/s]
+Prediction:  54%|█████▍    | 68/126 [00:05<00:04, 12.15it/s]
+Prediction:  56%|█████▌    | 70/126 [00:05<00:04, 12.20it/s]
+Prediction:  57%|█████▋    | 72/126 [00:05<00:04, 12.19it/s]
+Prediction:  59%|█████▊    | 74/126 [00:06<00:04, 12.10it/s]
+Prediction:  60%|██████    | 76/126 [00:06<00:04, 12.12it/s]
+Prediction:  62%|██████▏   | 78/126 [00:06<00:03, 12.15it/s]
+Prediction:  63%|██████▎   | 80/126 [00:06<00:03, 12.15it/s]
+Prediction:  65%|██████▌   | 82/126 [00:06<00:03, 12.13it/s]
+Prediction:  67%|██████▋   | 84/126 [00:06<00:03, 12.11it/s]
+Prediction:  68%|██████▊   | 86/126 [00:07<00:03, 12.15it/s]
+Prediction:  70%|██████▉   | 88/126 [00:07<00:03, 12.21it/s]
+Prediction:  71%|███████▏  | 90/126 [00:07<00:02, 12.13it/s]
+Prediction:  73%|███████▎  | 92/126 [00:07<00:02, 12.15it/s]
+Prediction:  75%|███████▍  | 94/126 [00:07<00:02, 12.26it/s]
+Prediction:  76%|███████▌  | 96/126 [00:07<00:02, 12.32it/s]
+Prediction:  78%|███████▊  | 98/126 [00:08<00:02, 12.34it/s]
+Prediction:  79%|███████▉  | 100/126 [00:08<00:02, 12.36it/s]
+Prediction:  81%|████████  | 102/126 [00:08<00:01, 12.34it/s]
+Prediction:  83%|████████▎ | 104/126 [00:08<00:01, 12.33it/s]
+Prediction:  84%|████████▍ | 106/126 [00:08<00:01, 12.45it/s]
+Prediction:  86%|████████▌ | 108/126 [00:08<00:01, 12.48it/s]
+Prediction:  87%|████████▋ | 110/126 [00:08<00:01, 12.45it/s]
+Prediction:  89%|████████▉ | 112/126 [00:09<00:01, 12.36it/s]
+Prediction:  90%|█████████ | 114/126 [00:09<00:00, 12.39it/s]
+Prediction:  92%|█████████▏| 116/126 [00:09<00:00, 12.47it/s]
+Prediction:  94%|█████████▎| 118/126 [00:09<00:00, 12.47it/s]
+Prediction:  95%|█████████▌| 120/126 [00:09<00:00, 12.51it/s]
+Prediction:  97%|█████████▋| 122/126 [00:09<00:00, 12.51it/s]
+Prediction:  98%|█████████▊| 124/126 [00:10<00:00, 12.55it/s]
+Prediction: 100%|██████████| 126/126 [00:10<00:00, 12.16it/s]
+Prediction: 100%|██████████| 126/126 [00:10<00:00, 12.26it/s]
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:  learning_rate ████████▇▇▇▇▇▇▆▆▆▆▆▅▅▅▄▄▄▃▃▃▂▂▁▁
+wandb: train_accuracy ▁▅▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇███████████████
+wandb:       train_f1 ▁▅▆▆▆▇▇▇▇▇▇▇▇▇▇█▇███████████████
+wandb:     train_loss █▄▃▃▂▂▂▂▂▂▂▁▁▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   val_accuracy ▁▃▄▃▄▆▅▅▅▆▅█▇▄▆▄▅▆▆▇▅▇▄▅▆█▅▆▇▄█▆
+wandb:         val_f1 ▁▂▃▃▄▆▅▅▄▆▄█▇▄▆▅▅▇▆▇▅▇▄▅▆█▆▆▇▄█▆
+wandb:       val_loss █▇▆▄▅▃▃▂▄▃▃▁▂▅▃▅▄▂▃▁▃▃▅▆▄▂▅▃▄▅▂▃
+wandb: 
+wandb: Run summary:
+wandb:  learning_rate 0.0004
+wandb: train_accuracy 95.15449
+wandb:       train_f1 0.95196
+wandb:     train_loss 0.13396
+wandb:   val_accuracy 91.52542
+wandb:         val_f1 0.91236
+wandb:       val_loss 0.25668
+wandb: 
+wandb: 🚀 View run 2507041904-resnet34.tv_in1k-opt_AdamW-sch_CosineAnnealingLR-img224-onaug_dilation_eda_erosion_mixup-clsaug_1-TTA_0-MP_0 at: https://wandb.ai/lyjune37-juneictlab/upstage-img-clf/runs/yyrena0e
+wandb: ⭐️ View project at: https://wandb.ai/lyjune37-juneictlab/upstage-img-clf
+wandb: Synced 5 W&B file(s), 4 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250704_190414-yyrena0e/logs
+Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 213, in <module>
+    artifact = wandb.Artifact(f'submission-{next_run_name}', type='submission')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/artifacts/artifact.py"", line 207, in __init__
+    self._name: str = validate_artifact_name(name)  # includes version after saving
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/artifacts/_validators.py"", line 73, in validate_artifact_name
+    raise ValueError(
+ValueError: Artifact name is longer than 128 characters: 'submission-2507041904-resnet34.tv_in1k-opt_AdamW-sch_CosineAnnealingLR-img224-onaug_dilation_eda_erosion_mixup-clsaug_1-TTA_0-MP ...'
+"
+exp_full_010_2507041730,2025-07-04 19:12:06,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.001,25,minimal,False,45.0,0.9282,92.8,76.29700638055802,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_010_2507041730.yaml,models/exp_full_010_2507041730.pth,data/submissions/exp_full_010_2507041730.csv,
+exp_full_011_2507041730,2025-07-04 20:28:23,darwin_mps,mps,completed,resnet50.tv2_in1k,320,0.0001,25,minimal,False,15.0,0.933,93.22,76.75745473305385,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_011_2507041730.yaml,models/exp_full_011_2507041730.pth,data/submissions/exp_full_011_2507041730.csv,
+exp_full_012_2507041730,2025-07-04 21:45:09,darwin_mps,mps,completed,resnet34.tv_in1k,320,1e-05,25,minimal,True,30.0,0.9231,92.37,123.41496615409852,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_012_2507041730.yaml,models/exp_full_012_2507041730.pth,data/submissions/exp_full_012_2507041730.csv,
+exp_full_013_2507041730,2025-07-04 23:48:34,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.001,25,moderate,True,15.0,0.8975,90.68,138.81982611417772,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_013_2507041730.yaml,models/exp_full_013_2507041730.pth,data/submissions/exp_full_013_2507041730.csv,
+exp_full_014_2507041730,2025-07-05 02:07:23,darwin_mps,mps,completed,resnet34.tv_in1k,224,1e-05,25,moderate,True,30.0,0.9098,91.53,74.12278948227565,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_014_2507041730.yaml,models/exp_full_014_2507041730.pth,data/submissions/exp_full_014_2507041730.csv,
+exp_full_015_2507041730,2025-07-05 03:21:30,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.0001,25,moderate,True,30.0,0.9138,92.37,82.32520801623663,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_015_2507041730.yaml,models/exp_full_015_2507041730.pth,data/submissions/exp_full_015_2507041730.csv,
+exp_full_016_2507041730,2025-07-05 04:43:50,darwin_mps,mps,failed,resnet50.tv2_in1k,320,0.001,25,strong,False,,,,225.68919847011568,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_016_2507041730.yaml,,,"Training failed: wandb: Currently logged in as: lyjune37 (lyjune37-juneictlab) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.21.0
+wandb: Run data is saved locally in /Users/jayden/Developer/Projects/cv-classification/wandb/run-20250705_044356-i54haz81
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 2507050443-resnet50.tv2_in1k-opt_AdamW-sch_CosineAnnealingLR-img320-onaug_dilation_eda_erosion_mixup-clsaug_1-TTA_0-MP_0
+wandb: ⭐️ View project at https://wandb.ai/lyjune37-juneictlab/upstage-img-clf
+wandb: 🚀 View run at https://wandb.ai/lyjune37-juneictlab/upstage-img-clf/runs/i54haz81
+/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/albumentations/core/validation.py:114: UserWarning: ShiftScaleRotate is a special case of Affine transform. Please use Affine transform instead.
+  original_init(self, **validated_kwargs)
+
+  0%|          | 0/1000 [00:00<?, ?it/s]
+  0%|          | 1/1000 [03:22<56:14:49, 202.69s/it]
+  0%|          | 2/1000 [06:51<57:15:56, 206.57s/it]
+  0%|          | 3/1000 [10:22<57:41:12, 208.30s/it]
+  0%|          | 4/1000 [13:50<57:37:31, 208.29s/it]
+  0%|          | 5/1000 [17:15<57:16:13, 207.21s/it]
+  1%|          | 6/1000 [20:45<57:25:29, 207.98s/it]
+  1%|          | 7/1000 [24:14<57:26:18, 208.24s/it]
+  1%|          | 8/1000 [27:40<57:14:03, 207.71s/it]
+  1%|          | 9/1000 [31:13<57:34:56, 209.18s/it]
+  1%|          | 10/1000 [34:41<57:29:42, 209.07s/it]
+  1%|          | 11/1000 [42:00<76:44:54, 279.37s/it]
+  1%|          | 12/1000 [42:25<55:25:24, 201.95s/it]
+  1%|▏         | 13/1000 [42:50<40:40:55, 148.38s/it]
+  1%|▏         | 14/1000 [59:58<113:21:11, 413.87s/it]
+  2%|▏         | 15/1000 [1:00:22<81:09:31, 296.62s/it]
+  2%|▏         | 16/1000 [1:00:47<58:43:43, 214.86s/it]
+  2%|▏         | 17/1000 [1:01:13<43:06:28, 157.87s/it]
+  2%|▏         | 18/1000 [1:16:59<107:40:15, 394.72s/it]
+  2%|▏         | 19/1000 [1:18:04<80:35:24, 295.74s/it] 
+  2%|▏         | 20/1000 [1:34:39<137:41:36, 505.81s/it]
+  2%|▏         | 21/1000 [1:35:05<98:19:36, 361.57s/it] 
+  2%|▏         | 22/1000 [1:35:30<70:48:05, 260.62s/it]
+  2%|▏         | 23/1000 [1:35:55<51:33:31, 189.98s/it]
+  2%|▏         | 24/1000 [1:36:20<38:06:40, 140.57s/it]
+  2%|▎         | 25/1000 [1:36:49<28:58:01, 106.95s/it]
+  3%|▎         | 26/1000 [1:53:42<102:30:55, 378.91s/it]
+  3%|▎         | 27/1000 [1:54:47<76:57:47, 284.76s/it] 
+  3%|▎         | 28/1000 [1:55:39<58:00:53, 214.87s/it]
+  3%|▎         | 29/1000 [1:57:12<48:05:10, 178.28s/it]
+  3%|▎         | 30/1000 [2:00:28<49:29:32, 183.68s/it]
+  3%|▎         | 31/1000 [2:03:59<51:37:17, 191.78s/it]
+  3%|▎         | 32/1000 [2:07:33<53:21:27, 198.44s/it]
+  3%|▎         | 33/1000 [2:11:08<54:36:04, 203.27s/it]
+  3%|▎         | 34/1000 [2:14:39<55:13:08, 205.79s/it]
+  4%|▎         | 35/1000 [2:18:10<55:34:32, 207.33s/it]
+  4%|▎         | 36/1000 [2:21:43<55:57:36, 208.98s/it]
+  4%|▎         | 37/1000 [2:25:13<56:00:28, 209.38s/it]
+  4%|▍         | 38/1000 [2:28:45<56:08:19, 210.08s/it]
+  4%|▍         | 39/1000 [2:32:19<56:22:54, 211.21s/it]
+  4%|▍         | 40/1000 [2:35:51<56:23:00, 211.44s/it]
+  4%|▍         | 41/1000 [2:39:23<56:23:36, 211.70s/it]
+  4%|▍         | 42/1000 [2:42:55<56:18:54, 211.62s/it]
+  4%|▍         | 43/1000 [2:46:25<56:08:28, 211.19s/it]
+  4%|▍         | 44/1000 [2:49:57<56:11:51, 211.62s/it]
+  4%|▍         | 45/1000 [2:53:29<56:05:34, 211.45s/it]
+  5%|▍         | 46/1000 [2:57:01<56:05:43, 211.68s/it]
+  5%|▍         | 47/1000 [3:00:34<56:10:22, 212.20s/it]
+  5%|▍         | 48/1000 [3:04:06<56:03:54, 212.01s/it]
+  5%|▍         | 49/1000 [3:07:37<55:54:46, 211.66s/it]
+  5%|▌         | 50/1000 [3:11:09<55:57:11, 212.03s/it]
+  5%|▌         | 51/1000 [3:14:41<55:51:26, 211.89s/it]
+  5%|▌         | 52/1000 [3:18:14<55:50:41, 212.07s/it]
+  5%|▌         | 53/1000 [3:21:47<55:53:41, 212.48s/it]
+  5%|▌         | 54/1000 [3:25:18<55:45:37, 212.20s/it]
+  6%|▌         | 55/1000 [3:28:48<55:31:20, 211.51s/it]
+  6%|▌         | 56/1000 [3:32:21<55:32:19, 211.80s/it]
+  6%|▌         | 57/1000 [3:35:52<55:26:24, 211.65s/it]
+  6%|▌         | 58/1000 [3:39:25<55:27:49, 211.96s/it]
+  6%|▌         | 59/1000 [3:42:57<55:25:23, 212.03s/it]
+  6%|▌         | 59/1000 [3:43:00<59:16:48, 226.79s/it]
+
+Prediction:   0%|          | 0/10 [00:00<?, ?it/s]
+Prediction:  10%|█         | 1/10 [00:01<00:11,  1.25s/it]
+Prediction:  20%|██        | 2/10 [00:02<00:08,  1.08s/it]
+Prediction:  30%|███       | 3/10 [00:03<00:07,  1.02s/it]
+Prediction:  40%|████      | 4/10 [00:04<00:05,  1.01it/s]
+Prediction:  50%|█████     | 5/10 [00:05<00:04,  1.03it/s]
+Prediction:  60%|██████    | 6/10 [00:05<00:03,  1.04it/s]
+Prediction:  70%|███████   | 7/10 [00:06<00:02,  1.04it/s]
+Prediction:  80%|████████  | 8/10 [00:07<00:01,  1.04it/s]
+Prediction:  90%|█████████ | 9/10 [00:08<00:00,  1.04it/s]
+Prediction: 100%|██████████| 10/10 [00:09<00:00,  1.25it/s]
+Prediction: 100%|██████████| 10/10 [00:09<00:00,  1.07it/s]
+
+Prediction:   0%|          | 0/126 [00:00<?, ?it/s]
+Prediction:   1%|          | 1/126 [00:01<02:10,  1.04s/it]
+Prediction:   2%|▏         | 2/126 [00:01<01:59,  1.03it/s]
+Prediction:   2%|▏         | 3/126 [00:02<01:56,  1.06it/s]
+Prediction:   3%|▎         | 4/126 [00:03<01:53,  1.07it/s]
+Prediction:   4%|▍         | 5/126 [00:04<01:52,  1.08it/s]
+Prediction:   5%|▍         | 6/126 [00:05<01:50,  1.09it/s]
+Prediction:   6%|▌         | 7/126 [00:06<01:49,  1.08it/s]
+Prediction:   6%|▋         | 8/126 [00:07<01:50,  1.07it/s]
+Prediction:   7%|▋         | 9/126 [00:08<01:51,  1.05it/s]
+Prediction:   8%|▊         | 10/126 [00:09<01:51,  1.04it/s]
+Prediction:   9%|▊         | 11/126 [00:10<01:54,  1.00it/s]
+Prediction:  10%|▉         | 12/126 [00:11<01:55,  1.01s/it]
+Prediction:  10%|█         | 13/126 [00:12<01:56,  1.03s/it]
+Prediction:  11%|█         | 14/126 [00:13<01:56,  1.04s/it]
+Prediction:  12%|█▏        | 15/126 [00:14<01:55,  1.04s/it]
+Prediction:  13%|█▎        | 16/126 [00:15<01:55,  1.05s/it]
+Prediction:  13%|█▎        | 17/126 [00:16<01:54,  1.05s/it]
+Prediction:  14%|█▍        | 18/126 [00:17<01:53,  1.05s/it]
+Prediction:  15%|█▌        | 19/126 [00:19<01:53,  1.06s/it]
+Prediction:  16%|█▌        | 20/126 [00:20<01:53,  1.07s/it]
+Prediction:  17%|█▋        | 21/126 [00:21<01:52,  1.07s/it]
+Prediction:  17%|█▋        | 22/126 [00:22<01:50,  1.07s/it]
+Prediction:  18%|█▊        | 23/126 [00:23<01:49,  1.06s/it]
+Prediction:  19%|█▉        | 24/126 [00:24<01:48,  1.06s/it]
+Prediction:  20%|█▉        | 25/126 [00:25<01:47,  1.06s/it]
+Prediction:  21%|██        | 26/126 [00:26<01:46,  1.06s/it]
+Prediction:  21%|██▏       | 27/126 [00:27<01:44,  1.06s/it]
+Prediction:  22%|██▏       | 28/126 [00:28<01:43,  1.06s/it]
+Prediction:  23%|██▎       | 29/126 [00:29<01:42,  1.06s/it]
+Prediction:  24%|██▍       | 30/126 [00:30<01:42,  1.07s/it]
+Prediction:  25%|██▍       | 31/126 [00:31<01:41,  1.07s/it]
+Prediction:  25%|██▌       | 32/126 [00:32<01:40,  1.07s/it]
+Prediction:  26%|██▌       | 33/126 [00:33<01:38,  1.06s/it]
+Prediction:  27%|██▋       | 34/126 [00:35<01:38,  1.07s/it]
+Prediction:  28%|██▊       | 35/126 [00:36<01:37,  1.07s/it]
+Prediction:  29%|██▊       | 36/126 [00:37<01:36,  1.07s/it]
+Prediction:  29%|██▉       | 37/126 [00:38<01:34,  1.07s/it]
+Prediction:  30%|███       | 38/126 [00:39<01:33,  1.06s/it]
+Prediction:  31%|███       | 39/126 [00:40<01:32,  1.06s/it]
+Prediction:  32%|███▏      | 40/126 [00:41<01:31,  1.06s/it]
+Prediction:  33%|███▎      | 41/126 [00:42<01:29,  1.05s/it]
+Prediction:  33%|███▎      | 42/126 [00:43<01:28,  1.06s/it]
+Prediction:  34%|███▍      | 43/126 [00:44<01:27,  1.06s/it]
+Prediction:  35%|███▍      | 44/126 [00:45<01:27,  1.06s/it]
+Prediction:  36%|███▌      | 45/126 [00:46<01:26,  1.06s/it]
+Prediction:  37%|███▋      | 46/126 [00:47<01:25,  1.06s/it]
+Prediction:  37%|███▋      | 47/126 [00:48<01:23,  1.06s/it]
+Prediction:  38%|███▊      | 48/126 [00:49<01:23,  1.07s/it]
+Prediction:  39%|███▉      | 49/126 [00:50<01:21,  1.06s/it]
+Prediction:  40%|███▉      | 50/126 [00:52<01:21,  1.07s/it]
+Prediction:  40%|████      | 51/126 [00:53<01:20,  1.07s/it]
+Prediction:  41%|████▏     | 52/126 [00:54<01:18,  1.07s/it]
+Prediction:  42%|████▏     | 53/126 [00:55<01:17,  1.07s/it]
+Prediction:  43%|████▎     | 54/126 [00:56<01:17,  1.08s/it]
+Prediction:  44%|████▎     | 55/126 [00:57<01:15,  1.06s/it]
+Prediction:  44%|████▍     | 56/126 [00:58<01:14,  1.06s/it]
+Prediction:  45%|████▌     | 57/126 [00:59<01:12,  1.06s/it]
+Prediction:  46%|████▌     | 58/126 [01:00<01:11,  1.06s/it]
+Prediction:  47%|████▋     | 59/126 [01:01<01:11,  1.06s/it]
+Prediction:  48%|████▊     | 60/126 [01:02<01:10,  1.06s/it]
+Prediction:  48%|████▊     | 61/126 [01:03<01:09,  1.06s/it]
+Prediction:  49%|████▉     | 62/126 [01:04<01:07,  1.06s/it]
+Prediction:  50%|█████     | 63/126 [01:05<01:06,  1.06s/it]
+Prediction:  51%|█████     | 64/126 [01:06<01:05,  1.06s/it]
+Prediction:  52%|█████▏    | 65/126 [01:07<01:04,  1.07s/it]
+Prediction:  52%|█████▏    | 66/126 [01:09<01:04,  1.07s/it]
+Prediction:  53%|█████▎    | 67/126 [01:10<01:03,  1.08s/it]
+Prediction:  54%|█████▍    | 68/126 [01:11<01:02,  1.07s/it]
+Prediction:  55%|█████▍    | 69/126 [01:12<01:00,  1.06s/it]
+Prediction:  56%|█████▌    | 70/126 [01:13<00:59,  1.06s/it]
+Prediction:  56%|█████▋    | 71/126 [01:14<00:58,  1.06s/it]
+Prediction:  57%|█████▋    | 72/126 [01:15<00:57,  1.06s/it]
+Prediction:  58%|█████▊    | 73/126 [01:16<00:56,  1.06s/it]
+Prediction:  59%|█████▊    | 74/126 [01:17<00:55,  1.06s/it]
+Prediction:  60%|█████▉    | 75/126 [01:18<00:54,  1.07s/it]
+Prediction:  60%|██████    | 76/126 [01:19<00:53,  1.07s/it]
+Prediction:  61%|██████    | 77/126 [01:20<00:52,  1.06s/it]
+Prediction:  62%|██████▏   | 78/126 [01:21<00:51,  1.07s/it]
+Prediction:  63%|██████▎   | 79/126 [01:22<00:49,  1.06s/it]
+Prediction:  63%|██████▎   | 80/126 [01:23<00:48,  1.06s/it]
+Prediction:  64%|██████▍   | 81/126 [01:25<00:47,  1.06s/it]
+Prediction:  65%|██████▌   | 82/126 [01:26<00:46,  1.06s/it]
+Prediction:  66%|██████▌   | 83/126 [01:27<00:45,  1.06s/it]
+Prediction:  67%|██████▋   | 84/126 [01:28<00:44,  1.07s/it]
+Prediction:  67%|██████▋   | 85/126 [01:29<00:43,  1.06s/it]
+Prediction:  68%|██████▊   | 86/126 [01:30<00:42,  1.06s/it]
+Prediction:  69%|██████▉   | 87/126 [01:31<00:41,  1.06s/it]
+Prediction:  70%|██████▉   | 88/126 [01:32<00:40,  1.06s/it]
+Prediction:  71%|███████   | 89/126 [01:33<00:39,  1.06s/it]
+Prediction:  71%|███████▏  | 90/126 [01:34<00:38,  1.06s/it]
+Prediction:  72%|███████▏  | 91/126 [01:35<00:37,  1.06s/it]
+Prediction:  73%|███████▎  | 92/126 [01:36<00:35,  1.05s/it]
+Prediction:  74%|███████▍  | 93/126 [01:37<00:34,  1.06s/it]
+Prediction:  75%|███████▍  | 94/126 [01:38<00:33,  1.06s/it]
+Prediction:  75%|███████▌  | 95/126 [01:39<00:32,  1.06s/it]
+Prediction:  76%|███████▌  | 96/126 [01:40<00:31,  1.06s/it]
+Prediction:  77%|███████▋  | 97/126 [01:41<00:30,  1.06s/it]
+Prediction:  78%|███████▊  | 98/126 [01:43<00:29,  1.06s/it]
+Prediction:  79%|███████▊  | 99/126 [01:44<00:28,  1.06s/it]
+Prediction:  79%|███████▉  | 100/126 [01:45<00:27,  1.06s/it]
+Prediction:  80%|████████  | 101/126 [01:46<00:26,  1.06s/it]
+Prediction:  81%|████████  | 102/126 [01:47<00:25,  1.06s/it]
+Prediction:  82%|████████▏ | 103/126 [01:48<00:24,  1.06s/it]
+Prediction:  83%|████████▎ | 104/126 [01:49<00:23,  1.06s/it]
+Prediction:  83%|████████▎ | 105/126 [01:50<00:22,  1.06s/it]
+Prediction:  84%|████████▍ | 106/126 [01:51<00:20,  1.05s/it]
+Prediction:  85%|████████▍ | 107/126 [01:52<00:19,  1.05s/it]
+Prediction:  86%|████████▌ | 108/126 [01:53<00:18,  1.05s/it]
+Prediction:  87%|████████▋ | 109/126 [01:54<00:17,  1.05s/it]
+Prediction:  87%|████████▋ | 110/126 [01:55<00:16,  1.06s/it]
+Prediction:  88%|████████▊ | 111/126 [01:56<00:15,  1.06s/it]
+Prediction:  89%|████████▉ | 112/126 [01:57<00:14,  1.06s/it]
+Prediction:  90%|████████▉ | 113/126 [01:58<00:13,  1.06s/it]
+Prediction:  90%|█████████ | 114/126 [01:59<00:12,  1.06s/it]
+Prediction:  91%|█████████▏| 115/126 [02:01<00:11,  1.06s/it]
+Prediction:  92%|█████████▏| 116/126 [02:02<00:10,  1.07s/it]
+Prediction:  93%|█████████▎| 117/126 [02:03<00:09,  1.06s/it]
+Prediction:  94%|█████████▎| 118/126 [02:04<00:08,  1.06s/it]
+Prediction:  94%|█████████▍| 119/126 [02:05<00:07,  1.06s/it]
+Prediction:  95%|█████████▌| 120/126 [02:06<00:06,  1.06s/it]
+Prediction:  96%|█████████▌| 121/126 [02:07<00:05,  1.06s/it]
+Prediction:  97%|█████████▋| 122/126 [02:08<00:04,  1.05s/it]
+Prediction:  98%|█████████▊| 123/126 [02:09<00:03,  1.05s/it]
+Prediction:  98%|█████████▊| 124/126 [02:10<00:02,  1.06s/it]
+Prediction:  99%|█████████▉| 125/126 [02:11<00:01,  1.05s/it]
+Prediction: 100%|██████████| 126/126 [02:12<00:00,  1.04s/it]
+Prediction: 100%|██████████| 126/126 [02:12<00:00,  1.05s/it]
+wandb: uploading config.yaml
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:  learning_rate ██████████▇▇▇▇▇▇▇▇▇▆▆▆▆▆▅▅▅▅▅▄▄▄▄▃▃▂▂▂▁▁
+wandb: train_accuracy ▁▅▆▇▇▇▇▇▇▇██▇▇████▇█████████████████████
+wandb:       train_f1 ▁▅▆▇▇▇▇▇▇▇▇██▇▇█▇███████████████████████
+wandb:     train_loss █▄▃▂▂▂▂▁▁▁▁▂▁▁▁▁▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   val_accuracy ▁▆▆▇█▇▇▇▇▇▇▇▇▆█▇▇▇▇█▇▇▇██▇▇█▇▇▆▇▅▇▆█▇▇▇▇
+wandb:         val_f1 ▁▄▆▆▆▇▇▆▇▇▇▆▆██▇▇▇▇▇▇▇▇█▇▇▇█▇▇▆▇▇▅▇██▇▇█
+wandb:       val_loss █▅▃▂▂▂▂▂▃▂▂▂▁▁▂▂▂▂▂▁▂▂▂▁▂▂▃▂▃▂▃▃▃▂▁▂▃▃▂▂
+wandb: 
+wandb: Run summary:
+wandb:  learning_rate 0.0004
+wandb: train_accuracy 97.89326
+wandb:       train_f1 0.97876
+wandb:     train_loss 0.06282
+wandb:   val_accuracy 94.91525
+wandb:         val_f1 0.94892
+wandb:       val_loss 0.20167
+wandb: 
+wandb: 🚀 View run 2507050443-resnet50.tv2_in1k-opt_AdamW-sch_CosineAnnealingLR-img320-onaug_dilation_eda_erosion_mixup-clsaug_1-TTA_0-MP_0 at: https://wandb.ai/lyjune37-juneictlab/upstage-img-clf/runs/i54haz81
+wandb: ⭐️ View project at: https://wandb.ai/lyjune37-juneictlab/upstage-img-clf
+wandb: Synced 5 W&B file(s), 4 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250705_044356-i54haz81/logs
+Traceback (most recent call last):
+  File ""/Users/jayden/Developer/Projects/cv-classification/codes/gemini_main.py"", line 213, in <module>
+    artifact = wandb.Artifact(f'submission-{next_run_name}', type='submission')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/artifacts/artifact.py"", line 207, in __init__
+    self._name: str = validate_artifact_name(name)  # includes version after saving
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/jayden/Developer/Projects/cv-classification/venv/lib/python3.11/site-packages/wandb/sdk/artifacts/_validators.py"", line 73, in validate_artifact_name
+    raise ValueError(
+ValueError: Artifact name is longer than 128 characters: 'submission-2507050443-resnet50.tv2_in1k-opt_AdamW-sch_CosineAnnealingLR-img320-onaug_dilation_eda_erosion_mixup-clsaug_1-TTA_0-M ...'
+"
+exp_full_017_2507041730,2025-07-05 08:29:31,darwin_mps,mps,completed,resnet34.tv_in1k,224,1e-05,25,minimal,True,30.0,0.8968,90.25,86.72084800004959,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_017_2507041730.yaml,models/exp_full_017_2507041730.pth,data/submissions/exp_full_017_2507041730.csv,
+exp_full_018_2507041730,2025-07-05 09:56:15,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.001,25,minimal,False,15.0,0.9159,91.95,77.75173788070678,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_018_2507041730.yaml,models/exp_full_018_2507041730.pth,data/submissions/exp_full_018_2507041730.csv,
+exp_full_019_2507041730,2025-07-05 11:14:00,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.0001,25,minimal,False,45.0,0.9219,92.37,141.81073421637217,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_019_2507041730.yaml,models/exp_full_019_2507041730.pth,data/submissions/exp_full_019_2507041730.csv,
+exp_full_020_2507041730,2025-07-05 13:35:48,darwin_mps,mps,completed,resnet50.tv2_in1k,224,1e-05,25,minimal,False,45.0,0.9125,91.1,82.1913426876068,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_020_2507041730.yaml,models/exp_full_020_2507041730.pth,data/submissions/exp_full_020_2507041730.csv,
+exp_full_021_2507041730,2025-07-05 14:58:00,darwin_mps,mps,completed,resnet50.tv2_in1k,320,0.001,25,minimal,True,15.0,0.9347,93.64,18.54237829844157,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_021_2507041730.yaml,models/exp_full_021_2507041730.pth,data/submissions/exp_full_021_2507041730.csv,
+exp_full_022_2507041730,2025-07-05 15:16:32,darwin_mps,mps,completed,resnet34.tv_in1k,320,0.0001,25,moderate,True,30.0,0.9104,91.1,17.645914498964945,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_022_2507041730.yaml,models/exp_full_022_2507041730.pth,data/submissions/exp_full_022_2507041730.csv,
+exp_full_023_2507041730,2025-07-05 15:34:11,darwin_mps,mps,completed,resnet34.tv_in1k,224,0.001,25,moderate,True,30.0,0.8843,88.98,13.445911220709483,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_023_2507041730.yaml,models/exp_full_023_2507041730.pth,data/submissions/exp_full_023_2507041730.csv,
+exp_full_024_2507041730,2025-07-05 15:47:38,darwin_mps,mps,completed,resnet50.tv2_in1k,224,0.0001,25,minimal,False,30.0,0.8951,89.83,11.483400472005208,/Users/jayden/Developer/Projects/cv-classification/codes/practice/exp_full_024_2507041730.yaml,models/exp_full_024_2507041730.pth,data/submissions/exp_full_024_2507041730.csv,

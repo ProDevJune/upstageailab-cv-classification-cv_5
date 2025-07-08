@@ -1,0 +1,19 @@
+device: mps
+experiments:
+- accuracy: 93.67932778815856
+  device: mps
+  experiment_id: sim_001
+  f1_score: 0.7811394878924249
+  model: resnet34
+- accuracy: 84.27011011090363
+  device: mps
+  experiment_id: sim_002
+  f1_score: 0.7971556066918006
+  model: resnet50
+- accuracy: 89.32706395402
+  device: mps
+  experiment_id: sim_003
+  f1_score: 0.8025471244442537
+  model: efficientnet_b3
+platform: darwin
+recommended_batch_size: 25

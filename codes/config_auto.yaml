@@ -1,0 +1,116 @@
+# 자동화 실험용 설정 템플릿 (기본)
+# 플랫폼별 최적화가 자동으로 적용됩니다
+
+# 실험 메타데이터
+experiment_id: "auto_experiment"
+experiment_type: "quick"  # quick, full, targeted
+
+# 모델 설정 (기존 config.yaml 기반)
+model_name: 'resnet50.tv2_in1k'
+pretrained: true
+fine_tuning: "full"
+
+# 손실 함수
+criterion: 'CrossEntropyLoss'
+
+# 옵티마이저
+optimizer_name: 'AdamW'
+lr: 0.0001
+weight_decay: 0.00001
+
+# 스케줄러
+scheduler_name: 'CosineAnnealingLR'
+
+# 기본 설정
+random_seed: 256
+n_folds: 0
+val_split_ratio: 0.15
+stratify: true
+image_size: 224
+
+# 정규화
+norm_mean: [0.5, 0.5, 0.5]
+norm_std: [0.5, 0.5, 0.5]
+
+# 기법들
+class_imbalance: null
+online_augmentation: true
+augmentation:
+  eda: true
+  dilation: true
+  erosion: false
+  mixup: false
+  cutmix: false
+
+TTA: false
+mixed_precision: false  # 플랫폼별로 자동 설정됨
+
+# 모델 하이퍼파라미터
+timm:
+  activation: null
+
+custom_layer: null
+
+# 훈련 하이퍼파라미터
+epochs: 100
+patience: 15
+batch_size: 32  # 플랫폼별로 자동 조정됨
+
+# W&B
+wandb:
+  project: "upstage-img-clf-hpo"
+  log: true
+
+# 경로 (플랫폼별로 자동 조정됨)
+data_dir: "/data/ephemeral/home/upstageailab-cv-classification-cv_5/data"
+
+# HPO 전용 설정
+hpo_settings:
+  max_experiments: 20
+  early_stopping_min_delta: 1e-4
+  save_all_models: false  # 디스크 공간 절약
+  log_frequency: 10  # 에포크마다 로깅
+
+# 자동화에서 탐색할 하이퍼파라미터 공간
+hyperparameter_space:
+  models: 
+    - 'resnet34.tv_in1k'
+    - 'resnet50.tv2_in1k'
+    - 'efficientnet_b3.ra2_in1k'
+    - 'convnext_tiny.fb_in22k_ft_in1k'
+  
+  image_sizes: [224, 320, 384]
+  
+  learning_rates: [0.001, 0.0001, 0.00001]
+  
+  augmentation_levels:
+    - 'minimal'   # eda만
+    - 'moderate'  # eda + dilation
+    - 'strong'    # eda + dilation + erosion + mixup
+  
+  TTA_options: [true, false]
+  
+  batch_sizes: [16, 32, 64]  # 플랫폼별 제한 적용
+  
+  optimizers: ['Adam', 'AdamW']
+  
+  schedulers: ['CosineAnnealingLR', 'OneCycleLR']
+
+# 플랫폼별 제한 설정 (자동 적용)
+platform_limits:
+  cpu:
+    max_models: ['resnet34.tv_in1k']
+    max_image_size: 224
+    max_batch_size: 16
+    disable_mixed_precision: true
+    
+  mps:
+    max_image_size: 320
+    max_batch_size: 32
+    disable_mixed_precision: true
+    conservative_memory: true
+    
+  cuda:
+    # 제한 없음, 전체 공간 사용
+    enable_compile: true
+    enable_mixed_precision: true

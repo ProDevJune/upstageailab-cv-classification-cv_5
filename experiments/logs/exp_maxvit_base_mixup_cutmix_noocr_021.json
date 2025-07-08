@@ -1,0 +1,19 @@
+{
+  "experiment_id": "exp_maxvit_base_mixup_cutmix_noocr_021",
+  "timestamp": "2025-07-08T11:17:29.201227",
+  "model": "maxvit_base",
+  "technique": "mixup_cutmix",
+  "config_path": "experiments/configs/exp_maxvit_base_mixup_cutmix_noocr_021.yaml",
+  "description": "maxvit_base_tf_384.in1k + MixUp + CutMix 데이터 증강",
+  "success": false,
+  "error_message": "프로세스 종료 코드: 1",
+  "local_results": null,
+  "submission": {
+    "csv_path": null,
+    "submission_ready": false,
+    "file_size_mb": 0,
+    "created_at": null
+  },
+  "memo_suggestion": null,
+  "server_evaluation": null
+}

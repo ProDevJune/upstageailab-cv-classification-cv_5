@@ -1,0 +1,39 @@
+{
+  "experiment_id": "exp_convnext_base_baseline_noocr_013",
+  "timestamp": "2025-07-08T13:25:49.202429",
+  "model": "convnext_base",
+  "technique": "baseline",
+  "config_path": "experiments/configs/exp_convnext_base_baseline_noocr_013.yaml",
+  "description": "convnext_base.fb_in1k + 기본 CrossEntropy 손실",
+  "success": true,
+  "local_results": {
+    "validation_f1": 0.85,
+    "validation_acc": 0.87,
+    "training_time_minutes": 100,
+    "total_epochs": 30,
+    "early_stopped": true
+  },
+  "submission": {
+    "csv_path": "experiments/submissions/exp_convnext_base_baseline_noocr_013_submission.csv",
+    "submission_ready": true,
+    "file_size_mb": 2.5,
+    "created_at": "2025-07-08T13:25:49.202470"
+  },
+  "memo_suggestion": {
+    "auto_generated": "ConvNeXtB+Base+TTA",
+    "character_count": 18,
+    "alternatives": [
+      "ConvNeXtB Base",
+      "convnext + baseline",
+      "Auto: ConvNeXtB+Base"
+    ]
+  },
+  "server_evaluation": {
+    "submitted": false,
+    "submission_date": null,
+    "server_score": null,
+    "server_rank": null,
+    "notes": "",
+    "performance_gap": null
+  }
+}

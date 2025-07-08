@@ -1,0 +1,138 @@
+# 자동 실험 매트릭스 정의 (OCR 지원 버전)
+# 모델 × 기법 × OCR 조합을 정의하여 실험 생성
+
+models:
+  swin_transformer:
+    model_name: 'swin_base_patch4_window12_384.ms_in1k'
+    batch_size: 32
+    image_size: 384
+    priority: 2
+    estimated_time_minutes: 90
+    
+  efficientnet_b4:
+    model_name: 'efficientnet_b4.ra2_in1k'
+    batch_size: 48
+    image_size: 320
+    priority: 1
+    estimated_time_minutes: 75
+    
+  convnext_base:
+    model_name: 'convnext_base.fb_in1k'
+    batch_size: 28
+    image_size: 384
+    priority: 3
+    estimated_time_minutes: 100
+    
+  maxvit_base:
+    model_name: 'maxvit_base_tf_384.in1k'
+    batch_size: 24
+    image_size: 384
+    priority: 4
+    estimated_time_minutes: 110
+
+techniques:
+  baseline:
+    description: "기본 CrossEntropy 손실"
+    criterion: 'CrossEntropyLoss'
+    mixup_cutmix_prob: 0.0
+    priority: 6
+    expected_improvement: 0.0
+    
+  focal_loss:
+    description: "Focal Loss (hard sample 집중)"
+    criterion: 'FocalLoss'
+    focal_loss:
+      alpha: 1.0
+      gamma: 2.0
+    mixup_cutmix_prob: 0.0
+    priority: 4
+    expected_improvement: 0.02
+    
+  mixup_cutmix:
+    description: "MixUp + CutMix 데이터 증강"
+    criterion: 'CrossEntropyLoss'
+    mixup_cutmix_prob: 0.5
+    priority: 3
+    expected_improvement: 0.03
+    
+  focal_mixup:
+    description: "Focal Loss + MixUp/CutMix 조합"
+    criterion: 'FocalLoss'
+    focal_loss:
+      alpha: 1.0
+      gamma: 2.0
+    mixup_cutmix_prob: 0.5
+    priority: 1
+    expected_improvement: 0.05
+    
+  label_smooth:
+    description: "Label Smoothing Cross Entropy"
+    criterion: 'LabelSmoothingCrossEntropy'
+    label_smoothing:
+      smoothing: 0.1
+    mixup_cutmix_prob: 0.0
+    priority: 5
+    expected_improvement: 0.01
+    
+  label_mixup:
+    description: "Label Smoothing + MixUp/CutMix"
+    criterion: 'LabelSmoothingCrossEntropy'
+    label_smoothing:
+      smoothing: 0.1
+    mixup_cutmix_prob: 0.5
+    priority: 2
+    expected_improvement: 0.04
+
+# 🔥 새로 추가: OCR 설정 옵션
+ocr_options:
+  no_ocr:
+    description: "OCR 미적용"
+    enabled: false
+    priority: 2
+    time_multiplier: 1.0
+    expected_improvement: 0.0
+    
+  with_ocr:
+    description: "OCR 적용 (텍스트 정보 활용)"
+    enabled: true
+    priority: 1  # OCR이 더 효과적이라고 가정
+    time_multiplier: 1.2  # OCR 처리로 인한 시간 증가
+    expected_improvement: 0.03
+    ocr_config:
+      ocr_model: "TrOCR"  # 또는 다른 OCR 모델
+      confidence_threshold: 0.7
+      max_text_length: 100
+      text_embedding_dim: 768
+
+# 실험 우선순위 계산 규칙 (OCR 차원 추가)
+priority_weights:
+  model_priority: 0.25    # 빠른 모델 우선
+  technique_priority: 0.4  # 효과 큰 기법 우선
+  ocr_priority: 0.25      # OCR 효과 우선
+  estimated_time: 0.1     # 짧은 시간 우선
+
+# 실험 생성 옵션
+experiment_options:
+  # OCR 실험 생성 모드
+  ocr_experiment_mode: "none"  # "all", "selective", "none"
+  # all: 모든 조합에 OCR 적용/미적용 둘 다 생성 (총 48개 실험)
+  # selective: 상위 기법들에만 OCR 적용/미적용 생성 (총 32개 실험)
+  # none: OCR 없이 기존 24개 실험만 생성
+  
+  # selective 모드에서 OCR을 적용할 기법들
+  ocr_selective_techniques: ["focal_mixup", "label_mixup", "mixup_cutmix", "focal_loss"]
+  
+  # OCR 실험의 우선순위 부스트
+  ocr_priority_boost: 0.1
+
+# 전역 설정
+global_settings:
+  base_config_path: "codes/config_v2.yaml"
+  output_dir: "experiments/configs"
+  log_dir: "experiments/logs"
+  submission_dir: "experiments/submissions"
+  main_script_path: "codes/gemini_main_v2.py"
+  
+  # OCR 관련 설정
+  ocr_data_path: "data/ocr_texts"  # OCR 텍스트 데이터 경로
+  ocr_features_path: "data/ocr_features"  # OCR 특성 저장 경로
