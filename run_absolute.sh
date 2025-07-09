@@ -8,7 +8,12 @@ cd /data/ephemeral/home/upstageailab-cv-classification-cv_5
 
 # 환경변수에서 설정 파일 가져오기 (예비 경로 포함)
 if [ -n "$EXPERIMENT_CONFIG" ]; then
-    CONFIG_FILE="$EXPERIMENT_CONFIG"
+    # 상대 경로를 절대 경로로 변환
+    if [[ "$EXPERIMENT_CONFIG" = /* ]]; then
+        CONFIG_FILE="$EXPERIMENT_CONFIG"
+    else
+        CONFIG_FILE="/data/ephemeral/home/upstageailab-cv-classification-cv_5/$EXPERIMENT_CONFIG"
+    fi
 else
     CONFIG_FILE="${1:-codes/practice/exp_golden_efficientnet_b4_202507051902.yaml}"
 fi
