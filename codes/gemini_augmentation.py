@@ -92,10 +92,13 @@ def augment_class_imbalance(cfg, train_df):
     cutout_transform = A.Compose([
         # 이미지 크기 조정
         A.CoarseDropout(
-            num_holes_range=(1, 2), # 마스킹 개수
-            hole_height_range=(int(cfg.image_size * 0.05), int(cfg.image_size * 0.1)), # 마스킹의 높이 범위
-            hole_width_range=(int(cfg.image_size * 0.05), int(cfg.image_size * 0.2)), # 마스킹의 너비 범위
-            fill=(0,0,0), # 검정색 마스킹
+            max_holes=2,  # 최대 구멍 개수
+            max_height=int(cfg.image_size * 0.1),  # 최대 높이
+            max_width=int(cfg.image_size * 0.2),   # 최대 너비
+            min_holes=1,  # 최소 구멍 개수
+            min_height=int(cfg.image_size * 0.05), # 최소 높이
+            min_width=int(cfg.image_size * 0.05),  # 최소 너비
+            fill_value=0, # 검정색 마스킹
             p=1.0
         )
     ])

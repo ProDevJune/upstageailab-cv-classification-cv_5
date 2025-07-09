@@ -86,12 +86,15 @@ if __name__ == "__main__":
         ### submission 폴더 생성
         # 모델 저장, 시각화 그래프 저장, submission 파일 등등 저장 용도
         submission_dir = os.path.join(cfg.data_dir, 'submissions', next_run_name)
-        try:
-            os.makedirs(submission_dir, exist_ok=False)
-            # cfg에 추가 
-            cfg.submission_dir = submission_dir
-        except:
-            raise ValueError("같은 이름의 submission 폴더가 있습니다.", submission_dir)
+        counter = 1
+        original_submission_dir = submission_dir
+        while os.path.exists(submission_dir):
+            submission_dir = f"{original_submission_dir}_{counter}"
+            counter += 1
+        
+        os.makedirs(submission_dir, exist_ok=False)
+        # cfg에 추가 
+        cfg.submission_dir = submission_dir
 
 
         ### Data Load
