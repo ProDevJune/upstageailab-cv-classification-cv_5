@@ -12,7 +12,6 @@ AUG = {
             scale=(0.85, 1.15),
             translate_percent=(-0.05,0.05),
             rotate=(-20,30),
-            value=255,  # 단일 값으로 변경 (흰색)
             shear=(-5, 5),
             p=1.0
         ),
@@ -35,7 +34,6 @@ AUG = {
             scale=(0.85, 1.15),
             translate_percent=(-0.05,0.05),
             rotate=(-20,30),
-            value=255,  # 단일 값으로 변경
             shear=(-5, 5),
             p=0.9
         ),
@@ -54,7 +52,6 @@ AUG = {
             scale=(0.85, 1.15),
             translate_percent=(-0.05,0.05),
             rotate=(-20,30),
-            value=255,  # 단일 값으로 변경
             shear=(-5, 5),
             p=0.9
         ),
@@ -69,7 +66,6 @@ AUG = {
         A.Rotate(
             limit=(-20, 30),
             border_mode=cv2.BORDER_CONSTANT,
-            value=255,  # 단일 값으로 변경
             p=0.8, # 50% 확률로 적용
         ),
         A.HorizontalFlip(p=0.5),
@@ -82,7 +78,6 @@ AUG = {
             translate_percent={"x": (-0.1, 0.1), "y": (-0.1, 0.1)}, # X, Y 축 개별 이동
             rotate=(-15, 20), # 회전 각도
             shear=(-10, 10),  # 전단 변환 (이미지를 기울임)
-            value=255, # 단일 값으로 변경
             p=0.8, # 50% 확률로 적용
         ),
         A.HorizontalFlip(p=0.5),
@@ -115,7 +110,6 @@ AUG = {
             rotate=(-15, 20), # 회전 각도
             shear=(-10, 10),  # 전단 변환 (이미지를 기울임)
             p=0.5, # 50% 확률로 적용
-            value=255 # 단일 값으로 변경
         ),
         A.HorizontalFlip(p=0.5),
         A.VerticalFlip(p=0.5),
@@ -150,7 +144,6 @@ AUG = {
             rotate=(-120, 120), # 회전 각도
             shear=(-5, 5),  # 전단 변환 (이미지를 기울임)
             p=1.0, 
-            value=255 # 단일 값으로 변경
         ),
 
         A.HorizontalFlip(p=0.5),
@@ -161,10 +154,10 @@ AUG = {
         # 정보 가리기 및 혼합 (Occlusion & Mixing)
         # Train의 마스킹과 유사한 효과를 주어 모델이 특정 영역에 의존하지 않도록함
         A.CoarseDropout(
-            num_holes_range=(3, 5),
-            hole_height_range=(10, 35),
-            hole_width_range=(5, 45),
-            max_holes=5,  # fill 대신 max_holes 사용
+            max_holes=5,
+            max_height=35,
+            max_width=45,
+            fill_value=0,  # fill 대신 fill_value 사용
             p=0.9
         ),
         # 강력한 기하학적 변환
@@ -176,9 +169,8 @@ AUG = {
                 rotate=(-45, 45), # 회전 각도
                 shear=(-10, 10),  # 전단 변환 (이미지를 기울임)
                 p=1.0, # 50% 확률로 적용
-                value=255 # 단일 값으로 변경
             ),
-            A.Perspective(scale=(0.05, 0.1), value=255, p=1.0),  # value 추가
+            A.Perspective(scale=(0.05, 0.1), p=1.0),  # value 제거
         ], p=0.9),
         A.HorizontalFlip(p=0.5),
         A.VerticalFlip(p=0.5),
@@ -212,7 +204,7 @@ def get_augmentation(cfg, epoch=0):
         # 긴 변을 기준으로 종횡비를 유지하며 resize
         A.LongestMaxSize(max_size=cfg.image_size),
         # cfg.image_size 정사각형으로 만들고, 여백은 흰색으로 채움.
-        A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, value=(255, 255, 255), p=1.0),  # fill -> value로 변경
+        A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, p=1.0),  # value 제거
         A.Normalize(mean=cfg.norm_mean, std=cfg.norm_std),
         ToTensorV2(),
     ])
@@ -285,10 +277,10 @@ def augment_class_imbalance(cfg, train_df):
     cutout_transform = A.Compose([
         # 이미지 크기 조정
         A.CoarseDropout(
-            num_holes_range=(1, 2), # 마스킹 개수
-            hole_height_range=(int(cfg.image_size * 0.05), int(cfg.image_size * 0.1)), # 마스킹의 높이 범위
-            hole_width_range=(int(cfg.image_size * 0.05), int(cfg.image_size * 0.2)), # 마스킹의 너비 범위
-            max_holes=2, # fill 대신 max_holes 사용
+            max_holes=2,
+            max_height=int(cfg.image_size * 0.1),
+            max_width=int(cfg.image_size * 0.2),
+            fill_value=0, # fill 대신 fill_value 사용
             p=1.0
         )
     ])
