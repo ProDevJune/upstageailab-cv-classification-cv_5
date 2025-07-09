@@ -103,16 +103,32 @@ for config_file in v2_experiments/configs/*.yaml; do
         
         echo "   🐍 실행 스크립트: $MAIN_SCRIPT"
         
+        # 실험 실행 전 상태 체크
+        echo "   📋 실행 전 체크:"
+        echo "     - 설정 파일: $(ls -la "$config_file")"
+        echo "     - Python 환경: $(which python)"
+        echo "     - 가상환경: ${VIRTUAL_ENV:-'None'}"
+        echo "     - 실행 명령어: python \"$MAIN_SCRIPT\" --config \"$config_file\""
+        echo ""
+        
         # 실험 실행
-        python "$MAIN_SCRIPT" --config "$config_file" >> "$LOG_FILE" 2>&1
+        echo "   🚀 실험 실행 시작..."
+        python "$MAIN_SCRIPT" --config "$config_file" 2>&1 | tee -a "$LOG_FILE"
         
         if [ $? -eq 0 ]; then
             echo "   ✅ 완료: $exp_name"
             ((success_count++))
+            
+            # 생성된 결과 파일 체크
+            if [ -d "data/submissions" ]; then
+                RECENT_SUBMISSIONS=$(find data/submissions -name "*.csv" -newer "$config_file" | wc -l)
+                echo "   📈 새로 생성된 submission 파일: ${RECENT_SUBMISSIONS}개"
+            fi
         else
-            echo "   ❌ 실패: $exp_name"
-            echo "   📋 마지막 10줄의 로그:"
-            tail -10 "$LOG_FILE"
+            echo "   ❌ 실패: $exp_name (Exit code: $?)"
+            echo "   📋 마지막 20줄의 로그:"
+            tail -20 "$LOG_FILE" | sed 's/^/     /'
+            echo "   📋 전체 로그 파일: $LOG_FILE"
         fi
         
         echo "   완료 시간: $(date)"
