@@ -241,12 +241,12 @@ echo "📝 Logging to: $LOG_FILE"
 echo "🔬 [{exp_num}/{total_exp}] Starting: {exp_name}"
 echo "Time: $(date)"
 echo "현재 위치: $(pwd)"
-echo "설정 파일: {output_dir}/configs/{config_name}"
+echo "설정 파일: $(pwd)/{output_dir}/configs/{config_name}"
 echo "실행 스크립트: {main_script}"
 echo ""
 
 # 실험 실행
-if python {main_script} --config {output_dir}/configs/{config_name} 2>&1 | tee -a "$LOG_FILE"; then
+if python {main_script} --config $(pwd)/{output_dir}/configs/{config_name} 2>&1 | tee -a "$LOG_FILE"; then
     echo "✅ [{exp_num}/{total_exp}] Completed: {exp_name}"
 else
     echo "❌ [{exp_num}/{total_exp}] Failed: {exp_name} (Exit code: $?)"
