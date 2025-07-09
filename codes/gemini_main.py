@@ -71,7 +71,10 @@ if __name__ == "__main__":
 
         # W&B 설정
         # W&B 사용 안 하면 run=None
-        next_run_name = f"{CURRENT_TIME}-{cfg.model_name}-opt_{cfg.optimizer_name}-sch_{cfg.scheduler_name}-img{cfg.image_size}-{'on' if cfg.online_augmentation else 'off'}aug_{'_'.join([aug for aug, active in cfg.augmentation.items() if active])}-clsaug_{1 if cfg.class_imbalance else 0}-TTA_{1 if cfg.TTA else 0}-MP_{1 if cfg.mixed_precision else 0}"
+        # TTA 설정 호환성 처리
+        tta_enabled = getattr(cfg, 'TTA', getattr(cfg, 'test_TTA', False))
+        
+        next_run_name = f"{CURRENT_TIME}-{cfg.model_name}-opt_{cfg.optimizer_name}-sch_{cfg.scheduler_name}-img{cfg.image_size}-{'on' if cfg.online_augmentation else 'off'}aug_{'_'.join([aug for aug, active in cfg.augmentation.items() if active])}-clsaug_{1 if cfg.class_imbalance else 0}-TTA_{1 if tta_enabled else 0}-MP_{1 if cfg.mixed_precision else 0}"
         run = None 
         if hasattr(cfg, 'wandb') and cfg.wandb['log']:
             run = wandb.init(
@@ -171,12 +174,12 @@ if __name__ == "__main__":
         val_preds, val_f1 = do_validation(
             df=val_df, 
             model=trainer.model, 
-            data=val_dataset_raw if cfg.TTA else val_loader, 
+            data=val_dataset_raw if tta_enabled else val_loader, 
             transform_func=tta_transform, 
             cfg=cfg, 
             run=run, 
             show=False, 
-            savepath=os.path.join(cfg.submission_dir, f"val_confusion_matrix{'_TTA' if cfg.TTA else ''}.png")
+            savepath=os.path.join(cfg.submission_dir, f"val_confusion_matrix{'_TTA' if tta_enabled else ''}.png")
         )
         print("📢 Validation F1-score:",val_f1)
 
@@ -189,7 +192,7 @@ if __name__ == "__main__":
         # Inference
         test_df = pd.read_csv(os.path.join(cfg.data_dir, "sample_submission.csv"))
 
-        if cfg.TTA:
+        if tta_enabled:
             test_dataset_raw = ImageDataset(test_df, os.path.join(cfg.data_dir, "test"), transform=raw_transform)
             test_loader_raw = DataLoader(test_dataset_raw, batch_size=cfg.batch_size, shuffle=False, num_workers=4, pin_memory=True)
             print("Running TTA on test set...")
