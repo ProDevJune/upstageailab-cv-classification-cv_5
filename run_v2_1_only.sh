@@ -31,8 +31,13 @@ echo "  - 긴 학습 시간 (최대 48시간/실험)"
 echo "  - 높은 GPU 메모리 요구사항"
 echo "  - 최고 성능 추구"
 
-echo ""
-read -p "V2_1 실험을 실행하시겠습니까? (y/n): " confirm
+# run_optimal_performance.sh에서 호출될 때는 자동으로 "y" 응답
+if [ "$1" = "--auto" ]; then
+    confirm="y"
+else
+    echo ""
+    read -p "V2_1 실험을 실행하시겠습니까? (y/n): " confirm
+fi
 
 if [[ $confirm == "y" || $confirm == "Y" ]]; then
     echo "🚀 Starting V2_1 experiments..."

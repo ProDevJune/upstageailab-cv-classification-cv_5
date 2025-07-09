@@ -74,9 +74,215 @@ class V3ExperimentGenerator:
                                 
                                 experiments.append(experiment)
         
-        # 우선순위 필터링
-        if phase:
-            experiments = self.filter_by_phase(experiments, phase)
+    def filter_by_phase(self, experiments, phase):
+        """Phase별 실험 필터링"""
+        if not phase:
+            return experiments
+            
+        # Phase1: 가장 유망한 조합들만 선별
+        if phase == 'phase1':
+            priority_combinations = [
+                'convnext_base_convnext_nano_balanced',
+                'convnext_base_convnext_tiny_balanced', 
+                'efficientnet_b4_convnext_nano_balanced'
+            ]
+            
+            filtered = []
+            for exp in experiments:
+                # 실험명에서 핵심 조합 추출
+                for priority in priority_combinations:
+                    if priority in exp['name']:
+                        filtered.append(exp)
+                        break
+                        
+            # Phase1에서는 최대 3개 실험만
+            return filtered[:3]
+            
+        elif phase == 'phase2':
+            # Phase2: 중간 우선순위
+            return experiments[3:8]
+        elif phase == 'phase3':
+            # Phase3: 낮은 우선순위
+            return experiments[8:15]
+        else:
+            return experiments
+    
+    def save_experiment_configs(self, experiments):
+        """실험 설정 파일들 저장"""
+        print(f"💾 Saving {len(experiments)} experiment configurations...")
+        
+        for exp in experiments:
+            # Model A 설정 저장
+            model_a_path = self.output_dir / "configs" / "modelA" / f"{exp['name']}_modelA.yaml"
+            with open(model_a_path, 'w', encoding='utf-8') as f:
+                yaml.dump(exp['model_a_config'], f, default_flow_style=False, allow_unicode=True)
+            
+            # Model B 설정 저장
+            model_b_path = self.output_dir / "configs" / "modelB" / f"{exp['name']}_modelB.yaml"
+            with open(model_b_path, 'w', encoding='utf-8') as f:
+                yaml.dump(exp['model_b_config'], f, default_flow_style=False, allow_unicode=True)
+        
+        print(f"✅ Saved configs in {self.output_dir}/configs/")
+    
+    def generate_runner_script(self, experiments):
+        """전체 실험 실행 스크립트 생성"""
+        script_content = '''#!/bin/bash
+
+# V3 Hierarchical Classification Experiments Runner
+echo "🚀 Starting V3 Hierarchical Classification Experiments"
+echo "===================================================="
+
+# 로그 디렉토리 생성
+mkdir -p v3_experiments/logs
+mkdir -p data/submissions
+
+# 실험 실행
+experiment_count=0
+success_count=0
+
+'''
+        
+        for exp in experiments:
+            script_content += f'''
+# 실험: {exp['name']}
+echo "🧪 실험 시작: {exp['name']}"
+((experiment_count++))
+
+# Model A 실행
+if python codes/gemini_main_v3.py --config v3_experiments/configs/modelA/{exp['name']}_modelA.yaml; then
+    echo "✅ Model A 완료: {exp['name']}"
+    ((success_count++))
+else
+    echo "❌ Model A 실패: {exp['name']}"
+fi
+
+# Model B 실행 
+if python codes/gemini_main_v3.py --config v3_experiments/configs/modelB/{exp['name']}_modelB.yaml; then
+    echo "✅ Model B 완료: {exp['name']}"
+    ((success_count++))
+else
+    echo "❌ Model B 실패: {exp['name']}"
+fi
+
+echo ""
+'''
+        
+        script_content += '''
+echo "🎉 모든 V3 실험 완료!"
+echo "📊 결과: $success_count/$((experiment_count * 2)) 성공"
+echo "📁 결과 확인: ls -la data/submissions/"
+'''
+        
+        script_path = self.output_dir / "scripts" / "run_v3_experiments.sh"
+        with open(script_path, 'w', encoding='utf-8') as f:
+            f.write(script_content)
+        
+        # 실행 권한 부여
+        import stat
+        script_path.chmod(script_path.stat().st_mode | stat.S_IEXEC)
+        
+        print(f"✅ Generated runner script: {script_path}")
+    
+    def generate_phase_scripts(self, experiments):
+        """Phase별 실행 스크립트 생성"""
+        phases = ['phase1', 'phase2', 'phase3']
+        
+        for phase in phases:
+            phase_experiments = self.filter_by_phase(experiments, phase)
+            if not phase_experiments:
+                continue
+                
+            script_content = f'''#!/bin/bash
+
+# V3 {phase.upper()} Experiments
+echo "🚀 Starting V3 {phase.upper()} Experiments"
+echo "Generated {len(phase_experiments)} experiments"
+echo "====================================="
+
+# 현재 위치 확인
+echo "현재 위치: $(pwd)"
+
+# 로그 디렉토리 생성
+mkdir -p v3_experiments/logs
+mkdir -p data/submissions
+
+# 메인 실행 파일 확인
+if [ ! -f "codes/gemini_main_v3.py" ]; then
+    echo "⚠️  codes/gemini_main_v3.py를 찾을 수 없습니다. 대체 파일 사용..."
+    if [ -f "codes/gemini_main_v2_1_style.py" ]; then
+        MAIN_SCRIPT="codes/gemini_main_v2_1_style.py"
+    else
+        echo "❌ 실행할 메인 스크립트를 찾을 수 없습니다!"
+        exit 1
+    fi
+else
+    MAIN_SCRIPT="codes/gemini_main_v3.py"
+fi
+
+echo "🐍 사용할 스크립트: $MAIN_SCRIPT"
+
+# 실험 실행
+experiment_count=0
+success_count=0
+
+'''
+            
+            for exp in phase_experiments:
+                script_content += f'''
+# 실험: {exp['name']}
+echo "🧪 [{phase.upper()}] 실험 시작: {exp['name']}"
+((experiment_count++))
+
+# 설정 파일 확인
+if [ -f "v3_experiments/configs/modelA/{exp['name']}_modelA.yaml" ]; then
+    echo "   📝 Model A 설정: v3_experiments/configs/modelA/{exp['name']}_modelA.yaml"
+    if python "$MAIN_SCRIPT" --config "v3_experiments/configs/modelA/{exp['name']}_modelA.yaml"; then
+        echo "   ✅ Model A 완료: {exp['name']}"
+        ((success_count++))
+    else
+        echo "   ❌ Model A 실패: {exp['name']}"
+    fi
+else
+    echo "   ⚠️  Model A 설정 파일 없음: {exp['name']}"
+fi
+
+echo ""
+'''
+            
+            script_content += f'''
+echo "🎉 V3 {phase.upper()} 실험 완료!"
+echo "📊 결과: $success_count/$experiment_count 성공"
+echo "📁 결과 확인: ls -la data/submissions/"
+'''
+            
+            script_path = self.output_dir / "scripts" / f"run_v3_{phase}.sh"
+            with open(script_path, 'w', encoding='utf-8') as f:
+                f.write(script_content)
+            
+            # 실행 권한 부여
+            import stat
+            script_path.chmod(script_path.stat().st_mode | stat.S_IEXEC)
+            
+            print(f"✅ Generated {phase} script: {script_path}")
+    
+    def generate_summary_report(self, experiments):
+        """실험 요약 보고서 생성"""
+        total_experiments = len(experiments)
+        model_a_variants = len(set(exp['model_a_config']['model_name'] for exp in experiments))
+        model_b_variants = len(set(exp['model_b_config']['model_name'] for exp in experiments))
+        
+        report = f"""# V3 Hierarchical Classification Experiments Report
+
+생성 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## 📊 Experiment Overview
+- **Total Experiments**: {total_experiments}
+- **Model A Variants**: {model_a_variants}
+- **Model B Variants**: {model_b_variants}
+- **Hierarchical Strategies**: 3
+
+## 🎯 Phase별 실험 분배
+"""
         
         # 개수 제한
         if limit:

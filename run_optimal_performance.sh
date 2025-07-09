@@ -262,6 +262,12 @@ EOF
 
     chmod +x ensemble_best_models.py
     
+    # 앞서 추가적으로 실행 권한 부여 
+    echo "#!/usr/bin/env python3" > temp_ensemble.py
+    cat ensemble_best_models.py >> temp_ensemble.py
+    mv temp_ensemble.py ensemble_best_models.py
+    chmod +x ensemble_best_models.py
+    
     # 앙상블 실행
     if python ensemble_best_models.py; then
         log_success "앙상블 생성 완료"
@@ -312,7 +318,7 @@ main() {
     # 2단계: V2_1 대형 모델 (6시간)
     check_system_status
     run_experiment 2 "V2_1_LargeModel" \
-        "./run_v2_1_only.sh" \
+        "./run_v2_1_only.sh --auto" \
         "6시간"
     
     wait_between_experiments 60
