@@ -1,0 +1,156 @@
+# 확장 가능한 하이퍼파라미터 실험 시스템 마스터 설정
+system:
+  base_config_template: "codes/config_v2.yaml"
+  project_naming: "model_name"  # WandB 프로젝트명 규칙
+  temp_config_dir: "temp_configs"
+  results_tracking: true
+
+# 실험할 모델들 (동적으로 추가/제거 가능)
+models:
+  - name: "resnet50.tv2_in1k"
+    enabled: true
+    base_config: "codes/config_v2.yaml"
+    script: "python codes/gemini_main_v2.py"
+    description: "ResNet50 기본 모델"
+    
+  - name: "efficientnet_b4.ra2_in1k" 
+    enabled: true
+    base_config: "codes/config_v2.yaml"
+    script: "./run_absolute.sh"
+    description: "EfficientNet-B4 (황금조합 검증됨)"
+    
+  - name: "efficientnet_b3.ra2_in1k"
+    enabled: true
+    base_config: "codes/config_v2.yaml" 
+    script: "./run_b3.sh"
+    description: "EfficientNet-B3"
+    
+  - name: "swin_base_patch4_window12_384.ms_in1k"
+    enabled: true
+    base_config: "codes/config_v2.yaml"
+    script: "./run_code_v2.sh"
+    description: "Swin Transformer V2 시스템"
+    
+  # 새로운 모델 쉽게 추가 가능
+  - name: "convnext_base.fb_in1k"
+    enabled: false  # 필요시 활성화
+    base_config: "codes/config_v2.yaml"
+    script: "./run_convnext.sh"
+    description: "ConvNeXt Base"
+
+# 실험 카테고리들 (동적으로 추가/제거 가능)
+experiment_categories:
+  optimizer:
+    enabled: true
+    description: "옵티마이저 실험"
+    options:
+      - name: "AdamW"
+        lr: 0.001
+        weight_decay: 0.001
+        description: "AdamW 기본 설정"
+      - name: "SGD"
+        lr: 0.01
+        momentum: 0.9
+        weight_decay: 0.0001
+        description: "SGD with momentum"
+  
+  scheduler:
+    enabled: true
+    description: "스케줄러 실험"
+    options:
+      - name: "CosineAnnealingLR"
+        T_max: 25
+        eta_min: 0.0001
+        description: "코사인 어닐링"
+      - name: "OneCycleLR"
+        max_lr: 0.01
+        total_steps: 1000
+        description: "원사이클 학습률"
+  
+  loss_function:  # 누락된 부분 완전 추가
+    enabled: true
+    description: "손실 함수 실험"
+    options:
+      - name: "CrossEntropyLoss"
+        description: "기본 크로스엔트로피"
+      - name: "FocalLoss"
+        alpha: 2
+        gamma: 1
+        description: "클래스 불균형 대응"
+      - name: "LabelSmoothingLoss"
+        smoothing: 0.1
+        description: "라벨 스무딩"
+  
+  image_size:
+    enabled: true
+    description: "이미지 크기 실험"
+    options:
+      - size: 224
+        batch_size: 64
+        description: "작은 이미지, 큰 배치"
+      - size: 320
+        batch_size: 64
+        description: "황금조합 (검증된 최고 성능)"
+      - size: 384
+        batch_size: 32
+        description: "V2 시스템 기본"
+      - size: 512
+        batch_size: 16
+        description: "큰 이미지, 작은 배치"
+  
+  batch_size:
+    enabled: true
+    description: "배치 크기 실험"
+    options:
+      - batch_size: 32
+        mixed_precision: true
+        description: "중간 배치 + Mixed Precision"
+      - batch_size: 64
+        mixed_precision: false
+        description: "큰 배치"
+      - batch_size: 128
+        mixed_precision: true
+        description: "매우 큰 배치 + Mixed Precision"
+  
+  early_stopping:
+    enabled: true
+    description: "조기 종료 실험"
+    options:
+      - patience: 5
+        description: "빠른 수렴"
+      - patience: 10
+        description: "안정적 수렴"
+      - patience: 20
+        description: "충분한 학습"
+      
+  # 새로운 카테고리들 (필요시 활성화)
+  augmentation:
+    enabled: false  # V2 시스템 특화
+    description: "증강 기법 실험"
+    options:
+      - type: "minimal"
+        eda: true
+        dynamic_enabled: false
+        description: "최소 증강 (안정적)"
+      - type: "dynamic"
+        eda: true
+        dynamic_enabled: true
+        description: "동적 증강 (V2 고급 기능)"
+  
+  regularization:
+    enabled: false  # 미래 확장용
+    description: "정규화 기법 실험"
+    options:
+      - dropout: 0.1
+        weight_decay: 0.001
+        description: "가벼운 정규화"
+      - dropout: 0.3
+        weight_decay: 0.01
+        description: "강한 정규화"
+
+# 실행 설정
+execution:
+  max_parallel: 1  # 동시 실행 실험 수
+  experiment_timeout: 3600  # 1시간 타임아웃
+  retry_failed: true
+  save_logs: true

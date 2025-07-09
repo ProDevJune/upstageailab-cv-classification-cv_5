@@ -101,6 +101,6 @@ wandb:
   project: "upstage-img-clf"
   log: True # log using wandb, if False then do not use wandb
 
-# Paths
-data_dir: "/data/ephemeral/home/upstageailab-cv-classification-cv_5/data"
+# Paths - 상대 경로 사용 (Mac/Linux 모두 지원)
+data_dir: "./data"  # 프로젝트 루트에서 상대 경로
 train_data: train0705a.csv

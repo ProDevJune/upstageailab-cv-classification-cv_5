@@ -1,0 +1,148 @@
+configs:
+  config_v2:
+    valid: true
+  experiment_config:
+    enabled_categories: 6
+    enabled_models: 4
+    estimated_experiments: 68
+    valid: true
+critical_issues: []
+disk_space:
+  free_gb: 760.6084442138672
+  required_gb: 10
+  status: sufficient
+  total_gb: 926.3517189025879
+estimated_runtime:
+  device_type: MPS
+  time_per_experiment_minutes: 45
+  total_days: 2.125
+  total_experiments: 68
+  total_hours: 51.0
+file_structure:
+  missing: []
+  status:
+    codes/config_v2.yaml:
+      description: V2 설정 파일
+      exists: true
+    codes/gemini_main_v2.py:
+      description: V2 메인 실행 파일
+      exists: true
+    data/test/:
+      description: 테스트 데이터 디렉토리
+      exists: true
+    data/train.csv:
+      description: 훈련 데이터 (또는 train0705a.csv)
+      exists: true
+    data/train/:
+      description: 훈련 이미지 디렉토리
+      exists: true
+    hyperparameter_system/categories/__init__.py:
+      description: 카테고리 모듈
+      exists: true
+    hyperparameter_system/experiment_config.yaml:
+      description: 마스터 설정 파일
+      exists: true
+    hyperparameter_system/experiment_runner.py:
+      description: 실험 실행기
+      exists: true
+    hyperparameter_system/hyperparameter_configs.py:
+      description: 실험 매트릭스 생성기
+      exists: true
+    hyperparameter_system/run_experiments.py:
+      description: 통합 실행 스크립트
+      exists: true
+  train_data_found: true
+hardware:
+  device_available: true
+  device_type: MPS
+  estimated_speed: fast
+  gpu_count: 0
+  performance_test_time: 0.016128063201904297
+memory:
+  available_gb: 38.888885498046875
+  gpu_memory_gb: 0
+  status: excellent
+  total_gb: 64.0
+overall_status: ready
+packages:
+  installed: 14
+  missing: []
+  status:
+    PIL:
+      installed: true
+      version: 10.4.0
+    albumentations:
+      installed: true
+      version: 2.0.8
+    matplotlib:
+      installed: true
+      version: 3.9.2
+    numpy:
+      installed: true
+      version: 1.26.4
+    opencv-python:
+      installed: true
+      version: 4.10.0
+    pandas:
+      installed: true
+      version: 2.2.3
+    scikit-learn:
+      installed: true
+      version: 1.5.2
+    seaborn:
+      installed: true
+      version: 0.13.2
+    timm:
+      installed: true
+      version: 1.0.12
+    torch:
+      installed: true
+      version: !!python/object/new:torch.torch_version.TorchVersion
+      - 2.7.1
+    torchvision:
+      installed: true
+      version: 0.22.1
+    tqdm:
+      installed: true
+      version: 4.66.5
+    wandb:
+      installed: true
+      version: 0.18.3
+    yaml:
+      installed: true
+      version: 6.0.2
+  total_required: 14
+python_env:
+  executable: /Users/jayden/Developer/Projects/cv-classification/venv/bin/python
+  venv_active: true
+  version: 3.11.13
+recommendations:
+- 실행 시간이 길어 특정 모델/카테고리만 먼저 테스트 권장
+scripts:
+  codes/gemini_main_v2.py:
+    executable: true
+    exists: true
+  hyperparameter_system/experiment_runner.py:
+    executable: true
+    exists: true
+  hyperparameter_system/run_experiments.py:
+    executable: true
+    exists: true
+  run_absolute.sh:
+    executable: true
+    exists: true
+  run_b3.sh:
+    executable: true
+    exists: true
+  run_code_v2.sh:
+    executable: true
+    exists: true
+system_info:
+  environment: macOS
+  expected_device: MPS
+  machine: arm64
+  platform: macOS-15.5-arm64-arm-64bit
+  python_version: 3.11.13
+  system: Darwin
+warnings:
+- 실행 시간이 매우 길어질 수 있음

@@ -29,13 +29,24 @@ from zoneinfo import ZoneInfo
 from datetime import datetime
 import argparse
 
-#📢 project_root 설정 필수
-project_root = '/data/ephemeral/home/upstageailab-cv-classification-cv_5'
-sys.path.append(project_root)
-from codes.gemini_utils_v2 import *
-from codes.gemini_train_v2 import *
-from codes.gemini_augmentation_v2 import *
-from codes.gemini_evalute_v2 import *
+#📢 크로스 플랫폼 상대 경로 설정
+# 현재 파일 위치를 기준으로 프로젝트 루트를 찾기
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_file_dir)  # codes/ 의 상위 디렉토리
+sys.path.insert(0, project_root)  # 최우선으로 프로젝트 루트 추가
+
+# 상대 경로로 모듈 import
+try:
+    from codes.gemini_utils_v2 import *
+    from codes.gemini_train_v2 import *
+    from codes.gemini_augmentation_v2 import *
+    from codes.gemini_evalute_v2 import *
+except ImportError as e:
+    print(f"❌ 모듈 import 실패: {e}")
+    print(f"현재 디렉토리: {os.getcwd()}")
+    print(f"프로젝트 루트: {project_root}")
+    print(f"Python 경로: {sys.path[:3]}")
+    raise
 
 if __name__ == "__main__":
     try:
@@ -50,10 +61,18 @@ if __name__ == "__main__":
         
         args = parser.parse_args()
 
-        # Yaml 파일 읽기
-        cfg = load_config(
-            config_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), args.config)
-        )
+        # Yaml 파일 읽기 - 상대 경로 처리
+        config_path = args.config
+        if not os.path.isabs(config_path):
+            # 상대 경로인 경우 codes/ 디렉토리 기준으로 결합
+            config_path = os.path.join(current_file_dir, config_path)
+        
+        cfg = load_config(config_path=config_path)
+        
+        # 작업 디렉토리를 프로젝트 루트로 변경 (상대 경로 정상 작동)
+        original_cwd = os.getcwd()
+        os.chdir(project_root)
+        print(f"📁 작업 디렉토리: {os.getcwd()}")
         # 랜덤성 제어
         set_seed(cfg.random_seed)
 
@@ -109,11 +128,17 @@ if __name__ == "__main__":
         # 모델 저장, 시각화 그래프 저장, submission 파일 등등 저장 용도
         submission_dir = os.path.join(cfg.data_dir, 'submissions', next_run_name)
         try:
-            os.makedirs(submission_dir, exist_ok=False)
+            os.makedirs(submission_dir, exist_ok=True)  # 테스트 시 exist_ok=True로 변경
             # cfg에 추가 
             cfg.submission_dir = submission_dir
-        except:
-            raise ValueError("같은 이름의 submission 폴더가 있습니다.", submission_dir)
+            print(f"📁 Submission 폴더 생성: {submission_dir}")
+        except Exception as e:
+            print(f"⚠️ Submission 폴더 생성 오류: {e}")
+            # 임시 대체 경로 사용
+            import tempfile
+            submission_dir = tempfile.mkdtemp(prefix=f"submission_{CURRENT_TIME}_")
+            cfg.submission_dir = submission_dir
+            print(f"📁 임시 Submission 폴더: {submission_dir}")
 
 
         ### Data Load
@@ -478,9 +503,15 @@ if __name__ == "__main__":
             run.finish()
 
     finally:
+        # 작업 디렉토리 복원
+        if 'original_cwd' in locals():
+            os.chdir(original_cwd)
+            
         if run:
             run.finish()
-        if augmented_ids:
+        # augmented_ids가 정의된 경우에만 삭제
+        if 'augmented_ids' in locals() and augmented_ids:
             ### Offline Augmentation 파일 삭제
             delete_offline_augmented_images(cfg=cfg, augmented_ids=augmented_ids)
+        if 'val_augmented_ids' in locals() and val_augmented_ids:
             delete_offline_augmented_images(cfg=cfg, augmented_ids=val_augmented_ids)
