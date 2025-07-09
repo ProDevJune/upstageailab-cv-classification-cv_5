@@ -1,0 +1,46 @@
+# Ubuntu (NVIDIA CUDA) 환경용 완전 호환성 검증 requirements
+# CV_8U 오류 + NumPy 2.x 호환성 문제 완전 해결 버전
+
+--index-url https://download.pytorch.org/whl/cu121
+
+# PyTorch with CUDA 12.1 support (AIStages 서버 호환 버전)
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# Core ML and Deep Learning
+timm==1.0.12
+transformers==4.44.2
+huggingface-hub==0.26.2
+
+# Adafactor optimizer support
+adafactor==0.2.0
+
+# Computer Vision - 완전 호환성 검증 버전
+numpy==1.26.4
+opencv-python==4.8.1.78
+Pillow==10.4.0
+albumentations==1.4.0
+imageio==2.35.1
+
+# Data Science - NumPy 1.26.4 호환 버전
+pandas==2.2.3
+scipy==1.14.1
+scikit-learn==1.5.2
+matplotlib==3.9.2
+seaborn==0.13.2
+
+# Configuration and Utilities
+pyyaml==6.0.2
+tqdm==4.66.5
+psutil==6.0.0
+wandb==0.18.3
+
+# Hyperparameter Optimization
+optuna==4.0.0
+
+# CUDA specific optimizations
+accelerate==1.0.1
+
+# Additional utilities
+pynvml==11.5.3
