@@ -1,0 +1,49 @@
+# Ubuntu Linux CUDA 환경용 requirements (최종 안정 버전)
+# albumentations 호환성 문제 완전 해결
+
+# PyTorch 생태계 (CUDA 12.1 지원)
+--index-url https://download.pytorch.org/whl/cu121
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# 핵심 수치 계산 (모든 패키지와 호환되는 안정 버전)
+numpy==1.26.4
+
+# 컴퓨터 비전 (안정적이고 검증된 버전)
+opencv-python==4.8.1.78
+Pillow==10.0.1
+imageio==2.31.6
+
+# albumentations 생태계 (완전 호환 버전)
+albucore==0.0.9
+albumentations==1.3.1
+
+# timm (안정 버전)
+timm==0.9.12
+
+# 딥러닝 유틸리티
+transformers==4.35.2
+huggingface-hub==0.19.4
+accelerate==0.24.1
+
+# 데이터 사이언스 (안정 버전)
+pandas==2.0.3
+scipy==1.11.4
+scikit-learn==1.3.2
+matplotlib==3.7.5
+seaborn==0.12.2
+
+# 설정 및 유틸리티
+PyYAML==6.0.1
+tqdm==4.66.1
+psutil==5.9.6
+
+# 실험 추적
+wandb==0.16.0
+
+# 하이퍼파라미터 최적화
+optuna==3.4.0
+
+# 시스템 호환성
+zoneinfo>=0.2.1; python_version<"3.9"
