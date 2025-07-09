@@ -96,17 +96,30 @@ run_test "Train 데이터 디렉토리" "python -c 'import os; assert os.path.ex
 
 run_test "Test 데이터 디렉토리" "python -c 'import os; assert os.path.exists(\"data/test\"), \"Test dir missing\"; print(\"Test dir OK:\", len(os.listdir(\"data/test\")), \"files\")'"
 
-# CSV 파일 테스트 - 디버깅 정보 포함
+# CSV 파일 테스트 - 완전히 새로 수정
 echo -e "${BLUE}📄 CSV 테스트 디버깅 시작${NC}"
+echo "=== 디버깅 정보 ==="
 echo "Python 버전: $(python --version)"
 echo "Pandas 설치 확인:"
-python -c "import pandas; print('pandas version:', pandas.__version__)" || echo "Pandas import 실패"
+python -c "import pandas; print('pandas version:', pandas.__version__)" 2>&1 || echo "Pandas import 실패"
 echo "OS 모듈 확인:"
-python -c "import os; print('os module OK')" || echo "OS import 실패"
+python -c "import os; print('os module OK')" 2>&1 || echo "OS import 실패" 
 echo "data/train.csv 파일 존재 확인:"
 ls -la data/train.csv 2>/dev/null || echo "train.csv 파일 없음"
+echo "=== 디버깅 종료 ==="
 
-# 간단한 CSV 테스트
+# 어떤 라인에서 에러가 발생하는지 단계별 테스트
+echo -e "${BLUE}📄 단계별 CSV 테스트${NC}"
+echo "1. OS 모듈 import 테스트:"
+python -c "import os; print('Step 1 OK')" || echo "Step 1 실패"
+echo "2. Pandas 모듈 import 테스트:"
+python -c "import pandas; print('Step 2 OK')" || echo "Step 2 실패"
+echo "3. 두 모듈 함께 import 테스트:"
+python -c "import os; import pandas; print('Step 3 OK')" || echo "Step 3 실패"
+echo "4. CSV 파일 읽기 테스트:"
+python -c "import os; import pandas; df = pandas.read_csv('data/train.csv'); print('Step 4 OK, rows:', len(df))" || echo "Step 4 실패"
+
+# 간단한 방식으로 다시 시도
 run_test "CSV 파일들" "python -c 'import os; import pandas; df=pandas.read_csv(\"data/train.csv\"); print(\"CSV OK\", len(df))'"
 
 # 8. 빠른 학습 테스트 (선택적)
