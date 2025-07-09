@@ -14,18 +14,21 @@ AttributeError: module 'cv2' has no attribute 'CV_8U'
 
 ### 방법 1: 자동 수정 스크립트 (권장)
 ```bash
-# 서버에서 실행
-bash fix_cv_8u_error.sh
+# 서버에서 실행 (강화 버전)
+bash fix_cv_8u_error_robust.sh
+
+# 또는 간단 버전
+bash fix_cv_8u_simple.sh
 ```
 
-### 방법 2: 수동 설치
+### 방법 2: 수동 설치 (pip 캐시 오류 대응)
 ```bash
 # 1. 기존 패키지 제거
 pip uninstall -y opencv-python opencv-python-headless opencv-contrib-python albumentations
 
-# 2. 호환 버전 설치
-pip install opencv-python==4.8.1.78
-pip install albumentations==1.4.0
+# 2. 호환 버전 설치 (캐시 비활성화 대응)
+pip install --no-cache-dir opencv-python==4.8.1.78
+pip install --no-cache-dir albumentations==1.4.0
 
 # 3. 확인
 python -c "import cv2; import albumentations as A; print('✅ 문제 해결됨')"
@@ -44,9 +47,29 @@ pip install -r requirements_ubuntu_fixed.txt
 
 ## 주의사항
 1. **가상환경 활성화**: 먼저 `source venv/bin/activate` 실행
-2. **캐시 정리**: 설치 전 `pip cache purge` 실행 권장
+2. **pip 캐시 오류**: `pip cache purge` 실패 시 `--no-cache-dir` 옵션 사용
 3. **버전 확인**: 설치 후 반드시 버전 확인
 4. **시스템 재시작**: 필요시 컨테이너/세션 재시작
+
+## 일반적인 오류 대응
+
+### "pip cache commands can not function since cache is disabled"
+```bash
+# 캐시 비활성화 환경에서는 --no-cache-dir 옵션 사용
+pip install --no-cache-dir opencv-python==4.8.1.78
+pip install --no-cache-dir albumentations==1.4.0
+```
+
+### 설치 실패 시 대안 버전
+```bash
+# 대안 1: 더 안정적인 버전
+pip install --no-cache-dir opencv-python==4.7.1.72
+pip install --no-cache-dir albumentations==1.3.1
+
+# 대안 2: 최소 호환 버전
+pip install --no-cache-dir opencv-python==4.6.0.66
+pip install --no-cache-dir albumentations==1.3.0
+```
 
 ## 설치 후 확인 명령어
 ```python

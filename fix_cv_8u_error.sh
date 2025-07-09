@@ -15,9 +15,8 @@ fi
 echo "🗑️ 기존 패키지 제거 중..."
 pip uninstall -y opencv-python opencv-python-headless opencv-contrib-python albumentations
 
-# 캐시 제거
-echo "🧹 pip 캐시 정리 중..."
-pip cache purge
+# pip 캐시가 비활성화된 경우를 위한 안전한 처리
+echo "🧹 설치 준비 중..."
 
 # 호환 가능한 버전으로 재설치
 echo "📥 호환 패키지 설치 중..."
