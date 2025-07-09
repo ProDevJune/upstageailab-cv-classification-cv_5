@@ -111,8 +111,8 @@ wandb:
 
 # Paths
 # Test 데이터셋이 있는 디렉토리
-# test_data_dir: "/Users/jayden/Developer/Projects/upstageailab-cv-classification-cv_5/data"
+# test_data_dir: "./data"
 # Train 데이터셋이 있는 디렉토리
-data_dir: "/Users/jayden/Developer/Projects/upstageailab-cv-classification-cv_5/data"
+data_dir: "./data"
 # train.csv의 파일 이름.
 train_data: train.csv

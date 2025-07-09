@@ -6,8 +6,8 @@
 echo "🏗️ V2_1 Experiment Runner - Large Model + Long Training"
 echo "========================================================"
 
-# 프로젝트 루트로 이동
-cd /Users/jayden/Developer/Projects/upstageailab-cv-classification-cv_5
+# 현재 디렉토리에서 실행 (경로 수정 불필요)
+# cd 명령어 제거됨
 
 # V2_1 실험만 생성
 echo "📊 Generating V2_1 experiments..."

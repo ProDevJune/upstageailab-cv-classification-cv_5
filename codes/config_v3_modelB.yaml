@@ -110,6 +110,6 @@ wandb:
   tags: ["v3", "hierarchical", "model_b"]  # 실험 분류용 태그
 
 # Paths
-# test_data_dir: "/Users/jayden/Developer/Projects/upstageailab-cv-classification-cv_5/data"
-data_dir: "/Users/jayden/Developer/Projects/upstageailab-cv-classification-cv_5/data"
+# test_data_dir: "./data"
+data_dir: "./data"
 train_data: train.csv

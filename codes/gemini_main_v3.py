@@ -30,7 +30,7 @@ from datetime import datetime
 import argparse
 import traceback
 
-#📢 project_root 설정 필수 - 상대 경로로 변경
+#📢 project_root 설정 필수 - 동적 경로 설정
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(project_root)
 from codes.gemini_utils_v3 import *
