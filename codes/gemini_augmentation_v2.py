@@ -12,7 +12,7 @@ AUG = {
             scale=(0.85, 1.15),
             translate_percent=(-0.05,0.05),
             rotate=(-20,30),
-            fill=255,  # 단일 값으로 변경 (흰색)
+            value=255,  # 단일 값으로 변경 (흰색)
             shear=(-5, 5),
             p=1.0
         ),
@@ -35,7 +35,7 @@ AUG = {
             scale=(0.85, 1.15),
             translate_percent=(-0.05,0.05),
             rotate=(-20,30),
-            fill=255,  # 단일 값으로 변경
+            value=255,  # 단일 값으로 변경
             shear=(-5, 5),
             p=0.9
         ),
@@ -54,7 +54,7 @@ AUG = {
             scale=(0.85, 1.15),
             translate_percent=(-0.05,0.05),
             rotate=(-20,30),
-            fill=255,  # 단일 값으로 변경
+            value=255,  # 단일 값으로 변경
             shear=(-5, 5),
             p=0.9
         ),
@@ -69,7 +69,7 @@ AUG = {
         A.Rotate(
             limit=(-20, 30),
             border_mode=cv2.BORDER_CONSTANT,
-            fill=255,  # 단일 값으로 변경
+            value=255,  # 단일 값으로 변경
             p=0.8, # 50% 확률로 적용
         ),
         A.HorizontalFlip(p=0.5),
@@ -82,7 +82,7 @@ AUG = {
             translate_percent={"x": (-0.1, 0.1), "y": (-0.1, 0.1)}, # X, Y 축 개별 이동
             rotate=(-15, 20), # 회전 각도
             shear=(-10, 10),  # 전단 변환 (이미지를 기울임)
-            fill=255, # 단일 값으로 변경
+            value=255, # 단일 값으로 변경
             p=0.8, # 50% 확률로 적용
         ),
         A.HorizontalFlip(p=0.5),
@@ -115,7 +115,7 @@ AUG = {
             rotate=(-15, 20), # 회전 각도
             shear=(-10, 10),  # 전단 변환 (이미지를 기울임)
             p=0.5, # 50% 확률로 적용
-            fill=255 # 단일 값으로 변경
+            value=255 # 단일 값으로 변경
         ),
         A.HorizontalFlip(p=0.5),
         A.VerticalFlip(p=0.5),
@@ -150,7 +150,7 @@ AUG = {
             rotate=(-120, 120), # 회전 각도
             shear=(-5, 5),  # 전단 변환 (이미지를 기울임)
             p=1.0, 
-            fill=255 # 단일 값으로 변경
+            value=255 # 단일 값으로 변경
         ),
 
         A.HorizontalFlip(p=0.5),
@@ -176,9 +176,9 @@ AUG = {
                 rotate=(-45, 45), # 회전 각도
                 shear=(-10, 10),  # 전단 변환 (이미지를 기울임)
                 p=1.0, # 50% 확률로 적용
-                fill=255 # 단일 값으로 변경
+                value=255 # 단일 값으로 변경
             ),
-            A.Perspective(scale=(0.05, 0.1), fill=255, p=1.0),  # fill 추가
+            A.Perspective(scale=(0.05, 0.1), value=255, p=1.0),  # value 추가
         ], p=0.9),
         A.HorizontalFlip(p=0.5),
         A.VerticalFlip(p=0.5),
