@@ -164,7 +164,7 @@ AUG = {
             num_holes_range=(3, 5),
             hole_height_range=(10, 35),
             hole_width_range=(5, 45),
-            fill=0,  # 검정색
+            max_holes=5,  # fill 대신 max_holes 사용
             p=0.9
         ),
         # 강력한 기하학적 변환
@@ -288,7 +288,7 @@ def augment_class_imbalance(cfg, train_df):
             num_holes_range=(1, 2), # 마스킹 개수
             hole_height_range=(int(cfg.image_size * 0.05), int(cfg.image_size * 0.1)), # 마스킹의 높이 범위
             hole_width_range=(int(cfg.image_size * 0.05), int(cfg.image_size * 0.2)), # 마스킹의 너비 범위
-            fill=0, # 검정색 마스킹
+            max_holes=2, # fill 대신 max_holes 사용
             p=1.0
         )
     ])
