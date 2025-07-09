@@ -104,26 +104,40 @@ if __name__ == "__main__":
         else:
             aug_str_parts += "offaug"
 
+        # 개선된 run name 생성 (더 간결하고 읽기 쉽게)
         next_run_name = (
             f"{CURRENT_TIME}-"
-            f"{cfg.model_name}-"
-            f"opt_{cfg.optimizer_name}-"
-            f"sch_{cfg.scheduler_name}-"
+            f"{cfg.model_name.split('.')[0]}-"  # 모델명 간소화
+            f"opt{cfg.optimizer_name}-"
+            f"sch{cfg.scheduler_name}-"
             f"img{cfg.image_size}-"
             f"es{cfg.patience}-"
-            f"{aug_str_parts}-"  # 개선된 증강 문자열
+            f"{aug_str_parts}-"
             f"cv{cfg.n_folds}-"
-            f"clsaug_{1 if cfg.class_imbalance else 0}-"
-            f"vTTA_{1 if getattr(cfg, 'val_TTA', False) else 0}-"
-            f"tTTA_{1 if getattr(cfg, 'test_TTA', cfg.TTA if hasattr(cfg, 'TTA') else False) else 0}-"
-            f"MP_{1 if cfg.mixed_precision else 0}"
+            f"bs{cfg.batch_size}-"  # 배치사이즈 추가
+            f"vTTA{1 if getattr(cfg, 'val_TTA', False) else 0}-"
+            f"tTTA{1 if getattr(cfg, 'test_TTA', cfg.TTA if hasattr(cfg, 'TTA') else False) else 0}-"
+            f"MP{1 if cfg.mixed_precision else 0}"
         )
 
+        # WanDB 프로젝트명을 model_name 기반으로 설정
         if hasattr(cfg, 'wandb') and cfg.wandb['log']:
+            # model_name 기반 프로젝트명 생성
+            if getattr(cfg.wandb, 'model_based_project', True):
+                model_name_clean = cfg.model_name.replace('.', '-').replace('_', '-')
+                project_name = f"{cfg.wandb['project']}-{model_name_clean}"
+            else:
+                project_name = cfg.wandb['project']
+            
+            # 태그 설정
+            tags = getattr(cfg.wandb, 'tags', [])
+            tags.extend([cfg.model_name, cfg.optimizer_name, cfg.scheduler_name, f"img{cfg.image_size}", f"cv{cfg.n_folds}"])
+            
             run = wandb.init(
-                project=cfg.wandb['project'],
+                project=project_name,
                 name=next_run_name,
                 config=vars(cfg),
+                tags=tags
             )
 
         ### submission 폴더 생성
@@ -482,7 +496,7 @@ if __name__ == "__main__":
         # Submission
         sample_submission_df = pd.read_csv(os.path.join(cfg.data_dir, "sample_submission.csv"))
         assert (sample_submission_df['ID'] == pred_df['ID']).all(), "pred_df에서 test 이미지가 아닌 데이터가 존재합니다."
-        assert set(pred_df['target']).issubset(set(range(17))), "target 컬럼에 0~16 외의 값이 있습니다."
+        assert set(pred_df['target']).issubset(set(range(cfg.num_classes))), "target 컬럼에 0~16 외의 값이 있습니다."
 
         submission_path = os.path.join(cfg.submission_dir, f"{next_run_name}.csv")
         pred_df.to_csv(submission_path, index=False)

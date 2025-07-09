@@ -1,0 +1,264 @@
+# Enhanced V2 Experiment Matrix
+# 다양한 모델, 옵티마이저, 스케줄러, Loss 함수 조합을 통한 포괄적 실험
+
+v2_enhanced_experiments:
+  base_config: "config_v2_1.yaml"  # 기본 설정 파일
+  
+  # 모델 변형
+  model_variants:
+    - name: "convnextv2_base"
+      model_name: "convnextv2_base.fcmae_ft_in22k_in1k_384"
+      image_size: 384
+      batch_size: 32
+    - name: "convnextv2_large"
+      model_name: "convnextv2_large.fcmae_ft_in22k_in1k_384"
+      image_size: 384
+      batch_size: 16
+    - name: "efficientnet_b4"
+      model_name: "efficientnet_b4.ra2_in1k"
+      image_size: 384
+      batch_size: 48
+    - name: "resnet50"
+      model_name: "resnet50.tv2_in1k"
+      image_size: 224
+      batch_size: 64
+    - name: "swin_base"
+      model_name: "swin_base_patch4_window7_224.ms_in22k_ft_in1k"
+      image_size: 224
+      batch_size: 32
+    - name: "vit_base"
+      model_name: "vit_base_patch16_224.augreg2_in21k_ft_in1k"
+      image_size: 224
+      batch_size: 48
+
+  # 옵티마이저 변형
+  optimizer_variants:
+    - name: "adamw_001"
+      optimizer_name: "AdamW"
+      lr: 0.001
+      weight_decay: 0.00001
+    - name: "adamw_0001"
+      optimizer_name: "AdamW"
+      lr: 0.0001
+      weight_decay: 0.00001
+    - name: "adamw_00005"
+      optimizer_name: "AdamW"
+      lr: 0.00005
+      weight_decay: 0.00001
+    - name: "sgd_001"
+      optimizer_name: "SGD"
+      lr: 0.001
+      weight_decay: 0.0001
+    - name: "sgd_01"
+      optimizer_name: "SGD"
+      lr: 0.01
+      weight_decay: 0.0001
+    - name: "adam_001"
+      optimizer_name: "Adam"
+      lr: 0.001
+      weight_decay: 0.00001
+
+  # 스케줄러 변형
+  scheduler_variants:
+    - name: "cosine"
+      scheduler_name: "CosineAnnealingLR"
+      scheduler_params:
+        T_max: 35
+    - name: "cosine_warmup"
+      scheduler_name: "CosineAnnealingWarmupRestarts"
+      scheduler_params:
+        T_max: 10000
+        max_lr: 0.0001
+        min_lr: 0.00001
+        warmup_steps: 5
+        gamma: 0.9
+    - name: "reduce_plateau"
+      scheduler_name: "ReduceLROnPlateau"
+      scheduler_params:
+        patience: 3
+        factor: 0.5
+    - name: "step_lr"
+      scheduler_name: "StepLR"
+      scheduler_params:
+        step_size: 10
+        gamma: 0.7
+    - name: "onecycle"
+      scheduler_name: "OneCycleLR"
+      scheduler_params:
+        max_lr: 0.001
+        total_steps: 1000
+
+  # Loss 함수 변형
+  loss_variants:
+    - name: "ce"
+      criterion: "CrossEntropyLoss"
+      label_smooth: 0.0
+    - name: "focal"
+      criterion: "FocalLoss"
+      label_smooth: 0.0
+    - name: "label_smooth_01"
+      criterion: "LabelSmoothingLoss"
+      label_smooth: 0.1
+    - name: "label_smooth_02"
+      criterion: "LabelSmoothingLoss"
+      label_smooth: 0.2
+
+  # 증강 전략 변형
+  augmentation_variants:
+    - name: "mixup"
+      online_augmentation: True
+      online_aug: 
+        mixup: True
+        cutmix: False
+        alpha: 0.4
+        num_classes: 17
+    - name: "cutmix"
+      online_augmentation: True
+      online_aug: 
+        mixup: False
+        cutmix: True
+        alpha: 0.4
+        num_classes: 17
+    - name: "both_aug"
+      online_augmentation: True
+      online_aug: 
+        mixup: True
+        cutmix: True
+        alpha: 0.4
+        num_classes: 17
+    - name: "none_aug"
+      online_augmentation: False
+      online_aug: 
+        mixup: False
+        cutmix: False
+    - name: "dynamic_aug"
+      online_augmentation: True
+      dynamic_augmentation:
+        enabled: True
+        policies:
+          weak:
+            end_epoch: 5
+            augs: ['basic']
+          middle:
+            end_epoch: 15
+            augs: ['middle']
+          strong:
+            end_epoch: 300
+            augs: ['aggressive','eda']
+
+  # TTA 전략 변형
+  tta_variants:
+    - name: "no_tta"
+      val_TTA: False
+      test_TTA: False
+      tta_dropout: False
+    - name: "val_only_tta"
+      val_TTA: True
+      test_TTA: False
+      tta_dropout: False
+    - name: "test_only_tta"
+      val_TTA: False
+      test_TTA: True
+      tta_dropout: False
+    - name: "full_tta"
+      val_TTA: True
+      test_TTA: True
+      tta_dropout: False
+    - name: "dropout_tta"
+      val_TTA: True
+      test_TTA: True
+      tta_dropout: True
+
+  # Early Stopping 변형
+  early_stopping_variants:
+    - name: "es_3"
+      patience: 3
+    - name: "es_5"
+      patience: 5
+    - name: "es_7"
+      patience: 7
+    - name: "es_10"
+      patience: 10
+
+  # 배치 사이즈 변형 (모델별 조정)
+  batch_size_variants:
+    - name: "small_batch"
+      batch_size: 16
+    - name: "medium_batch"
+      batch_size: 32
+    - name: "large_batch"
+      batch_size: 64
+
+# 실험 조합 전략
+experiment_combinations:
+  # Priority 1: 기본 모델 성능 비교
+  basic_model_comparison:
+    - models: ["convnextv2_base", "efficientnet_b4", "resnet50"]
+    - optimizers: ["adamw_0001"]
+    - schedulers: ["cosine"]
+    - losses: ["ce", "focal"]
+    - augmentations: ["mixup", "none_aug"]
+    - ttas: ["full_tta", "no_tta"]
+    - early_stopping: ["es_5"]
+
+  # Priority 2: 옵티마이저 비교
+  optimizer_comparison:
+    - models: ["convnextv2_base"]
+    - optimizers: ["adamw_0001", "adamw_001", "sgd_001", "adam_001"]
+    - schedulers: ["cosine"]
+    - losses: ["ce"]
+    - augmentations: ["mixup"]
+    - ttas: ["full_tta"]
+    - early_stopping: ["es_5"]
+
+  # Priority 3: 스케줄러 비교
+  scheduler_comparison:
+    - models: ["convnextv2_base"]
+    - optimizers: ["adamw_0001"]
+    - schedulers: ["cosine", "cosine_warmup", "reduce_plateau", "step_lr"]
+    - losses: ["ce"]
+    - augmentations: ["mixup"]
+    - ttas: ["full_tta"]
+    - early_stopping: ["es_5"]
+
+  # Priority 4: Loss 함수 비교
+  loss_comparison:
+    - models: ["convnextv2_base"]
+    - optimizers: ["adamw_0001"]
+    - schedulers: ["cosine"]
+    - losses: ["ce", "focal", "label_smooth_01", "label_smooth_02"]
+    - augmentations: ["mixup"]
+    - ttas: ["full_tta"]
+    - early_stopping: ["es_5"]
+
+  # Priority 5: 증강 전략 비교
+  augmentation_comparison:
+    - models: ["convnextv2_base"]
+    - optimizers: ["adamw_0001"]
+    - schedulers: ["cosine"]
+    - losses: ["ce"]
+    - augmentations: ["mixup", "cutmix", "both_aug", "none_aug", "dynamic_aug"]
+    - ttas: ["full_tta"]
+    - early_stopping: ["es_5"]
+
+  # Priority 6: TTA 전략 비교
+  tta_comparison:
+    - models: ["convnextv2_base"]
+    - optimizers: ["adamw_0001"]
+    - schedulers: ["cosine"]
+    - losses: ["ce"]
+    - augmentations: ["mixup"]
+    - ttas: ["no_tta", "val_only_tta", "test_only_tta", "full_tta", "dropout_tta"]
+    - early_stopping: ["es_5"]
+
+# 실험 생성 옵션
+generation_options:
+  max_experiments_per_combination: 50  # 조합당 최대 실험 수
+  randomize_combinations: True  # 조합 순서 랜덤화
+  exclude_invalid_combinations: True  # 잘못된 조합 제외
+  priority_based_generation: True  # 우선순위 기반 생성
+
+# WanDB 설정 오버라이드
+wandb_override:
+  project_prefix: "cv-clf-enhanced"  # 프로젝트명 접두사
+  tags_override: ["v2_enhanced", "comprehensive_experiment"]  # 추가 태그

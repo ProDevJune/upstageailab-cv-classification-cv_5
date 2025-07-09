@@ -33,6 +33,27 @@ v2_1_experiments:
       - name: "batch_48"
         batch_size: 48
     
+    # 🔥 NEW: Mixup/CutMix 온라인 증강 옵션
+    online_augmentations:
+      - name: "mixup"
+        online_aug:
+          mixup: True
+          cutmix: False
+          alpha: 0.4
+          num_classes: 17
+      - name: "cutmix"
+        online_aug:
+          mixup: False
+          cutmix: True
+          alpha: 0.4
+          num_classes: 17
+      - name: "none"
+        online_aug:
+          mixup: False
+          cutmix: False
+          alpha: 0.4
+          num_classes: 17
+    
     # 스케줄러 변형
     schedulers:
       - name: "warmup_short"

@@ -37,6 +37,7 @@ n_folds: 0 # number of folds for cross-validation
 val_split_ratio: 0.15 # train-val split 비율
 stratify: True # validation set 분할 시 stratify 전략 사용 여부
 image_size: 384 # 만약 multi-scale train/test 시 None으로 설정
+num_classes: 17 # 총 클래스 개수 (하드코딩 제거)
 
 # Normalization
 # full file tuning 시 0.5가 유리
@@ -104,8 +105,10 @@ batch_size: 64 # image_size, model_size, GPU RAM 에 따라 OOM이 발생하지 
 
 # W&B
 wandb:
-  project: "upstage-img-clf"
+  project: "cv-clf"  # 기본 프로젝트명 (코드에서 model_name 추가)
   log: True # log using wandb, if False then do not use wandb
+  model_based_project: True  # model_name 기반 프로젝트 생성 활성화
+  tags: ["v2_2", "enhanced_single_model"]  # 실험 분류용 태그
 
 # Paths - 상대 경로 사용 (Mac/Linux 모두 지원)
 data_dir: "./data"  # 프로젝트 루트에서 상대 경로

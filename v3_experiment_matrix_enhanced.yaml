@@ -1,0 +1,302 @@
+# Enhanced V3 Hierarchical Classification Experiment Matrix
+# 계층적 분류 시스템을 위한 확장된 실험 조합 설계
+
+# V3 계층적 실험 설정
+v3_hierarchical_experiments:
+  base_configs:
+    model_a: "config_v3_modelA.yaml"
+    model_b: "config_v3_modelB.yaml"
+  
+  experiment_name: "v3_hierarchical_enhanced"
+  
+  variations:
+    # Model A 변형 (14개 클래스 처리) - 확장됨
+    model_a_variants:
+      - name: "convnext_base"
+        model_name: "convnextv2_base.fcmae_ft_in22k_in1k_384"
+        batch_size: 32
+        lr: 0.0001
+        patience: 7
+        image_size: 384
+      - name: "convnext_large"
+        model_name: "convnextv2_large.fcmae_ft_in22k_in1k_384"
+        batch_size: 16
+        lr: 0.00005
+        patience: 10
+        image_size: 384
+      - name: "efficientnet_b4"
+        model_name: "efficientnet_b4.ra2_in1k"
+        batch_size: 48
+        lr: 0.0001
+        patience: 7
+        image_size: 384
+      - name: "swin_base"
+        model_name: "swin_base_patch4_window7_224.ms_in22k_ft_in1k"
+        batch_size: 32
+        lr: 0.0001
+        patience: 7
+        image_size: 224
+      - name: "vit_base"
+        model_name: "vit_base_patch16_224.augreg2_in21k_ft_in1k"
+        batch_size: 48
+        lr: 0.0001
+        patience: 7
+        image_size: 224
+      - name: "resnet50"
+        model_name: "resnet50.tv2_in1k"
+        batch_size: 64
+        lr: 0.001
+        patience: 5
+        image_size: 224
+
+    # Model B 변형 (4개 Hard Classes 처리) - 확장됨
+    model_b_variants:
+      - name: "convnext_nano"
+        model_name: "convnextv2_nano.fcmae_ft_in22k_in1k_384"
+        batch_size: 64
+        lr: 0.0001
+        patience: 5
+        image_size: 384
+      - name: "convnext_tiny"
+        model_name: "convnextv2_tiny.fcmae_ft_in22k_in1k_384"
+        batch_size: 48
+        lr: 0.0001
+        patience: 5
+        image_size: 384
+      - name: "efficientnet_b0"
+        model_name: "efficientnet_b0.ra_in1k"
+        batch_size: 96
+        lr: 0.001
+        patience: 5
+        image_size: 224
+      - name: "mobilenetv3_small"
+        model_name: "mobilenetv3_small_100.lamb_in1k"
+        batch_size: 128
+        lr: 0.001
+        patience: 3
+        image_size: 224
+      - name: "resnet18"
+        model_name: "resnet18.a1_in1k"
+        batch_size: 96
+        lr: 0.001
+        patience: 5
+        image_size: 224
+      - name: "convnext_femto"
+        model_name: "convnextv2_femto.fcmae_ft_in22k_in1k_384"
+        batch_size: 128
+        lr: 0.001
+        patience: 3
+        image_size: 384
+
+    # 계층적 전략 - 확장됨
+    hierarchical_strategies:
+      - name: "conservative"
+        model_a_patience: 10
+        model_b_patience: 5
+        strategy_type: "model_a_focus"
+      - name: "aggressive"
+        model_a_patience: 5
+        model_b_patience: 10
+        strategy_type: "model_b_focus"
+      - name: "balanced"
+        model_a_patience: 7
+        model_b_patience: 7
+        strategy_type: "equal_focus"
+      - name: "quick_convergence"
+        model_a_patience: 3
+        model_b_patience: 3
+        strategy_type: "fast_training"
+      - name: "patient_training"
+        model_a_patience: 15
+        model_b_patience: 15
+        strategy_type: "thorough_training"
+
+    # 증강 조합 - 확장됨
+    augmentation_combinations:
+      - name: "both_mixup"
+        model_a_online_aug: {mixup: True, cutmix: False, alpha: 0.4}
+        model_b_online_aug: {mixup: True, cutmix: False, alpha: 0.4}
+        description: "Both models use Mixup"
+      - name: "mixed_strategy"
+        model_a_online_aug: {mixup: True, cutmix: False, alpha: 0.4}
+        model_b_online_aug: {mixup: False, cutmix: True, alpha: 0.4}
+        description: "Model A: Mixup, Model B: CutMix"
+      - name: "both_cutmix"
+        model_a_online_aug: {mixup: False, cutmix: True, alpha: 0.4}
+        model_b_online_aug: {mixup: False, cutmix: True, alpha: 0.4}
+        description: "Both models use CutMix"
+      - name: "reverse_strategy"
+        model_a_online_aug: {mixup: False, cutmix: True, alpha: 0.4}
+        model_b_online_aug: {mixup: True, cutmix: False, alpha: 0.4}
+        description: "Model A: CutMix, Model B: Mixup"
+      - name: "both_combined"
+        model_a_online_aug: {mixup: True, cutmix: True, alpha: 0.2}
+        model_b_online_aug: {mixup: True, cutmix: True, alpha: 0.2}
+        description: "Both models use Mixup + CutMix"
+      - name: "no_augmentation"
+        model_a_online_aug: {mixup: False, cutmix: False, alpha: 0.0}
+        model_b_online_aug: {mixup: False, cutmix: False, alpha: 0.0}
+        description: "No online augmentation"
+      - name: "alpha_variation_high"
+        model_a_online_aug: {mixup: True, cutmix: False, alpha: 0.8}
+        model_b_online_aug: {mixup: True, cutmix: False, alpha: 0.8}
+        description: "High alpha Mixup"
+      - name: "alpha_variation_low"
+        model_a_online_aug: {mixup: True, cutmix: False, alpha: 0.1}
+        model_b_online_aug: {mixup: True, cutmix: False, alpha: 0.1}
+        description: "Low alpha Mixup"
+
+    # TTA 전략 변형 - 새로 추가
+    tta_strategies:
+      - name: "no_tta"
+        model_a_val_tta: False
+        model_a_test_tta: False
+        model_b_val_tta: False
+        model_b_test_tta: False
+        description: "No TTA for both models"
+      - name: "val_only_tta"
+        model_a_val_tta: True
+        model_a_test_tta: False
+        model_b_val_tta: True
+        model_b_test_tta: False
+        description: "Validation TTA only"
+      - name: "test_only_tta"
+        model_a_val_tta: False
+        model_a_test_tta: True
+        model_b_val_tta: False
+        model_b_test_tta: True
+        description: "Test TTA only"
+      - name: "full_tta"
+        model_a_val_tta: True
+        model_a_test_tta: True
+        model_b_val_tta: True
+        model_b_test_tta: True
+        description: "Full TTA for both models"
+      - name: "asymmetric_tta_a"
+        model_a_val_tta: True
+        model_a_test_tta: True
+        model_b_val_tta: False
+        model_b_test_tta: False
+        description: "TTA only for Model A"
+      - name: "asymmetric_tta_b"
+        model_a_val_tta: False
+        model_a_test_tta: False
+        model_b_val_tta: True
+        model_b_test_tta: True
+        description: "TTA only for Model B"
+
+    # 옵티마이저 변형 - 새로 추가
+    optimizer_combinations:
+      - name: "both_adamw_0001"
+        model_a_optimizer: "AdamW"
+        model_a_lr: 0.0001
+        model_b_optimizer: "AdamW"
+        model_b_lr: 0.0001
+      - name: "both_adamw_001"
+        model_a_optimizer: "AdamW"
+        model_a_lr: 0.001
+        model_b_optimizer: "AdamW"
+        model_b_lr: 0.001
+      - name: "mixed_optimizers"
+        model_a_optimizer: "AdamW"
+        model_a_lr: 0.0001
+        model_b_optimizer: "SGD"
+        model_b_lr: 0.001
+      - name: "different_lr"
+        model_a_optimizer: "AdamW"
+        model_a_lr: 0.0001
+        model_b_optimizer: "AdamW"
+        model_b_lr: 0.001
+
+    # 스케줄러 변형 - 새로 추가
+    scheduler_combinations:
+      - name: "both_cosine"
+        model_a_scheduler: "CosineAnnealingLR"
+        model_b_scheduler: "CosineAnnealingLR"
+      - name: "both_warmup"
+        model_a_scheduler: "CosineAnnealingWarmupRestarts"
+        model_b_scheduler: "CosineAnnealingWarmupRestarts"
+      - name: "mixed_schedulers"
+        model_a_scheduler: "CosineAnnealingLR"
+        model_b_scheduler: "ReduceLROnPlateau"
+      - name: "step_vs_cosine"
+        model_a_scheduler: "StepLR"
+        model_b_scheduler: "CosineAnnealingLR"
+
+# 실험 조합 전략 - 새로 추가
+experiment_combinations:
+  # Priority 1: 기본 모델 조합 비교
+  basic_model_combinations:
+    - model_a: ["convnext_base", "efficientnet_b4"]
+    - model_b: ["convnext_nano", "mobilenetv3_small"]
+    - strategies: ["conservative", "balanced"]
+    - augmentations: ["both_mixup", "mixed_strategy"]
+    - ttas: ["full_tta", "no_tta"]
+    - optimizers: ["both_adamw_0001"]
+    - schedulers: ["both_cosine"]
+
+  # Priority 2: 계층적 전략 비교
+  strategy_comparison:
+    - model_a: ["convnext_base"]
+    - model_b: ["convnext_nano"]
+    - strategies: ["conservative", "aggressive", "balanced", "quick_convergence", "patient_training"]
+    - augmentations: ["both_mixup"]
+    - ttas: ["full_tta"]
+    - optimizers: ["both_adamw_0001"]
+    - schedulers: ["both_cosine"]
+
+  # Priority 3: 증강 전략 비교
+  augmentation_comparison:
+    - model_a: ["convnext_base"]
+    - model_b: ["convnext_nano"]
+    - strategies: ["balanced"]
+    - augmentations: ["both_mixup", "mixed_strategy", "both_cutmix", "reverse_strategy", "both_combined", "no_augmentation"]
+    - ttas: ["full_tta"]
+    - optimizers: ["both_adamw_0001"]
+    - schedulers: ["both_cosine"]
+
+  # Priority 4: TTA 전략 비교
+  tta_comparison:
+    - model_a: ["convnext_base"]
+    - model_b: ["convnext_nano"]
+    - strategies: ["balanced"]
+    - augmentations: ["both_mixup"]
+    - ttas: ["no_tta", "val_only_tta", "test_only_tta", "full_tta", "asymmetric_tta_a", "asymmetric_tta_b"]
+    - optimizers: ["both_adamw_0001"]
+    - schedulers: ["both_cosine"]
+
+  # Priority 5: 옵티마이저 조합 비교
+  optimizer_comparison:
+    - model_a: ["convnext_base"]
+    - model_b: ["convnext_nano"]
+    - strategies: ["balanced"]
+    - augmentations: ["both_mixup"]
+    - ttas: ["full_tta"]
+    - optimizers: ["both_adamw_0001", "both_adamw_001", "mixed_optimizers", "different_lr"]
+    - schedulers: ["both_cosine"]
+
+  # Priority 6: 스케줄러 조합 비교
+  scheduler_comparison:
+    - model_a: ["convnext_base"]
+    - model_b: ["convnext_nano"]
+    - strategies: ["balanced"]
+    - augmentations: ["both_mixup"]
+    - ttas: ["full_tta"]
+    - optimizers: ["both_adamw_0001"]
+    - schedulers: ["both_cosine", "both_warmup", "mixed_schedulers", "step_vs_cosine"]
+
+# 실험 조합 생성 옵션
+generation_options:
+  max_combinations: 200  # 최대 조합 수 (확장됨)
+  randomize_order: True  # 실험 순서 랜덤화
+  exclude_incompatible: True  # 비호환 조합 제외
+  priority_based_generation: True  # 우선순위 기반 생성
+  experiments_per_priority: 30  # 우선순위별 실험 수
+
+# WanDB 설정 확장
+wandb_enhanced:
+  project_prefix: "cv-clf-hierarchical"  # 프로젝트명 접두사
+  model_based_projects: True  # 모델별 프로젝트 분리
+  tags_per_experiment: ["v3", "hierarchical", "enhanced"]  # 기본 태그
+  log_hierarchical_metrics: True  # 계층적 메트릭 로깅
+  track_model_interactions: True  # 모델 간 상호작용 추적

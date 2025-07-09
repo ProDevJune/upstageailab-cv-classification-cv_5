@@ -1,0 +1,209 @@
+# V3 Hierarchical Classification Experiment Matrix
+# 계층적 분류 시스템을 위한 실험 조합 설계
+
+# V3 계층적 실험 설정
+v3_hierarchical_experiments:
+  base_configs:
+    model_a: "config_v3_modelA.yaml"
+    model_b: "config_v3_modelB.yaml"
+  
+  experiment_name: "v3_hierarchical"
+  
+  variations:
+    # Model A 변형 (14개 클래스 처리)
+    model_a_variants:
+      - name: "convnext_base"
+        model_name: "convnextv2_base.fcmae_ft_in22k_in1k_384"
+        batch_size: 32
+        lr: 0.0001
+        patience: 7
+      - name: "convnext_large"
+        model_name: "convnextv2_large.fcmae_ft_in22k_in1k_384"
+        batch_size: 16
+        lr: 0.00005
+        patience: 10
+      - name: "efficientnet_b4"
+        model_name: "efficientnet_b4.ra2_in1k"
+        batch_size: 48
+        lr: 0.0001
+        patience: 7
+      - name: "resnet50"
+        model_name: "resnet50.tv2_in1k"
+        batch_size: 64
+        lr: 0.0002
+        patience: 7
+    
+    # Model B 변형 (4개 Hard Classes 처리)
+    model_b_variants:
+      - name: "convnext_nano"
+        model_name: "convnextv2_nano.fcmae_ft_in22k_in1k_384"
+        batch_size: 64
+        lr: 0.0001
+        patience: 5
+      - name: "convnext_tiny"
+        model_name: "convnextv2_tiny.fcmae_ft_in22k_in1k_384"
+        batch_size: 48
+        lr: 0.0001
+        patience: 7
+      - name: "efficientnet_b0"
+        model_name: "efficientnet_b0.ra_in1k"
+        batch_size: 96
+        lr: 0.0002
+        patience: 5
+      - name: "mobilenet_v3"
+        model_name: "mobilenetv3_large_100.miil_in21k_ft_in1k"
+        batch_size: 96
+        lr: 0.0002
+        patience: 5
+    
+    # 계층적 전략
+    hierarchical_strategies:
+      - name: "balanced"
+        description: "Model A와 B의 균형있는 학습"
+        model_a_patience: 7
+        model_b_patience: 7
+        model_a_epochs: 50
+        model_b_epochs: 50
+      - name: "a_focus"
+        description: "Model A에 더 집중"
+        model_a_patience: 10
+        model_b_patience: 5
+        model_a_epochs: 70
+        model_b_epochs: 30
+      - name: "b_focus"
+        description: "Model B에 더 집중"
+        model_a_patience: 5
+        model_b_patience: 10
+        model_a_epochs: 30
+        model_b_epochs: 70
+    
+    # 증강 조합
+    augmentation_combinations:
+      - name: "both_mixup"
+        description: "두 모델 모두 mixup 적용"
+        model_a_online_aug: {mixup: True, cutmix: False}
+        model_b_online_aug: {mixup: True, cutmix: False}
+        model_a_augmentation: {eda: True, erosion: True, easiest: True}
+        model_b_augmentation: {eda: True, erosion: True, easiest: True}
+      - name: "mixed_strategy"
+        description: "Model A는 mixup, Model B는 cutmix"
+        model_a_online_aug: {mixup: True, cutmix: False}
+        model_b_online_aug: {mixup: False, cutmix: True}
+        model_a_augmentation: {eda: True, erosion: True, easiest: True}
+        model_b_augmentation: {eda: True, erosion: True, easiest: True}
+      - name: "both_cutmix"
+        description: "두 모델 모두 cutmix 적용"
+        model_a_online_aug: {mixup: False, cutmix: True}
+        model_b_online_aug: {mixup: False, cutmix: True}
+        model_a_augmentation: {eda: True, erosion: True, easiest: True}
+        model_b_augmentation: {eda: True, erosion: True, easiest: True}
+      - name: "aggressive_a"
+        description: "Model A에 강한 증강, Model B에 약한 증강"
+        model_a_online_aug: {mixup: True, cutmix: False}
+        model_b_online_aug: {mixup: True, cutmix: False}
+        model_a_augmentation: {eda: True, erosion: True, middle: True, aggressive: True}
+        model_b_augmentation: {eda: True, easiest: True}
+    
+    # 손실 함수 조합
+    loss_combinations:
+      - name: "both_focal"
+        model_a_criterion: "FocalLoss"
+        model_b_criterion: "FocalLoss"
+      - name: "both_ce"
+        model_a_criterion: "CrossEntropyLoss"
+        model_b_criterion: "CrossEntropyLoss"
+      - name: "focal_ce"
+        model_a_criterion: "FocalLoss"
+        model_b_criterion: "CrossEntropyLoss"
+      - name: "ce_focal"
+        model_a_criterion: "CrossEntropyLoss"
+        model_b_criterion: "FocalLoss"
+    
+    # 스케줄러 조합
+    scheduler_combinations:
+      - name: "both_cosine"
+        model_a_scheduler: "CosineAnnealingLR"
+        model_b_scheduler: "CosineAnnealingLR"
+      - name: "both_onecycle"
+        model_a_scheduler: "OneCycleLR"
+        model_b_scheduler: "OneCycleLR"
+      - name: "cosine_onecycle"
+        model_a_scheduler: "CosineAnnealingLR"
+        model_b_scheduler: "OneCycleLR"
+      - name: "onecycle_cosine"
+        model_a_scheduler: "OneCycleLR"
+        model_b_scheduler: "CosineAnnealingLR"
+
+# 실험 우선순위 설정
+experiment_priority:
+  # 1단계: 기본 성능 확인
+  phase1:
+    - "v3.convnext_base.convnext_nano.balanced.both_mixup.both_focal.both_cosine"
+    - "v3.convnext_base.convnext_tiny.balanced.mixed_strategy.both_focal.both_cosine"
+    - "v3.efficientnet_b4.efficientnet_b0.balanced.both_mixup.both_focal.both_cosine"
+  
+  # 2단계: 모델 조합 탐색
+  phase2:
+    - "v3.convnext_large.*"
+    - "v3.*.mobilenet_v3.*"
+    - "v3.resnet50.*"
+  
+  # 3단계: 전략 최적화
+  phase3:
+    - "v3.*.*.a_focus.*"
+    - "v3.*.*.b_focus.*"
+    - "v3.*.*.aggressive_a.*"
+  
+  # 4단계: 고급 조합
+  phase4:
+    - "v3.*.*.*.*.focal_ce.*"
+    - "v3.*.*.*.*.ce_focal.*"
+    - "v3.*.*.*.*.*.cosine_onecycle"
+    - "v3.*.*.*.*.*.onecycle_cosine"
+
+# 실험 제약 조건
+constraints:
+  # 메모리 제약
+  memory_limit:
+    convnext_large:
+      max_batch_size: 16
+    efficientnet_b4:
+      max_batch_size: 48
+  
+  # 시간 제약
+  time_limit:
+    phase1: 24  # hours
+    phase2: 48  # hours
+    phase3: 72  # hours
+    phase4: 96  # hours
+  
+  # GPU 요구사항
+  gpu_requirements:
+    convnext_large: ">=16GB"
+    efficientnet_b4: ">=12GB"
+    default: ">=8GB"
+
+# Cross-validation 설정
+cross_validation:
+  enabled: False  # 기본적으로 비활성화
+  n_folds: 3      # CV 사용 시 fold 수
+  validation_experiments:
+    - "v3.convnext_base.convnext_nano.balanced.both_mixup.both_focal.both_cosine"
+    - "v3.convnext_base.convnext_tiny.balanced.mixed_strategy.both_focal.both_cosine"
+
+# TTA 설정
+tta_configurations:
+  validation_tta: True
+  test_tta: True
+  tta_strategies:
+    - "standard"  # 기본 TTA
+    - "aggressive"  # 더 많은 증강 적용
+
+# 앙상블 설정
+ensemble_configurations:
+  enabled: True
+  combinations:
+    - models: ["convnext_base", "convnext_large"]
+      weights: [0.6, 0.4]
+    - models: ["convnext_base", "efficientnet_b4"]
+      weights: [0.5, 0.5]

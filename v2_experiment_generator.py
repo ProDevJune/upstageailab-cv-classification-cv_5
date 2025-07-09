@@ -29,27 +29,50 @@ class V2ExperimentGenerator:
         with open(self.matrix_file, 'r', encoding='utf-8') as f:
             self.matrix = yaml.safe_load(f)
             
-    def generate_all_experiments(self, dry_run=False, phase=None):
-        """모든 실험 조합 생성"""
+    def generate_all_experiments(self, dry_run=False, phase=None, exp_type='all', model_filter=None, technique_filter=None, limit=None):
+        """모든 실험 조합 생성 with 필터링"""
         all_experiments = []
         
-        # V2_1 실험 생성
-        v2_1_experiments = self.generate_v2_1_experiments()
-        all_experiments.extend(v2_1_experiments)
+        # 타입별 실험 생성
+        if exp_type in ['all', 'v2_1']:
+            v2_1_experiments = self.generate_v2_1_experiments()
+            all_experiments.extend(v2_1_experiments)
         
-        # V2_2 실험 생성  
-        v2_2_experiments = self.generate_v2_2_experiments()
-        all_experiments.extend(v2_2_experiments)
+        if exp_type in ['all', 'v2_2']:
+            v2_2_experiments = self.generate_v2_2_experiments()
+            all_experiments.extend(v2_2_experiments)
         
-        # CV 실험 생성
-        cv_experiments = self.generate_cv_experiments()
-        all_experiments.extend(cv_experiments)
+        if exp_type in ['all', 'cv']:
+            cv_experiments = self.generate_cv_experiments()
+            all_experiments.extend(cv_experiments)
+        
+        # 필터링 적용
+        if model_filter:
+            all_experiments = [exp for exp in all_experiments 
+                             if model_filter.lower() in exp['overrides'].get('model_name', '').lower()]
+        
+        if technique_filter:
+            all_experiments = [exp for exp in all_experiments 
+                             if self.has_technique(exp, technique_filter)]
         
         # 우선순위 필터링
         if phase:
             all_experiments = self.filter_by_phase(all_experiments, phase)
+        
+        # 개수 제한
+        if limit:
+            all_experiments = all_experiments[:limit]
             
-        print(f"📊 Total experiments generated: {len(all_experiments)}")
+        print(f"📊 Generated experiments: {len(all_experiments)}")
+        print(f"   - Type filter: {exp_type}")
+        if model_filter:
+            print(f"   - Model filter: {model_filter}")
+        if technique_filter:
+            print(f"   - Technique filter: {technique_filter}")
+        if phase:
+            print(f"   - Phase: {phase}")
+        if limit:
+            print(f"   - Limited to: {limit}")
         
         if not dry_run:
             self.save_experiments(all_experiments)
@@ -57,8 +80,47 @@ class V2ExperimentGenerator:
             
         return all_experiments
     
+    def has_technique(self, experiment, technique):
+        """실험에 특정 기법이 포함되어 있는지 확인"""
+        technique = technique.lower()
+        
+        # 실험 이름에서 확인
+        if technique in experiment['name'].lower():
+            return True
+        
+        # Override 설정에서 확인
+        overrides = experiment['overrides']
+        
+        # 손실함수 확인
+        if technique == 'focal' and overrides.get('criterion') == 'FocalLoss':
+            return True
+        
+        # 증강기법 확인 (🔥 업데이트됨)
+        if technique == 'mixup':
+            # 새로운 online_aug 구조 확인
+            if overrides.get('online_aug', {}).get('mixup'):
+                return True
+            # 레거시 augmentation 구조 확인
+            if overrides.get('augmentation', {}).get('mixup'):
+                return True
+        if technique == 'cutmix':
+            # 새로운 online_aug 구조 확인
+            if overrides.get('online_aug', {}).get('cutmix'):
+                return True
+            # 레거시 augmentation 구조 확인
+            if overrides.get('augmentation', {}).get('cutmix'):
+                return True
+        if technique == 'dynamic' and overrides.get('dynamic_augmentation', {}).get('enabled'):
+            return True
+        
+        # 2-stage 확인
+        if technique == '2stage' and overrides.get('two_stage'):
+            return True
+        
+        return False
+    
     def generate_v2_1_experiments(self):
-        """V2_1 실험 조합 생성"""
+        """V2_1 실험 조합 생성 (🔥 Mixup/CutMix 지원)"""
         experiments = []
         base_config = self.matrix['v2_1_experiments']
         variations = base_config['variations']
@@ -68,23 +130,45 @@ class V2ExperimentGenerator:
             for lr in variations['learning_rates']:
                 for batch in variations['batch_sizes']:
                     for scheduler in variations['schedulers']:
-                        # 메모리 제약 확인
-                        if self.check_memory_constraint(model['name'], batch['batch_size']):
-                            exp_name = f"v2_1_{model['name']}_{lr['name']}_{batch['name']}_{scheduler['name']}"
-                            
-                            experiment = {
-                                'name': exp_name,
-                                'type': 'v2_1',
-                                'base_config': base_config['base_config'],
-                                'main_script': 'codes/gemini_main_v2_1_style.py',
-                                'overrides': {
-                                    'model_name': model['model_name'],
-                                    'lr': lr['lr'],
-                                    'batch_size': batch['batch_size'],
-                                    'scheduler_params': scheduler['scheduler_params']
+                        # 🔥 NEW: online_augmentations 추가
+                        if 'online_augmentations' in variations:
+                            for aug in variations['online_augmentations']:
+                                # 메모리 제약 확인
+                                if self.check_memory_constraint(model['name'], batch['batch_size']):
+                                    exp_name = f"v2_1_{model['name']}_{lr['name']}_{batch['name']}_{scheduler['name']}_{aug['name']}"
+                                    
+                                    experiment = {
+                                        'name': exp_name,
+                                        'type': 'v2_1',
+                                        'base_config': base_config['base_config'],
+                                        'main_script': 'codes/gemini_main_v2_1_style.py',
+                                        'overrides': {
+                                            'model_name': model['model_name'],
+                                            'lr': lr['lr'],
+                                            'batch_size': batch['batch_size'],
+                                            'scheduler_params': scheduler['scheduler_params'],
+                                            'online_aug': aug['online_aug']  # 🔥 Mixup/CutMix 설정
+                                        }
+                                    }
+                                    experiments.append(experiment)
+                        else:
+                            # 기존 방식 (역호환성)
+                            if self.check_memory_constraint(model['name'], batch['batch_size']):
+                                exp_name = f"v2_1_{model['name']}_{lr['name']}_{batch['name']}_{scheduler['name']}"
+                                
+                                experiment = {
+                                    'name': exp_name,
+                                    'type': 'v2_1',
+                                    'base_config': base_config['base_config'],
+                                    'main_script': 'codes/gemini_main_v2_1_style.py',
+                                    'overrides': {
+                                        'model_name': model['model_name'],
+                                        'lr': lr['lr'],
+                                        'batch_size': batch['batch_size'],
+                                        'scheduler_params': scheduler['scheduler_params']
+                                    }
                                 }
-                            }
-                            experiments.append(experiment)
+                                experiments.append(experiment)
                             
         return experiments
     
@@ -298,10 +382,19 @@ def main():
     parser.add_argument('--dry-run', action='store_true', help='Dry run mode (no file generation)')
     parser.add_argument('--phase', choices=['phase1', 'phase2', 'phase3', 'phase4'], help='Experiment phase')
     
+    # 🔥 NEW: 타입별 선택 옵션
+    parser.add_argument('--type', choices=['v2_1', 'v2_2', 'cv', 'all'], default='all', 
+                       help='Experiment type to generate')
+    parser.add_argument('--model', help='Filter by model name (e.g., convnextv2_base, resnet50)')
+    parser.add_argument('--technique', help='Filter by technique (e.g., mixup, cutmix, focal)')
+    parser.add_argument('--limit', type=int, help='Limit number of experiments')
+    
     args = parser.parse_args()
     
     generator = V2ExperimentGenerator(args.matrix, args.output)
-    experiments = generator.generate_all_experiments(args.dry_run, args.phase)
+    experiments = generator.generate_all_experiments(
+        args.dry_run, args.phase, args.type, args.model, args.technique, args.limit
+    )
     
     if args.dry_run:
         print("🔍 Dry run completed. No files were generated.")

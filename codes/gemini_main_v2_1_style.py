@@ -95,6 +95,18 @@ if __name__ == "__main__":
         aug_str_parts = ""
         if cfg.online_augmentation:
             aug_str_parts += "on"
+            # Mixup/CutMix 정보 추가
+            if hasattr(cfg, 'online_aug'):
+                if getattr(cfg.online_aug, 'mixup', False):
+                    aug_str_parts += "_mixup"
+                elif getattr(cfg.online_aug, 'cutmix', False):
+                    aug_str_parts += "_cutmix"
+            elif hasattr(cfg, 'augmentation'):
+                if getattr(cfg.augmentation, 'mixup', False):
+                    aug_str_parts += "_mixup"
+                elif getattr(cfg.augmentation, 'cutmix', False):
+                    aug_str_parts += "_cutmix"
+            
             if hasattr(cfg, 'dynamic_augmentation') and cfg.dynamic_augmentation and cfg.dynamic_augmentation.get('enabled', False):
                 aug_str_parts += "daug"                
             else:
@@ -103,25 +115,39 @@ if __name__ == "__main__":
         else:
             aug_str_parts += "offaug"
 
+        # 개선된 run name 생성 (더 간결하고 읽기 쉽게)
         next_run_name = (
             f"{CURRENT_TIME}-"
-            f"{cfg.model_name}-"
-            f"opt_{cfg.optimizer_name}-"
-            f"sch_{cfg.scheduler_name}-"
+            f"{cfg.model_name.split('.')[0]}-"  # 모델명 간소화
+            f"opt{cfg.optimizer_name}-"
+            f"sch{cfg.scheduler_name}-"
             f"img{cfg.image_size}-"
             f"es{cfg.patience}-"
-            f"{aug_str_parts}-"  # 개선된 증강 문자열
-            f"clsaug_{1 if getattr(cfg, 'class_imbalance', False) else 0}-"
-            f"vTTA_{1 if getattr(cfg, 'val_TTA', False) else 0}-"
-            f"tTTA_{1 if getattr(cfg, 'test_TTA', False) else 0}-"
-            f"MP_{1 if cfg.mixed_precision else 0}"
+            f"{aug_str_parts}-"
+            f"bs{cfg.batch_size}-"  # 배치사이즈 추가
+            f"vTTA{1 if getattr(cfg, 'val_TTA', False) else 0}-"
+            f"tTTA{1 if getattr(cfg, 'test_TTA', False) else 0}-"
+            f"MP{1 if cfg.mixed_precision else 0}"
         )
  
+        # WanDB 프로젝트명을 model_name 기반으로 설정
         if hasattr(cfg, 'wandb') and cfg.wandb['log']:
+            # model_name 기반 프로젝트명 생성
+            if getattr(cfg.wandb, 'model_based_project', True):
+                model_name_clean = cfg.model_name.replace('.', '-').replace('_', '-')
+                project_name = f"{cfg.wandb['project']}-{model_name_clean}"
+            else:
+                project_name = cfg.wandb['project']
+            
+            # 태그 설정
+            tags = getattr(cfg.wandb, 'tags', [])
+            tags.extend([cfg.model_name, cfg.optimizer_name, cfg.scheduler_name, f"img{cfg.image_size}"])
+            
             run = wandb.init(
-                project=cfg.wandb['project'],
+                project=project_name,
                 name=next_run_name,
                 config=vars(cfg),
+                tags=tags
             )
 
         ### submission 폴더 생성
@@ -156,7 +182,35 @@ if __name__ == "__main__":
 
         val_dataset = ImageDataset(val_df, os.path.join(cfg.data_dir, "train"), transform=val_transform)
 
-        train_loader = DataLoader(train_dataset, batch_size=cfg.batch_size, shuffle=True, num_workers=4, pin_memory=True)
+        # 🔥 Mixup/CutMix 지원을 위한 collate_fn 설정
+        train_collate = None
+        if hasattr(cfg, 'online_aug'):
+            alpha = getattr(cfg.online_aug, 'alpha', 0.4)
+            num_classes = getattr(cfg, 'num_classes', 17)
+            
+            if getattr(cfg.online_aug, 'mixup', False):
+                print(f"🎯 Mixup 온라인 증강 활성화됨! (alpha={alpha})")
+                train_collate = lambda batch: mixup_collate_fn(batch, num_classes=num_classes, alpha=alpha)
+            elif getattr(cfg.online_aug, 'cutmix', False):
+                print(f"🎯 CutMix 온라인 증강 활성화됨! (alpha={alpha})")
+                train_collate = lambda batch: cutmix_collate_fn(batch, num_classes=num_classes, alpha=alpha)
+        elif hasattr(cfg, 'augmentation'):
+            # 레거시 augmentation 설정 지원
+            if getattr(cfg.augmentation, 'mixup', False):
+                print("🎯 Mixup 증강 활성화됨! (레거시 모드, alpha=0.4)")
+                train_collate = lambda batch: mixup_collate_fn(batch, num_classes=cfg.num_classes, alpha=0.4)
+            elif getattr(cfg.augmentation, 'cutmix', False):
+                print("🎯 CutMix 증강 활성화됨! (레거시 모드, alpha=0.4)")
+                train_collate = lambda batch: cutmix_collate_fn(batch, num_classes=cfg.num_classes, alpha=0.4)
+        
+        train_loader = DataLoader(
+            train_dataset, 
+            batch_size=cfg.batch_size, 
+            shuffle=True, 
+            num_workers=4, 
+            pin_memory=True,
+            collate_fn=train_collate  # 🔥 Mixup/CutMix 지원
+        )
         val_loader = DataLoader(val_dataset, batch_size=cfg.batch_size, shuffle=False, num_workers=4, pin_memory=True)
 
         # For TTA, we need a loader with raw images
@@ -239,7 +293,7 @@ if __name__ == "__main__":
         # Submission
         sample_submission_df = pd.read_csv(os.path.join(cfg.data_dir, "sample_submission.csv"))
         assert (sample_submission_df['ID'] == pred_df['ID']).all(), "pred_df에서 test 이미지가 아닌 데이터가 존재합니다."
-        assert set(pred_df['target']).issubset(set(range(17))), "target 컬럼에 0~16 외의 값이 있습니다."
+        assert set(pred_df['target']).issubset(set(range(cfg.num_classes))), "target 컬럼에 0~16 외의 값이 있습니다."
 
         submission_path = os.path.join(cfg.submission_dir, f"{next_run_name}.csv")
         pred_df.to_csv(submission_path, index=False)
