@@ -1,0 +1,91 @@
+# Configuration for the training process - 018_opt_AdamW_lr0.001_wd0.001_2507091740
+model_name: 'efficientnet_b4' # timm model name for EfficientNet-B4
+pretrained: True # timm pretrained 가중치 사용 여부
+fine_tuning: "full" # fine-tuning 방법론
+  # full : pretrained=True, pretrained가중치를 전부 재학습시킨다. 
+  # head : pretrained=True, model backbone 부분은 freeze하고 head 부분을 재학습시킨다.
+  # custom : pretrained=True, backbone에서도 일부분을 재학습시킨다.
+  # scratch : pretrained=False, 모델 구조만 사용하고 모든 가중치를 처음부터 학습시킨다.
+
+# Loss Function
+criterion: 'CrossEntropyLoss' # CrossEntropyLoss, FocalLoss, LabelSmoothingLoss
+class_weighting: False # class에 가중치를 두어 Loss 계산
+label_smooth: 0.0
+
+# Optimizer - 실험 설정에 맞춘 AdamW 설정
+optimizer_name: 'AdamW'
+lr: 0.001 # 실험 파라미터: 0.001
+weight_decay: 0.001 # 실험 파라미터: 0.001
+
+# Scheduler
+scheduler_name: 'CosineAnnealingLR'
+scheduler_params:
+  T_max: 25
+  max_lr: 0.001 # lr과 동일하게 설정
+  min_lr: 0.0001 # 1e-4
+
+# Other variables
+random_seed: 256
+n_folds: 0 # number of folds for cross-validation
+val_split_ratio: 0.15 # train-val split 비율
+stratify: True # validation set 분할 시 stratify 전략 사용 여부
+image_size: 384 # EfficientNet-B4에 적합한 크기
+
+# Normalization - EfficientNet에 적합한 설정
+norm_mean: [0.485, 0.456, 0.406] # ImageNet 표준 값
+norm_std: [0.229, 0.224, 0.225] # ImageNet 표준 값
+
+# Techniques
+weighted_random_sampler: False
+class_imbalance: 
+  aug_class: [1, 13, 14]
+  max_samples: 70
+online_augmentation: True
+augmentation: # normal augmentation
+  eda: True
+  dilation: False
+  erosion: False
+  mixup: False
+  cutmix: False
+
+# Dynamic augmentation
+dynamic_augmentation:
+  enabled: True
+  policies:
+    weak:
+      end_epoch: 40
+      augs: ['easiest', 'basic']
+    middle:
+      end_epoch: 80
+      augs: ['stilleasy', 'middle']
+    strong:
+      end_epoch: 300
+      augs: ['aggressive']
+
+val_TTA: True # Validation 시, Test Time Augmentation 사용 여부
+test_TTA: True # Inference 시, Test Time Augmentation 사용 여부
+tta_dropout: False # inference 시에도 model.train() 모드를 사용해 dropout을 활성화하는 방법
+mixed_precision: True # Mixed Precision 학습 사용 여부
+
+# Model hyperparameters
+timm:
+  activation: None # EfficientNet의 기본 activation 사용
+
+custom_layer: # custom classifier head 사용 안 함
+  # head_type: "simple_dropout"
+  # drop: 0.1
+  # activation: 'GELU'
+
+# Training hyperparameters
+epochs: 1000 # max epoch
+patience: 5 # early stopping patience
+batch_size: 32 # EfficientNet-B4에 적합한 배치 크기 (메모리 효율성)
+
+# W&B
+wandb:
+  project: "upstage-img-clf"
+  log: True # log using wandb
+
+# Paths - 상대 경로 사용 (Mac/Linux 모두 지원)
+data_dir: "./data"  # 프로젝트 루트에서 상대 경로
+train_data: train0705a.csv
