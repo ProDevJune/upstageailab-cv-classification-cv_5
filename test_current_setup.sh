@@ -8,11 +8,6 @@ echo "⚡ 의존성 경고 무시하고 빠른 설치..."
 # 가상환경 활성화
 [ -d "venv" ] && source venv/bin/activate
 
-echo "📥 누락된 패키지들만 빠르게 설치..."
-
-# opencv-python-headless는 설치하지 않고 opencv-python만 사용
-# 의존성 경고가 나와도 실제로는 작동함
-
 echo "✅ 현재 설치 상태 확인..."
 python -c "
 try:

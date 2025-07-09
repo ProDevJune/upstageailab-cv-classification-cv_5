@@ -14,8 +14,7 @@ pip uninstall -y albumentations albucore qudida
 pip uninstall -y numpy pandas scikit-learn matplotlib scipy seaborn
 pip uninstall -y scikit-image Pillow imageio
 
-echo "🧹 pip 설정 초기화..."
-pip cache purge 2>/dev/null || echo "캐시 정리 건너뜀"
+echo "🧹 설치 준비 중..."
 
 echo "📥 1단계: 기본 패키지 설치 (의존성 무시)..."
 pip install --no-deps --no-cache-dir numpy==1.26.4
