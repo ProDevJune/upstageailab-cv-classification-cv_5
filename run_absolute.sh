@@ -22,4 +22,4 @@ echo "📄 사용할 설정 파일: $CONFIG_FILE"
 echo "🔍 설정 파일 존재 확인: $(ls -la \"$CONFIG_FILE\" 2>/dev/null && echo '✅ 존재' || echo '❌ 없음')"
 
 # 실제 실행
-venv/bin/python codes/gemini_main.py --config "$CONFIG_FILE"
+venv/bin/python codes/gemini_main_v2.py --config "$CONFIG_FILE"
