@@ -1,0 +1,82 @@
+# Configuration for cutmix example - v2_2 style with online augmentation
+model_name: 'resnet50.tv2_in1k' # timm model name
+pretrained: True # timm pretrained 가중치 사용 여부
+fine_tuning: "full" # fine-tuning 방법론
+
+# Loss Function
+criterion: 'CrossEntropyLoss' # CrossEntropyLoss, FocalLoss, LabelSmoothingLoss
+class_weighting: False # class에 가중치를 두어 Loss 계산
+label_smooth: 0.0
+
+# Optimizer
+optimizer_name: 'AdamW'
+lr: 0.001 # 1e-3
+weight_decay: 0.0001 # 1e-4
+
+# Scheduler
+scheduler_name: 'CosineAnnealingLR'
+scheduler_params:
+  T_max: 50
+  max_lr: 0.001
+  min_lr: 0.00001
+
+# Other variables
+random_seed: 256
+n_folds: 0 # number of folds for cross-validation
+val_split_ratio: 0.15 # train-val split 비율
+stratify: True # validation set 분할 시 stratify 전략 사용 여부
+image_size: 384 # 만약 multi-scale train/test 시 None으로 설정
+
+# Normalization
+norm_mean: [0.5, 0.5, 0.5]
+norm_std: [0.5, 0.5, 0.5]
+
+# Techniques
+weighted_random_sampler: False
+class_imbalance: False
+two_stage: False # 2-stage 학습 사용 여부
+online_augmentation: True
+augmentation: # normal augmentation
+  eda: True
+  dilation: False
+  erosion: False
+  easiest: False
+  stilleasy: False
+  basic: False
+  middle: False
+  aggressive: False
+  mixup: False  # 이건 레거시 설정
+  cutmix: False # 이건 레거시 설정
+# online_aug: mixup/cutmix를 위한 새로운 설정
+online_aug:
+  mixup: False  # mixup 비활성화
+  cutmix: True  # cutmix 활성화 (둘 중 하나만 사용)
+
+# dynamic augmentation 비활성화 (mixup/cutmix와 함께 사용시 복잡해질 수 있음)
+dynamic_augmentation:
+  enabled: False
+
+val_TTA: False # Validation 시, Test Time Augmentation 사용 여부
+test_TTA: False # Inference 시, Test Time Augmentation 사용 여부
+tta_dropout: False
+mixed_precision: True
+
+# Model hyperparameters
+timm:
+  activation: None
+
+custom_layer: # custom classifier head
+
+# Training hyperparameters
+epochs: 50 # max epoch
+patience: 10 # early stopping patience
+batch_size: 32 # mixup/cutmix 사용시 메모리 사용량 증가할 수 있음
+
+# W&B
+wandb:
+  project: "upstage-img-clf"
+  log: True
+
+# Paths
+data_dir: "./data"
+train_data: train0705a.csv

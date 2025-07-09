@@ -351,3 +351,195 @@ def plot_cross_validation(
     if show:
         plt.show()
     plt.clf()
+
+def mixup_data(x, y, alpha=0.4, use_cuda=True):
+    """Returns mixed inputs, pairs of targets, and lambda"""
+    if alpha > 0:
+        lam = np.random.beta(alpha, alpha)
+    else:
+        lam = 1
+
+    batch_size = x.size(0)
+    if use_cuda:
+        index = torch.randperm(batch_size).cuda()
+    else:
+        index = torch.randperm(batch_size)
+
+    mixed_x = lam * x + (1 - lam) * x[index, :]
+    y_a, y_b = y, y[index]
+    return mixed_x, y_a, y_b, lam
+
+def cutmix_data(x, y, alpha=0.4):
+    """Returns mixed inputs and pairs of targets"""
+    if alpha > 0:
+        lam = np.random.beta(alpha, alpha)
+    else:
+        lam = 1
+
+    batch_size = x.size(0)
+    index = torch.randperm(batch_size)
+    
+    # Generate random bounding box
+    W, H = x.size(2), x.size(3)
+    cut_rat = np.sqrt(1. - lam)
+    cut_w = int(W * cut_rat)
+    cut_h = int(H * cut_rat)
+    
+    # Uniform sampling
+    cx = np.random.randint(W)
+    cy = np.random.randint(H)
+    
+    bbx1 = np.clip(cx - cut_w // 2, 0, W)
+    bby1 = np.clip(cy - cut_h // 2, 0, H)
+    bbx2 = np.clip(cx + cut_w // 2, 0, W)
+    bby2 = np.clip(cy + cut_h // 2, 0, H)
+    
+    # Apply cutmix to images
+    x[:, :, bbx1:bbx2, bby1:bby2] = x[index, :, bbx1:bbx2, bby1:bby2]
+    
+    # Adjust lambda to exactly match pixel ratio
+    lam = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (W * H))
+    
+    y_a, y_b = y, y[index]
+    return x, y_a, y_b, lam
+
+def mixup_collate_fn(batch, num_classes=17, alpha=0.4):
+    """Collate function for mixup augmentation"""
+    images, targets = zip(*batch)
+    images = torch.stack(images)
+    targets = torch.tensor(targets, dtype=torch.long)
+    
+    # Apply mixup
+    mixed_images, targets_a, targets_b, lam = mixup_data(images, targets, alpha)
+    
+    # Convert to one-hot encoding for soft labels
+    targets_a_onehot = F.one_hot(targets_a, num_classes=num_classes).float()
+    targets_b_onehot = F.one_hot(targets_b, num_classes=num_classes).float()
+    mixed_targets = lam * targets_a_onehot + (1 - lam) * targets_b_onehot
+    
+    return mixed_images, mixed_targets
+
+def cutmix_collate_fn(batch, num_classes=17, alpha=0.4):
+    """Collate function for cutmix augmentation"""
+    images, targets = zip(*batch)
+    images = torch.stack(images)
+    targets = torch.tensor(targets, dtype=torch.long)
+    
+    # Apply cutmix
+    mixed_images, targets_a, targets_b, lam = cutmix_data(images, targets, alpha)
+    
+    # Convert to one-hot encoding for soft labels
+    targets_a_onehot = F.one_hot(targets_a, num_classes=num_classes).float()
+    targets_b_onehot = F.one_hot(targets_b, num_classes=num_classes).float()
+    mixed_targets = lam * targets_a_onehot + (1 - lam) * targets_b_onehot
+    
+    return mixed_images, mixed_targets
+
+def run_training_cycle(train_df, val_df, cfg, run, train_transforms, val_transform):
+    """Refactored training cycle function for modularity"""
+    from torch.utils.data import DataLoader, ConcatDataset, WeightedRandomSampler
+    from codes.gemini_augmentation_v2 import augment_class_imbalance, augment_validation, delete_offline_augmented_images
+    from codes.gemini_train_v2 import TrainModule
+    
+    augmented_ids, val_augmented_ids = [], []
+    
+    try:
+        # 클래스 불균형 해소를 위한 이미지 offline 증강
+        if hasattr(cfg, 'class_imbalance') and cfg.class_imbalance:
+            new_augmented_ids, augmented_labels = augment_class_imbalance(cfg, train_df)
+            augmented_ids.extend(new_augmented_ids)
+            imb_aug_df = pd.DataFrame({"ID": new_augmented_ids, "target": augmented_labels})
+            train_df = pd.concat([train_df, imb_aug_df], ignore_index=True).reset_index(drop=True)
+
+        # validation 데이터를 offline으로 eda 증강을 적용
+        if val_df is not None and getattr(cfg, 'val_TTA', False):
+            new_val_augmented_ids, augmented_labels = augment_validation(cfg, val_df)
+            val_augmented_ids.extend(new_val_augmented_ids)
+            val_aug_df = pd.DataFrame({"ID": new_val_augmented_ids, "target": augmented_labels})
+            val_df = pd.concat([val_df, val_aug_df], ignore_index=True).reset_index(drop=True)
+
+        # Sampler 설정
+        sampler = None
+        shuffle = True
+        if getattr(cfg, 'weighted_random_sampler', False):
+            targets = train_df['target'].values
+            class_counts = np.bincount(targets)
+            class_weights = 1. / class_counts
+            weights = class_weights[targets]
+            g = get_generator(cfg)
+            sampler = WeightedRandomSampler(weights, len(weights), generator=g)
+            shuffle = False
+
+        # Dataset 생성
+        if cfg.online_augmentation:
+            train_dataset = ImageDataset(train_df, os.path.join(cfg.data_dir, "train"), transform=train_transforms[0])
+        else:
+            datasets = [ImageDataset(train_df, os.path.join(cfg.data_dir, "train"), transform=t) for t in train_transforms]
+            train_dataset = ConcatDataset(datasets)
+        
+        val_loader = None
+        if val_df is not None:
+            val_dataset = ImageDataset(val_df, os.path.join(cfg.data_dir, "train"), transform=val_transform)
+            val_loader = DataLoader(val_dataset, batch_size=cfg.batch_size, shuffle=False, num_workers=8, pin_memory=True)
+
+        # Check for mixup/cutmix in online_aug settings
+        train_collate = None
+        if hasattr(cfg, 'online_aug'):
+            if getattr(cfg.online_aug, 'mixup', False):
+                train_collate = lambda batch: mixup_collate_fn(batch, num_classes=17, alpha=0.4)
+            elif getattr(cfg.online_aug, 'cutmix', False):
+                train_collate = lambda batch: cutmix_collate_fn(batch, num_classes=17, alpha=0.4)
+        elif hasattr(cfg, 'augmentation'):
+            # Fallback to old augmentation settings
+            if getattr(cfg.augmentation, 'mixup', False):
+                train_collate = lambda batch: mixup_collate_fn(batch, num_classes=17, alpha=0.4)
+            elif getattr(cfg.augmentation, 'cutmix', False):
+                train_collate = lambda batch: cutmix_collate_fn(batch, num_classes=17, alpha=0.4)
+                
+        # DataLoader 생성
+        train_loader = DataLoader(
+            train_dataset, 
+            batch_size=cfg.batch_size, 
+            sampler=sampler, 
+            shuffle=shuffle, 
+            num_workers=8, 
+            pin_memory=True, 
+            collate_fn=train_collate
+        )
+
+        # TrainModule 정의
+        model = get_timm_model(cfg)
+        class_weights = None
+        if hasattr(cfg, 'class_weighting') and cfg.class_weighting:
+            class_counts = train_df['target'].value_counts().sort_index()
+            weights = 1.0 / class_counts
+            class_weights = torch.tensor(weights.values, dtype=torch.float32).to(cfg.device)
+        
+        criterion = get_criterion(cfg, class_weights=class_weights)
+        optimizer = get_optimizer(model, cfg)
+        scheduler = get_scheduler(optimizer, cfg, steps_per_epoch=len(train_loader))
+
+        trainer = TrainModule(
+            model=model,
+            criterion=criterion,
+            optimizer=optimizer,
+            scheduler=scheduler,
+            train_loader=train_loader,
+            valid_loader=val_loader,
+            cfg=cfg,
+            verbose=1,
+            run=run
+        )
+
+        # 학습
+        train_result = trainer.training_loop()
+        if not train_result:
+            raise ValueError("Failed to train model...")
+
+        return trainer, augmented_ids, val_augmented_ids, val_df, val_loader
+        
+    except Exception as e:
+        # 에러 발생 시 정리
+        delete_offline_augmented_images(cfg=cfg, augmented_ids=augmented_ids)
+        delete_offline_augmented_images(cfg=cfg, augmented_ids=val_augmented_ids)
+        raise e

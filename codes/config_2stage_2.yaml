@@ -1,0 +1,92 @@
+# 2-stage 학습 2단계 - 정밀 조정
+model_name: 'resnet50.tv2_in1k' # timm model name (같은 모델 유지)
+pretrained: True # timm pretrained 가중치 사용 여부
+fine_tuning: "full" # fine-tuning 방법론
+
+# Loss Function - Stage 2에서 다른 손실함수 사용
+criterion: 'FocalLoss' # Stage 2: FocalLoss로 클래스 불균형 해결
+class_weighting: False # class에 가중치를 두어 Loss 계산
+label_smooth: 0.0
+
+# Optimizer
+optimizer_name: 'AdamW'
+lr: 0.0001 # 1e-4 (Stage 2: 낮은 학습률로 정밀 조정)
+weight_decay: 0.00001 # 1e-5 (더 낮은 weight decay)
+
+# Scheduler
+scheduler_name: 'CosineAnnealingLR'
+scheduler_params:
+  T_max: 20
+  max_lr: 0.0001
+  min_lr: 0.00001
+
+# Other variables
+random_seed: 256
+n_folds: 0 # number of folds for cross-validation
+val_split_ratio: 0.15 # train-val split 비율
+stratify: True # validation set 분할 시 stratify 전략 사용 여부
+image_size: 384 # 만약 multi-scale train/test 시 None으로 설정
+
+# Normalization
+norm_mean: [0.5, 0.5, 0.5]
+norm_std: [0.5, 0.5, 0.5]
+
+# Techniques
+weighted_random_sampler: False
+class_imbalance: 
+  aug_class: [1, 13, 14]
+  max_samples: 70
+two_stage: False # Stage 2에서는 false (더 이상 stage가 없음)
+online_augmentation: True
+augmentation: # normal augmentation
+  eda: False
+  dilation: False
+  erosion: False
+  easiest: False
+  stilleasy: False
+  basic: False
+  middle: True    # Stage 2: 중간 강도 증강
+  aggressive: False
+  mixup: False
+  cutmix: False
+
+# online_aug: Stage 2에서 mixup 추가
+online_aug:
+  mixup: True   # Stage 2: mixup 추가
+  cutmix: False
+
+# Stage 2: 더 강한 증강으로 정밀 조정
+dynamic_augmentation:
+  enabled: True
+  policies:
+    middle:
+      end_epoch: 10
+      augs: ['middle', 'eda']
+    strong:
+      end_epoch: 20
+      augs: ['aggressive']
+
+val_TTA: True # Validation 시, Test Time Augmentation 사용 여부
+test_TTA: True # Inference 시, Test Time Augmentation 사용 여부
+tta_dropout: False
+mixed_precision: True
+
+# Model hyperparameters
+timm:
+  activation: None
+
+custom_layer: # custom classifier head
+
+# Training hyperparameters
+epochs: 20 # Stage 2: 더 짧은 정밀 조정
+patience: 5 # early stopping patience (더 짧은 patience)
+batch_size: 32 # mixup 사용으로 배치 크기 줄임
+
+# W&B
+wandb:
+  project: "upstage-img-clf"
+  log: True
+
+# Paths
+data_dir: "./data"
+train_data: train0705a.csv

@@ -1,0 +1,89 @@
+# 2-stage 학습 1단계 - 기본 학습
+model_name: 'resnet50.tv2_in1k' # timm model name
+pretrained: True # timm pretrained 가중치 사용 여부
+fine_tuning: "full" # fine-tuning 방법론
+
+# Loss Function
+criterion: 'CrossEntropyLoss' # CrossEntropyLoss, FocalLoss, LabelSmoothingLoss
+class_weighting: False # class에 가중치를 두어 Loss 계산
+label_smooth: 0.0
+
+# Optimizer
+optimizer_name: 'AdamW'
+lr: 0.001 # 1e-3 (Stage 1: 상대적으로 높은 학습률)
+weight_decay: 0.0001 # 1e-4
+
+# Scheduler
+scheduler_name: 'CosineAnnealingLR'
+scheduler_params:
+  T_max: 30
+  max_lr: 0.001
+  min_lr: 0.0001
+
+# Other variables
+random_seed: 256
+n_folds: 0 # number of folds for cross-validation
+val_split_ratio: 0.15 # train-val split 비율
+stratify: True # validation set 분할 시 stratify 전략 사용 여부
+image_size: 384 # 만약 multi-scale train/test 시 None으로 설정
+
+# Normalization
+norm_mean: [0.5, 0.5, 0.5]
+norm_std: [0.5, 0.5, 0.5]
+
+# Techniques
+weighted_random_sampler: False
+class_imbalance: 
+  aug_class: [1, 13, 14]
+  max_samples: 70
+two_stage: True # 2-stage 학습 활성화
+online_augmentation: True
+augmentation: # normal augmentation
+  eda: False
+  dilation: False
+  erosion: False
+  easiest: True    # Stage 1: 약한 증강
+  stilleasy: False
+  basic: False
+  middle: False
+  aggressive: False
+  mixup: False
+  cutmix: False
+
+# online_aug: mixup/cutmix를 위한 새로운 설정
+online_aug:
+  mixup: False
+  cutmix: False
+
+# Stage 1: 약한 증강으로 시작
+dynamic_augmentation:
+  enabled: True
+  policies:
+    weak:
+      end_epoch: 30
+      augs: ['easiest', 'basic']
+
+val_TTA: False # Validation 시, Test Time Augmentation 사용 여부
+test_TTA: True # Inference 시, Test Time Augmentation 사용 여부
+tta_dropout: False
+mixed_precision: True
+
+# Model hyperparameters
+timm:
+  activation: None
+
+custom_layer: # custom classifier head
+
+# Training hyperparameters
+epochs: 30 # Stage 1: 짧은 학습
+patience: 10 # early stopping patience
+batch_size: 64
+
+# W&B
+wandb:
+  project: "upstage-img-clf"
+  log: True
+
+# Paths
+data_dir: "./data"
+train_data: train0705a.csv

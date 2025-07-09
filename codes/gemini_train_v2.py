@@ -101,42 +101,63 @@ class TrainModule():
 		all_preds = []
 		all_targets = []
 		
-		for train_x, train_y in self.train_loader: # batch training
-			train_x, train_y = train_x.to(self.cfg.device), train_y.to(self.cfg.device)
+		for batch_data in self.train_loader: # batch training
+			# Handle both regular and mixup/cutmix batches
+			if len(batch_data) == 2:
+				# Regular batch (images, labels)
+				train_x, train_y = batch_data
+				train_x, train_y = train_x.to(self.cfg.device), train_y.to(self.cfg.device)
+				is_soft_target = False
+			else:
+				# This shouldn't happen with current implementation
+				train_x, train_y = batch_data
+				train_x, train_y = train_x.to(self.cfg.device), train_y.to(self.cfg.device)
+				is_soft_target = len(train_y.shape) > 1 and train_y.shape[1] > 1
 			
 			self.optimizer.zero_grad() # 이전 gradient 초기화
 
-			# if self.cfg.mixed_precision: 
-				# autocast 컨텍스트 매니저 사용 > # FP16을 사용해 메모리 사용량 감소
+			# autocast 컨텍스트 매니저 사용 > # FP16을 사용해 메모리 사용량 감소
 			with torch.amp.autocast(device_type='cuda', enabled=self.cfg.mixed_precision):
 				outputs = self.model(train_x)
-				loss = self.criterion(outputs, train_y)
+				
+				# Handle soft targets (mixup/cutmix) vs hard targets
+				if is_soft_target:
+					# For mixup/cutmix with soft labels
+					loss = torch.sum(-train_y * torch.log_softmax(outputs, dim=1), dim=1).mean()
+				else:
+					# Regular loss calculation
+					loss = self.criterion(outputs, train_y)
+					
 			self.scaler.scale(loss).backward()
 			self.scaler.step(self.optimizer)
 			self.scaler.update() # 다음 반복을 위해 스케일 팩터를 업데이트
-
-			# else:
-			# 	outputs = self.model(train_x)
-			# 	loss = self.criterion(outputs, train_y)
-			# 	loss.backward() # backward pass
-			# 	self.optimizer.step() # 가중치 업데이트
 
 			if self.cfg.scheduler_name in ["OneCycleLR"]:
 				self.scheduler.step()
 			elif self.cfg.scheduler_name in ["CosineAnnealingWarmupRestarts"]:
 				self.scheduler.step(self.epoch_counter)
 			
-			running_loss += loss.item() * train_y.size(0) # train_loss 
+			running_loss += loss.item() * train_x.size(0) # train_loss 
+			
+			# For accuracy calculation, use hard targets
+			if is_soft_target:
+				# Convert soft targets back to hard targets for accuracy calculation
+				_, hard_targets = torch.max(train_y, 1)
+			else:
+				hard_targets = train_y
+				
 			_, predicted = torch.max(outputs, 1) # 가장 확률 높은 클래스 예측 # classification
-			correct += (predicted == train_y).sum().item() # classification
-			total += train_y.size(0) 
+			correct += (predicted == hard_targets).sum().item() # classification
+			total += train_x.size(0) 
 
 			all_preds.extend(predicted.cpu().numpy())
-			all_targets.extend(train_y.cpu().numpy())
+			all_targets.extend(hard_targets.cpu().numpy())
 
 			# **********************************************
 			# VRAM 부족 시: 각 배치 처리 후 GPU 캐시 비우기
 			del train_x, train_y, outputs, loss # 사용된 변수 명시적 삭제
+			if 'hard_targets' in locals():
+				del hard_targets
 			torch.cuda.empty_cache()           # <-- 여기에 추가
 			# **********************************************
 			

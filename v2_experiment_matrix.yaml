@@ -1,0 +1,163 @@
+# V2_1 & V2_2 Enhanced Experiment Matrix
+# 다양한 하이퍼파라미터 조합을 자동으로 실험
+
+# V2_1 실험군: "대형 모델 + 장기 학습" 전략
+v2_1_experiments:
+  base_config: "config_v2_1.yaml"
+  experiment_name: "v2_1"
+  variations:
+    # 모델 변형
+    models:
+      - name: "convnextv2_base"
+        model_name: "convnextv2_base.fcmae_ft_in22k_in1k_384"
+      - name: "convnextv2_large"  
+        model_name: "convnextv2_large.fcmae_ft_in22k_in1k_384"
+      - name: "efficientnetv2_l"
+        model_name: "tf_efficientnetv2_l.in21k_ft_in1k"
+    
+    # 학습률 조합
+    learning_rates:
+      - name: "lr_low"
+        lr: 0.00005
+      - name: "lr_medium"
+        lr: 0.0001
+      - name: "lr_high"
+        lr: 0.0002
+    
+    # 배치 크기
+    batch_sizes:
+      - name: "batch_16"
+        batch_size: 16
+      - name: "batch_32"
+        batch_size: 32
+      - name: "batch_48"
+        batch_size: 48
+    
+    # 스케줄러 변형
+    schedulers:
+      - name: "warmup_short"
+        scheduler_params:
+          T_max: 5000
+          warmup_steps: 3
+      - name: "warmup_long"
+        scheduler_params:
+          T_max: 10000
+          warmup_steps: 10
+
+# V2_2 실험군: "효율적 + 기법 조합" 전략  
+v2_2_experiments:
+  base_config: "config_v2_2.yaml"
+  experiment_name: "v2_2"
+  variations:
+    # 모델 변형
+    models:
+      - name: "resnet50"
+        model_name: "resnet50.tv2_in1k"
+      - name: "resnet101"
+        model_name: "resnet101.tv2_in1k"
+      - name: "efficientnet_b4"
+        model_name: "efficientnet_b4.ra2_in1k"
+    
+    # 손실함수 조합
+    criterions:
+      - name: "focal"
+        criterion: "FocalLoss"
+      - name: "ce"
+        criterion: "CrossEntropyLoss"
+      - name: "label_smooth"
+        criterion: "LabelSmoothingLoss"
+        label_smooth: 0.1
+    
+    # 증강 기법 조합
+    augmentations:
+      - name: "mixup"
+        online_aug:
+          mixup: true
+          cutmix: false
+        dynamic_augmentation:
+          enabled: false
+      - name: "cutmix"
+        online_aug:
+          mixup: false
+          cutmix: true
+        dynamic_augmentation:
+          enabled: false
+      - name: "dynamic"
+        online_aug:
+          mixup: false
+          cutmix: false
+        dynamic_augmentation:
+          enabled: true
+      - name: "mixup_dynamic"
+        online_aug:
+          mixup: true
+          cutmix: false
+        dynamic_augmentation:
+          enabled: true
+    
+    # 2-stage 학습 조합
+    two_stage_options:
+      - name: "single"
+        two_stage: false
+      - name: "two_stage"
+        two_stage: true
+        stage2_config: "config_2stage_2.yaml"
+
+# 교차 검증 실험
+cross_validation_experiments:
+  base_config: "config_v2_2.yaml"
+  experiment_name: "cv"
+  variations:
+    folds:
+      - name: "cv3"
+        n_folds: 3
+      - name: "cv5"  
+        n_folds: 5
+    models:
+      - name: "resnet50"
+        model_name: "resnet50.tv2_in1k"
+      - name: "efficientnet_b4"
+        model_name: "efficientnet_b4.ra2_in1k"
+
+# 실험 우선순위 및 필터링
+experiment_priority:
+  # 1단계: 기본 성능 확인
+  phase1:
+    - "v2_1.convnextv2_base.lr_medium.batch_32.warmup_short"
+    - "v2_2.resnet50.focal.mixup.single"
+    - "v2_2.resnet50.focal.cutmix.single"
+  
+  # 2단계: 모델 비교
+  phase2:
+    - "v2_1.convnextv2_large.*"
+    - "v2_2.efficientnet_b4.*"
+  
+  # 3단계: 하이퍼파라미터 최적화
+  phase3:
+    - "v2_1.*.lr_*.*.*"
+    - "v2_2.*.*.dynamic.*"
+  
+  # 4단계: 고급 기법
+  phase4:
+    - "v2_2.*.*.two_stage"
+    - "cv.*"
+
+# 실험 제약 조건
+constraints:
+  # 메모리 제약
+  memory_limit:
+    convnextv2_large:
+      max_batch_size: 16
+    efficientnetv2_l:
+      max_batch_size: 8
+  
+  # 시간 제약  
+  time_limit:
+    v2_1: 48  # hours
+    v2_2: 24  # hours
+    cv: 72    # hours
+  
+  # GPU 요구사항
+  gpu_requirements:
+    convnextv2_large: ">=16GB"
+    efficientnetv2_l: ">=24GB"
