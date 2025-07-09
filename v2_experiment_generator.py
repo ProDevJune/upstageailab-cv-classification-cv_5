@@ -301,18 +301,20 @@ class V2ExperimentGenerator:
         """자동 실행 스크립트 생성"""
         script_content = f'''#!/bin/bash
 
-# V2_1 & V2_2 자동 실험 실행 스크립트
-# 총 {len(experiments)}개 실험 자동 실행
+# 실행 권한 자동 부여
+chmod +x "$0" 2>/dev/null
 
-echo "🚀 Starting V2_1 & V2_2 Automatic Experiments"
+# V2_1 & V2_2 자동 실험 실행 스크립트 (FIXED VERSION)
+echo "🚀 Starting V2_1 & V2_2 Automatic Experiments (FIXED)"
 echo "Total experiments: {len(experiments)}"
 echo "======================================================"
 
-# 프로젝트 루트로 이동
-cd /Users/jayden/Developer/Projects/upstageailab-cv-classification-cv_5
+# 현재 디렉토리에서 실행 (경로 문제 해결)
+echo "현재 위치: $(pwd)"
 
 # 실험 결과 디렉토리 생성
 mkdir -p {self.output_dir}/results
+mkdir -p data/submissions
 
 # 실험 로그 파일
 LOG_FILE="{self.output_dir}/logs/experiment_run_$(date +%Y%m%d_%H%M%S).log"
@@ -329,29 +331,40 @@ echo "📝 Logging to: $LOG_FILE"
 # ===============================================
 echo "🔬 [{i}/{len(experiments)}] Starting: {exp['name']}"
 echo "Time: $(date)"
+echo "현재 위치: $(pwd)"
+echo "설정 파일: {self.output_dir}/configs/{config_name}"
+echo "실행 스크립트: {exp['main_script']}"
+echo ""
 
 '''
             
             if exp['type'] == 'v2_2' and exp.get('config2'):
                 # 2-stage 실험
-                script_content += f'''python {exp['main_script']} \\
+                script_content += f'''# 2-stage 실험 실행
+if python {exp['main_script']} \\
     --config {self.output_dir}/configs/{config_name} \\
     --config2 codes/{exp['config2']} \\
-    >> "$LOG_FILE" 2>&1
+    2>&1 | tee -a "$LOG_FILE"; then
+    echo "✅ [{i}/{len(experiments)}] Completed: {exp['name']}"
+else
+    echo "❌ [{i}/{len(experiments)}] Failed: {exp['name']} (Exit code: $?)"
+    echo "📋 마지막 20줄 로그:"
+    tail -20 "$LOG_FILE" | sed 's/^/   /'
+fi
 '''
             else:
                 # 일반 실험
-                script_content += f'''python {exp['main_script']} \\
+                script_content += f'''# 일반 실험 실행
+if python {exp['main_script']} \\
     --config {self.output_dir}/configs/{config_name} \\
-    >> "$LOG_FILE" 2>&1
-'''
-            
-            script_content += f'''
-if [ $? -eq 0 ]; then
+    2>&1 | tee -a "$LOG_FILE"; then
     echo "✅ [{i}/{len(experiments)}] Completed: {exp['name']}"
 else
-    echo "❌ [{i}/{len(experiments)}] Failed: {exp['name']}"
+    echo "❌ [{i}/{len(experiments)}] Failed: {exp['name']} (Exit code: $?)"
+    echo "📋 마지막 20줄 로그:"
+    tail -20 "$LOG_FILE" | sed 's/^/   /'
 fi
+'''
 
 echo "Time: $(date)"
 echo "---------------------------------------------"
