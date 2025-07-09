@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 첫 번째 실험이 0분 0초로 끝나는 문제 디버깅 스크립트
-echo "🔍 V2_2 FocalLoss 실험 문제 디버깅"
-echo "=================================="
+echo "🔍 V2 실험 문제 디버깅"
+echo "====================="
 
 # 1. 환경 확인
 echo "📋 1. 환경 확인"
@@ -11,32 +11,8 @@ echo "Python 경로: $(which python)"
 echo "가상환경: ${VIRTUAL_ENV:-'None'}"
 echo ""
 
-# 2. 필요한 파일들 확인
-echo "📁 2. 필요한 파일들 확인"
-echo "설정 파일:"
-if [ -f "v2_experiments/configs/v2_2_resnet50_focal_auto.yaml" ]; then
-    echo "  ✅ v2_experiments/configs/v2_2_resnet50_focal_auto.yaml"
-    echo "  첫 10줄:"
-    head -10 "v2_experiments/configs/v2_2_resnet50_focal_auto.yaml" | sed 's/^/    /'
-else
-    echo "  ❌ v2_experiments/configs/v2_2_resnet50_focal_auto.yaml 없음"
-fi
-echo ""
-
-echo "메인 스크립트:"
-if [ -f "codes/gemini_main_v2_1_style.py" ]; then
-    echo "  ✅ codes/gemini_main_v2_1_style.py"
-elif [ -f "codes/gemini_main.py" ]; then
-    echo "  ✅ codes/gemini_main.py"
-else
-    echo "  ❌ 메인 스크립트 없음"
-    echo "  사용 가능한 Python 파일들:"
-    ls -la codes/gemini_main*.py 2>/dev/null | sed 's/^/    /'
-fi
-echo ""
-
-# 3. 데이터 파일 확인
-echo "📊 3. 데이터 파일 확인"
+# 2. 데이터 파일 확인
+echo "📊 2. 데이터 파일 확인"
 if [ -f "data/train.csv" ]; then
     echo "  ✅ data/train.csv"
     echo "     크기: $(wc -l < data/train.csv) 줄"
@@ -52,13 +28,33 @@ else
 fi
 echo ""
 
-# 4. Python 라이브러리 확인
-echo "🐍 4. Python 라이브러리 확인"
-python -c "
-import sys
-print(f'Python 버전: {sys.version}')
+# 3. 실험 설정 파일 확인
+echo "📁 3. 실험 설정 파일 확인"
+CONFIG_COUNT=$(find v2_experiments/configs -name "*.yaml" | wc -l)
+echo "설정 파일 수: ${CONFIG_COUNT}개"
+if [ $CONFIG_COUNT -gt 0 ]; then
+    echo "설정 파일들:"
+    find v2_experiments/configs -name "*.yaml" | head -5 | sed 's/^/  /'
+fi
+echo ""
 
-libraries = ['torch', 'torchvision', 'timm', 'albumentations', 'pandas', 'numpy', 'yaml']
+# 4. 메인 스크립트 확인
+echo "🐍 4. 메인 스크립트 확인"
+if [ -f "codes/gemini_main_v2_1_style.py" ]; then
+    echo "  ✅ codes/gemini_main_v2_1_style.py"
+elif [ -f "codes/gemini_main.py" ]; then
+    echo "  ✅ codes/gemini_main.py"
+else
+    echo "  ❌ 메인 스크립트 없음"
+    echo "  사용 가능한 Python 파일들:"
+    ls -la codes/gemini_main*.py 2>/dev/null | sed 's/^/    /'
+fi
+echo ""
+
+# 5. 라이브러리 확인
+echo "📚 5. Python 라이브러리 확인"
+python -c "
+libraries = ['torch', 'torchvision', 'timm', 'pandas', 'numpy', 'yaml']
 for lib in libraries:
     try:
         __import__(lib)
@@ -68,60 +64,20 @@ for lib in libraries:
 "
 echo ""
 
-# 5. 직접 실험 실행 테스트
-echo "🧪 5. 직접 실험 실행 테스트"
-CONFIG_FILE="v2_experiments/configs/v2_2_resnet50_focal_auto.yaml"
-MAIN_SCRIPT=""
-
-if [ -f "codes/gemini_main_v2_1_style.py" ]; then
-    MAIN_SCRIPT="codes/gemini_main_v2_1_style.py"
-elif [ -f "codes/gemini_main.py" ]; then
-    MAIN_SCRIPT="codes/gemini_main.py"
+# 6. 로그 파일 확인
+echo "📋 6. 최근 로그 파일 확인"
+if [ -d "v2_experiments/logs" ]; then
+    LATEST_LOG=$(ls -t v2_experiments/logs/*.log 2>/dev/null | head -1)
+    if [ -n "$LATEST_LOG" ]; then
+        echo "최신 로그: $LATEST_LOG"
+        echo "마지막 20줄:"
+        tail -20 "$LATEST_LOG" | sed 's/^/  /'
+    else
+        echo "로그 파일 없음"
+    fi
 else
-    echo "❌ 실행할 메인 스크립트가 없습니다!"
-    exit 1
+    echo "로그 디렉토리 없음"
 fi
 
-echo "사용할 스크립트: $MAIN_SCRIPT"
-echo "설정 파일: $CONFIG_FILE"
 echo ""
-
-# 간단한 syntax 체크
-echo "📝 Python 스크립트 syntax 체크:"
-if python -m py_compile "$MAIN_SCRIPT"; then
-    echo "  ✅ Syntax 정상"
-else
-    echo "  ❌ Syntax 오류"
-    exit 1
-fi
-echo ""
-
-# 설정 파일 파싱 테스트
-echo "📝 설정 파일 파싱 테스트:"
-python -c "
-import yaml
-try:
-    with open('$CONFIG_FILE', 'r') as f:
-        config = yaml.safe_load(f)
-    print('  ✅ YAML 파싱 성공')
-    print(f'  실험 이름: {config.get(\"experiment_name\", \"Unknown\")}')
-    print(f'  모델: {config.get(\"model_name\", \"Unknown\")}')
-    print(f'  에포크: {config.get(\"epochs\", \"Unknown\")}')
-except Exception as e:
-    print(f'  ❌ YAML 파싱 실패: {e}')
-"
-echo ""
-
-# 실제 실행 (dry-run 형태)
-echo "🚀 6. 실제 실행 테스트 (첫 몇 초만)"
-echo "실행 명령어: timeout 10s python $MAIN_SCRIPT --config $CONFIG_FILE"
-echo "시작 시간: $(date)"
-
-timeout 10s python "$MAIN_SCRIPT" --config "$CONFIG_FILE" 2>&1 | head -20
-
-echo ""
-echo "종료 시간: $(date)"
-echo ""
-
 echo "✅ 디버깅 완료!"
-echo "위 결과를 확인하여 문제점을 파악하세요."

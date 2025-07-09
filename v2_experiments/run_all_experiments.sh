@@ -3,15 +3,15 @@
 # 실행 권한 자동 부여
 chmod +x "$0" 2>/dev/null
 
-# V2 실험 실행 스크립트 (경로 문제 해결된 버전)
-echo "🚀 Starting V2 Experiments (Fixed Version)"
+# V2 실험 실행 스크립트 (완전 수정된 버전)
+echo "🚀 Starting V2 Experiments (FIXED VERSION)"
 echo "=========================================="
 
-# 현재 디렉토리에서 실행 (상대 경로 사용)
+# 현재 디렉토리에서 실행 (하드코딩된 경로 제거)
 echo "현재 위치: $(pwd)"
 
 # 실험 설정 파일 확인
-CONFIG_COUNT=$(find v2_experiments/configs -name "*.yaml" | wc -l)
+CONFIG_COUNT=$(find v2_experiments/configs -name "*.yaml" 2>/dev/null | wc -l)
 echo "📊 발견된 실험 설정: ${CONFIG_COUNT}개"
 
 if [ $CONFIG_COUNT -eq 0 ]; then
@@ -51,11 +51,28 @@ online_aug:
   alpha: 0.4
   num_classes: 17
 
+# 옵티마이저 설정
+optimizer: "AdamW"
+weight_decay: 0.01
+
+# 스케줄러 설정
+scheduler: "CosineAnnealingWarmRestarts"
+scheduler_params:
+  T_0: 10
+  T_mult: 2
+  eta_min: 0.00001
+
 # 기타 설정
 device: "cuda"
 num_workers: 4
 pin_memory: true
 save_dir: "data/submissions"
+wandb_project: "upstage-cv-classification"
+seed: 42
+
+# 검증 설정
+validation_split: 0.2
+early_stopping_patience: 5
 EOF
     
     CONFIG_COUNT=1
@@ -90,8 +107,8 @@ for config_file in v2_experiments/configs/*.yaml; do
         MAIN_SCRIPT=""
         if [ -f "codes/gemini_main_v2_1_style.py" ]; then
             MAIN_SCRIPT="codes/gemini_main_v2_1_style.py"
-        elif [ -f "codes/main.py" ]; then
-            MAIN_SCRIPT="codes/main.py"
+        elif [ -f "codes/gemini_main.py" ]; then
+            MAIN_SCRIPT="codes/gemini_main.py"
         elif [ -f "codes/train.py" ]; then
             MAIN_SCRIPT="codes/train.py"
         else
@@ -115,17 +132,18 @@ for config_file in v2_experiments/configs/*.yaml; do
         echo "   🚀 실험 실행 시작..."
         python "$MAIN_SCRIPT" --config "$config_file" 2>&1 | tee -a "$LOG_FILE"
         
-        if [ $? -eq 0 ]; then
+        EXIT_CODE=$?
+        if [ $EXIT_CODE -eq 0 ]; then
             echo "   ✅ 완료: $exp_name"
             ((success_count++))
             
             # 생성된 결과 파일 체크
             if [ -d "data/submissions" ]; then
-                RECENT_SUBMISSIONS=$(find data/submissions -name "*.csv" -newer "$config_file" | wc -l)
+                RECENT_SUBMISSIONS=$(find data/submissions -name "*.csv" -newer "$config_file" 2>/dev/null | wc -l)
                 echo "   📈 새로 생성된 submission 파일: ${RECENT_SUBMISSIONS}개"
             fi
         else
-            echo "   ❌ 실패: $exp_name (Exit code: $?)"
+            echo "   ❌ 실패: $exp_name (Exit code: $EXIT_CODE)"
             echo "   📋 마지막 20줄의 로그:"
             tail -20 "$LOG_FILE" | sed 's/^/     /'
             echo "   📋 전체 로그 파일: $LOG_FILE"
@@ -143,7 +161,7 @@ echo "📋 로그 확인: cat $LOG_FILE"
 
 # 생성된 submission 파일 표시
 if [ -d "data/submissions" ]; then
-    SUBMISSION_COUNT=$(find data/submissions -name "*.csv" | wc -l)
+    SUBMISSION_COUNT=$(find data/submissions -name "*.csv" 2>/dev/null | wc -l)
     echo "📈 생성된 submission 파일: ${SUBMISSION_COUNT}개"
     if [ $SUBMISSION_COUNT -gt 0 ]; then
         echo "🏆 최신 submission 파일들:"
