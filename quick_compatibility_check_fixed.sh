@@ -96,17 +96,18 @@ run_test "Train 데이터 디렉토리" "python -c 'import os; assert os.path.ex
 
 run_test "Test 데이터 디렉토리" "python -c 'import os; assert os.path.exists(\"data/test\"), \"Test dir missing\"; print(\"Test dir OK:\", len(os.listdir(\"data/test\")), \"files\")'"
 
-# CSV 파일 테스트 - 간단한 방식으로 수정
-run_test "CSV 파일들" "python3 << 'EOF'
-import os
-import pandas as pd
-if os.path.exists('data/train.csv'):
-    df = pd.read_csv('data/train.csv')
-    print('CSV files OK:', len(df), 'rows')
-else:
-    print('CSV file missing')
-    exit(1)
-EOF"
+# CSV 파일 테스트 - 디버깅 정보 포함
+echo -e "${BLUE}📄 CSV 테스트 디버깅 시작${NC}"
+echo "Python 버전: $(python --version)"
+echo "Pandas 설치 확인:"
+python -c "import pandas; print('pandas version:', pandas.__version__)" || echo "Pandas import 실패"
+echo "OS 모듈 확인:"
+python -c "import os; print('os module OK')" || echo "OS import 실패"
+echo "data/train.csv 파일 존재 확인:"
+ls -la data/train.csv 2>/dev/null || echo "train.csv 파일 없음"
+
+# 간단한 CSV 테스트
+run_test "CSV 파일들" "python -c 'import os; import pandas; df=pandas.read_csv(\"data/train.csv\"); print(\"CSV OK\", len(df))'"
 
 # 8. 빠른 학습 테스트 (선택적)
 echo -e "\n${YELLOW}8. 빠른 학습 테스트 (30초 제한)${NC}"
