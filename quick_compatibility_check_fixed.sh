@@ -96,7 +96,17 @@ run_test "Train 데이터 디렉토리" "python -c 'import os; assert os.path.ex
 
 run_test "Test 데이터 디렉토리" "python -c 'import os; assert os.path.exists(\"data/test\"), \"Test dir missing\"; print(\"Test dir OK:\", len(os.listdir(\"data/test\")), \"files\")'"
 
-run_test "CSV 파일들" "python -c 'import os; import pandas as pd; assert os.path.exists(\"data/train.csv\"), \"train.csv missing\"; train_df = pd.read_csv(\"data/train.csv\"); print(\"CSV files OK:\", len(train_df), \"rows\")'"
+# CSV 파일 테스트 - 간단한 방식으로 수정
+run_test "CSV 파일들" "python3 << 'EOF'
+import os
+import pandas as pd
+if os.path.exists('data/train.csv'):
+    df = pd.read_csv('data/train.csv')
+    print('CSV files OK:', len(df), 'rows')
+else:
+    print('CSV file missing')
+    exit(1)
+EOF"
 
 # 8. 빠른 학습 테스트 (선택적)
 echo -e "\n${YELLOW}8. 빠른 학습 테스트 (30초 제한)${NC}"
