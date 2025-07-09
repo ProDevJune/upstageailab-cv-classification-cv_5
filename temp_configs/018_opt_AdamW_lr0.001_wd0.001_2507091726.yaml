@@ -1,0 +1,74 @@
+augmentation:
+  cutmix: false
+  dilation: false
+  eda: true
+  erosion: false
+  mixup: false
+batch_size: 64
+class_imbalance:
+  aug_class:
+  - 1
+  - 13
+  - 14
+  max_samples: 70
+class_weighting: false
+criterion: CrossEntropyLoss
+custom_layer: null
+data_dir: ./data
+dynamic_augmentation:
+  enabled: true
+  policies:
+    middle:
+      augs:
+      - stilleasy
+      - middle
+      end_epoch: 80
+    strong:
+      augs:
+      - aggressive
+      end_epoch: 300
+    weak:
+      augs:
+      - easiest
+      - basic
+      end_epoch: 40
+epochs: 1000
+experiment_id: 2507091726_efficientnet_b4_ra2_in1k_optimizer
+fine_tuning: full
+image_size: 384
+label_smooth: 0.0
+lr: 0.001
+mixed_precision: true
+model_name: efficientnet_b4.ra2_in1k
+n_folds: 0
+norm_mean:
+- 0.5
+- 0.5
+- 0.5
+norm_std:
+- 0.5
+- 0.5
+- 0.5
+online_augmentation: true
+optimizer_name: AdamW
+patience: 5
+pretrained: true
+random_seed: 256
+scheduler_name: CosineAnnealingLR
+scheduler_params:
+  T_max: 25
+  max_lr: 0.1
+  min_lr: 0.0001
+stratify: true
+test_TTA: true
+timm:
+  activation: None
+train_data: train0705a.csv
+tta_dropout: false
+val_TTA: true
+val_split_ratio: 0.15
+wandb:
+  log: true
+  project: efficientnet_b4_ra2_in1k
+weight_decay: 0.001
+weighted_random_sampler: false

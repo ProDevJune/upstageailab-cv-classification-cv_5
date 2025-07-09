@@ -1,0 +1,236 @@
+experiment_id,model_name,category,option,status,start_time,error_message,config_path,execution_time
+2507091712_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:12:06.114834,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091712.yaml,0.003328800201416
+2507091712_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:12:08.125344,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091712.yaml,0.0026023387908935
+2507091712_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:12:10.138522,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/022_loss_CrossEntropyLoss_2507091712.yaml,0.0026578903198242
+2507091712_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",failed,2025-07-09T17:12:12.151353,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091712.yaml,0.002530813217163
+2507091712_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",failed,2025-07-09T17:12:14.164053,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091712.yaml,0.0042262077331542
+2507091715_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:15:21.411308,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091715.yaml,0.0029723644256591
+2507091715_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:15:23.423572,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091715.yaml,0.0036954879760742
+2507091715_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:15:25.436985,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/022_loss_CrossEntropyLoss_2507091715.yaml,0.0040485858917236
+2507091715_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",failed,2025-07-09T17:15:27.452984,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091715.yaml,0.0026845932006835
+2507091715_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",failed,2025-07-09T17:15:29.466223,"./run_absolute.sh: line 9: venv/bin/python: No such file or directory
+",temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091715.yaml,0.0027644634246826
+2507091717_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",error,2025-07-09T17:17:24.806131,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091717.yaml,0.0022485256195068
+2507091717_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",error,2025-07-09T17:17:26.815776,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091717.yaml,0.0006327629089355
+2507091717_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",error,2025-07-09T17:17:28.827515,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/022_loss_CrossEntropyLoss_2507091717.yaml,0.0005714893341064
+2507091717_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",error,2025-07-09T17:17:30.837670,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091717.yaml,0.0005478858947753
+2507091717_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",error,2025-07-09T17:17:32.847546,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091717.yaml,0.0005805492401123
+2507091717_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:17:58.607851,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091717.yaml,3.622424602508545
+2507091717_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:18:04.239746,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091717.yaml,3.850109100341797
+2507091717_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:18:10.099622,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/022_loss_CrossEntropyLoss_2507091717.yaml,3.6609256267547607
+2507091721_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:21:59.391270,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091721.yaml,3.7223613262176514
+2507091721_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:22:05.123107,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091721.yaml,3.7426230907440186
+2507091721_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:22:10.877151,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/022_loss_CrossEntropyLoss_2507091721.yaml,3.706451177597046
+2507091721_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",failed,2025-07-09T17:22:16.593551,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091721.yaml,3.76920485496521
+2507091721_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",failed,2025-07-09T17:22:22.373739,"n load_config
+    with open(config_path, 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/codes/practice/exp_golden_efficientnet_b4_202507051902.yaml'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 224, in <module>
+    if run:
+NameError: name 'run' is not defined
+",temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091721.yaml,3.7135653495788574
+2507091726_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",error,2025-07-09T17:26:19.808723,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091726.yaml,0.0004675388336181
+2507091726_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",error,2025-07-09T17:26:21.816657,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091726.yaml,0.00059175491333
+2507091726_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",error,2025-07-09T17:26:23.827551,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/022_loss_CrossEntropyLoss_2507091726.yaml,0.0005803108215332
+2507091726_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",error,2025-07-09T17:26:25.838403,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091726.yaml,0.0006465911865234
+2507091732_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:32:57.110282,"b/run-20250709_173300-vv4lb5xy/logs
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 107, in <module>
+    augmented_ids, augmented_labels = augment_class_imbalance(cfg, train_df)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 94, in augment_class_imbalance
+    A.CoarseDropout(
+TypeError: CoarseDropout.__init__() got an unexpected keyword argument 'num_holes_range'
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091732.yaml,8.477176189422607
+2507091732_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:33:07.597034,"b/run-20250709_173311-k0wrpkeg/logs
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 107, in <module>
+    augmented_ids, augmented_labels = augment_class_imbalance(cfg, train_df)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 94, in augment_class_imbalance
+    A.CoarseDropout(
+TypeError: CoarseDropout.__init__() got an unexpected keyword argument 'num_holes_range'
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091732.yaml,9.842406272888184
+2507091732_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:33:19.449465,"은 이름의 submission 폴더가 있습니다."", submission_dir)
+ValueError: ('같은 이름의 submission 폴더가 있습니다.', './data/submissions/2507091733-efficientnet_b4.ra2_in1k-opt_AdamW-sch_CosineAnnealingLR-img384-onaug_eda-clsaug_1-TTA_1-MP_1')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 229, in <module>
+    if augmented_ids:
+NameError: name 'augmented_ids' is not defined
+",temp_configs/022_loss_CrossEntropyLoss_2507091732.yaml,7.7576258182525635
+2507091732_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",failed,2025-07-09T17:33:29.219011,"은 이름의 submission 폴더가 있습니다."", submission_dir)
+ValueError: ('같은 이름의 submission 폴더가 있습니다.', './data/submissions/2507091733-efficientnet_b4.ra2_in1k-opt_AdamW-sch_CosineAnnealingLR-img384-onaug_eda-clsaug_1-TTA_1-MP_1')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 229, in <module>
+    if augmented_ids:
+NameError: name 'augmented_ids' is not defined
+",temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091732.yaml,9.809566020965576
+2507091732_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",failed,2025-07-09T17:33:41.038721,"은 이름의 submission 폴더가 있습니다."", submission_dir)
+ValueError: ('같은 이름의 submission 폴더가 있습니다.', './data/submissions/2507091733-efficientnet_b4.ra2_in1k-opt_AdamW-sch_CosineAnnealingLR-img384-onaug_eda-clsaug_1-TTA_1-MP_1')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 229, in <module>
+    if augmented_ids:
+NameError: name 'augmented_ids' is not defined
+",temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091732.yaml,8.088342666625977
+2507091736_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:36:27.121123,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091736.yaml,9.924521923065186
+2507091736_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:36:39.056231,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091736.yaml,9.688826084136965
+2507091736_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:36:50.756510,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/022_loss_CrossEntropyLoss_2507091736.yaml,7.851051568984985
+2507091736_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",failed,2025-07-09T17:37:00.619121,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091736.yaml,9.964725732803345
+2507091736_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",failed,2025-07-09T17:37:12.594892,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091736.yaml,7.903186798095703
+2507091738_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:38:28.316920,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091738.yaml,7.775619745254517
+2507091738_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",failed,2025-07-09T17:38:38.100806,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091738.yaml,7.605201959609985
+2507091738_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",failed,2025-07-09T17:38:47.715510,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/022_loss_CrossEntropyLoss_2507091738.yaml,7.679761171340942
+2507091738_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",failed,2025-07-09T17:38:57.406340,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091738.yaml,8.027619123458862
+2507091738_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",failed,2025-07-09T17:39:07.443526,"ral/home/upstageailab-cv-classification-cv_5/codes/gemini_main.py"", line 122, in <module>
+    train_transforms, val_transform, tta_transform = get_augmentation(cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_augmentation.py"", line 12, in get_augmentation
+    A.PadIfNeeded(min_height=cfg.image_size, min_width=cfg.image_size, border_mode=cv2.BORDER_CONSTANT, fill=(255, 255, 255), p=1.0),
+TypeError: PadIfNeeded.__init__() got an unexpected keyword argument 'fill'
+",temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091738.yaml,8.339142084121704
+2507091739_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",error,2025-07-09T17:39:45.633598,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091739.yaml,0.0004689693450927
+2507091739_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'SGD', 'lr': 0.01, 'momentum': 0.9, 'weight_decay': 0.0001, 'description': 'SGD with momentum'}",error,2025-07-09T17:39:47.641856,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/019_opt_SGD_lr0.01_wd0.0001_mom0.9_2507091739.yaml,0.0005953311920166
+2507091739_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'CrossEntropyLoss', 'description': '기본 크로스엔트로피'}",error,2025-07-09T17:39:49.651502,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/022_loss_CrossEntropyLoss_2507091739.yaml,0.0005068778991699
+2507091739_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'FocalLoss', 'alpha': 2, 'gamma': 1, 'description': '클래스 불균형 대응'}",error,2025-07-09T17:39:51.662699,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/023_loss_FocalLoss_alpha2_gamma1_2507091739.yaml,0.0005984306335449
+2507091739_efficientnet_b4_ra2_in1k_loss_function,efficientnet_b4.ra2_in1k,loss_function,"{'name': 'LabelSmoothingLoss', 'smoothing': 0.1, 'description': '라벨 스무딩'}",error,2025-07-09T17:39:53.671494,[Errno 13] Permission denied: './run_absolute.sh',temp_configs/024_loss_LabelSmoothingLoss_smooth0.1_2507091739.yaml,0.0006275177001953
+2507091740_efficientnet_b4_ra2_in1k_optimizer,efficientnet_b4.ra2_in1k,optimizer,"{'name': 'AdamW', 'lr': 0.001, 'weight_decay': 0.001, 'description': 'AdamW 기본 설정'}",failed,2025-07-09T17:40:41.906089,"most recent call last):
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_main_v2.py"", line 411, in <module>
+    optimizer = get_optimizer(model, cfg)
+  File ""/data/ephemeral/home/upstageailab-cv-classification-cv_5/codes/gemini_utils_v2.py"", line 234, in get_optimizer
+    'Adafactor': optim.Adafactor(model.parameters(), lr=cfg.lr, beta2_decay=-0.8, d=1.0, weight_decay=cfg.weight_decay, maximize=False)
+AttributeError: module 'torch.optim' has no attribute 'Adafactor'
+",temp_configs/018_opt_AdamW_lr0.001_wd0.001_2507091740.yaml,34.50045204162598
