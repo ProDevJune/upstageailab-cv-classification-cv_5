@@ -1,0 +1,48 @@
+# V2_2 FocalLoss Configuration - Auto Generated
+experiment_name: "v2_2_resnet50_focal_auto"
+model_name: "resnet50.tv2_in1k"
+num_classes: 17
+img_size: 224
+batch_size: 32
+epochs: 20
+learning_rate: 0.0001
+
+# FocalLoss 설정
+criterion: "FocalLoss"
+focal_alpha: 0.25
+focal_gamma: 2.0
+
+# 데이터 설정
+data_dir: "data"
+train_csv: "data/train.csv"
+test_csv: "data/test.csv"
+
+# 증강 설정
+online_aug:
+  mixup: true
+  cutmix: false
+  alpha: 0.4
+  num_classes: 17
+
+# 옵티마이저 설정
+optimizer: "AdamW"
+weight_decay: 0.01
+
+# 스케줄러 설정
+scheduler: "CosineAnnealingWarmRestarts"
+scheduler_params:
+  T_0: 10
+  T_mult: 2
+  eta_min: 0.00001
+
+# 기타 설정
+device: "cuda"
+num_workers: 4
+pin_memory: true
+save_dir: "data/submissions"
+wandb_project: "upstage-cv-classification"
+seed: 42
+
+# 검증 설정
+validation_split: 0.2
+early_stopping_patience: 5
