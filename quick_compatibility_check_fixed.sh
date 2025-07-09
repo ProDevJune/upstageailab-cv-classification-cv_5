@@ -112,15 +112,15 @@ echo "=== 디버깅 종료 ==="
 echo -e "${BLUE}📄 단계별 CSV 테스트${NC}"
 echo "1. OS 모듈 import 테스트:"
 python -c "import os; print('Step 1 OK')" || echo "Step 1 실패"
-echo "2. Pandas 모듈 import 테스트:"
-python -c "import pandas; print('Step 2 OK')" || echo "Step 2 실패"
+echo "2. Pandas 모듈 import 테스트 (as pd):"
+python -c "import pandas as pd; print('Step 2 OK')" || echo "Step 2 실패"
 echo "3. 두 모듈 함께 import 테스트:"
-python -c "import os; import pandas; print('Step 3 OK')" || echo "Step 3 실패"
-echo "4. CSV 파일 읽기 테스트:"
-python -c "import os; import pandas; df = pandas.read_csv('data/train.csv'); print('Step 4 OK, rows:', len(df))" || echo "Step 4 실패"
+python -c "import os; import pandas as pd; print('Step 3 OK')" || echo "Step 3 실패"
+echo "4. CSV 파일 읽기 테스트 (실제 실험과 동일):"
+python -c "import pandas as pd; df = pd.read_csv('data/train.csv'); print('Step 4 OK, rows:', len(df))" || echo "Step 4 실패"
 
-# 간단한 방식으로 다시 시도
-run_test "CSV 파일들" "python -c 'import os; import pandas; df=pandas.read_csv(\"data/train.csv\"); print(\"CSV OK\", len(df))'"
+# 간단한 방식으로 다시 시도 - 실제 실험 코드와 동일하게
+run_test "CSV 파일들" "python -c 'import pandas as pd; df = pd.read_csv(\"data/train.csv\"); print(\"CSV OK\", len(df), \"rows\")'"
 
 # 8. 빠른 학습 테스트 (선택적)
 echo -e "\n${YELLOW}8. 빠른 학습 테스트 (30초 제한)${NC}"
