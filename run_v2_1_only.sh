@@ -34,6 +34,7 @@ echo "  - 최고 성능 추구"
 # run_optimal_performance.sh에서 호출될 때는 자동으로 "y" 응답
 if [ "$1" = "--auto" ]; then
     confirm="y"
+    echo "🤖 자동 모드: V2_1 실험을 자동으로 시작합니다."
 else
     echo ""
     read -p "V2_1 실험을 실행하시겠습니까? (y/n): " confirm
