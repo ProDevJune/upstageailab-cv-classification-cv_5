@@ -25,10 +25,11 @@ AUG = {
             A.GaussianBlur(sigma_limit=(0.5, 2.5), p=1.0),
             A.Blur(blur_limit=(3, 9), p=1.0),
         ], p=1.0),
-        A.GaussNoise(std_range=(0.0025, 0.2), p=1.0),            
+        A.GaussNoise(var_limit=(0.0025, 0.2), p=1.0),            
     ]),
     'dilation': A.Compose([
-        A.Morphological(p=1, scale=(1, 3), operation="dilation"),
+        # A.Morphological은 1.4.0에서 제거됨 - 다른 변환으로 대체
+        A.RandomBrightnessContrast(brightness_limit=0.1, contrast_limit=0.1, p=1.0),
         # 공간 변형에 대한 증강
         A.Affine(
             scale=(0.85, 1.15),
@@ -46,7 +47,8 @@ AUG = {
         A.RandomBrightnessContrast(p=1),
     ]),
     'erosion': A.Compose([
-        A.Morphological(p=1, scale=(2, 4), operation="erosion"),
+        # A.Morphological은 1.4.0에서 제거됨 - 다른 변환으로 대체
+        A.RandomBrightnessContrast(brightness_limit=0.15, contrast_limit=0.15, p=1.0),
         # 공간 변형에 대한 증강
         A.Affine(
             scale=(0.85, 1.15),
@@ -123,7 +125,7 @@ AUG = {
         
         # 노이즈 효과 (둘 중 하나만 적용, 문서 품질 저하를 시뮬레이션)
         A.OneOf([
-            A.GaussNoise(std_range=(0.01, 0.2), p=1.0),
+            A.GaussNoise(var_limit=(0.01, 0.2), p=1.0),
             A.ISONoise(color_shift=(0.01, 0.05), intensity=(0.1, 0.5), p=1.0)
         ], p=0.3), # 노이즈도 너무 강하면 인식 어렵기에 적당한 확률 (0.2 유지)
 
@@ -183,7 +185,7 @@ AUG = {
         A.Transpose(p=0.5),
         # 노이즈 효과 (둘 중 하나만 적용, 문서 품질 저하를 시뮬레이션)
         A.OneOf([
-            A.GaussNoise(std_range=(0.01, 0.3), p=1.0), 
+            A.GaussNoise(var_limit=(0.01, 0.3), p=1.0), 
             A.ISONoise(color_shift=(0.01, 0.2), intensity=(0.1, 0.5), p=1.0)
         ], p=0.3), # 노이즈도 너무 강하면 인식 어렵기에 적당한 확률 
         A.OneOf([
@@ -191,7 +193,7 @@ AUG = {
             A.GaussianBlur(blur_limit=(3, 7), p=1.0),
             A.MotionBlur(blur_limit=(3, 7), p=1.0),
             # 이미지 품질을 낮춰 압축/해상도 저하 효과 모방
-            A.Downscale(scale_range=(0.5, 0.75), p=1.0),
+            A.Downscale(scale_min=0.5, scale_max=0.75, p=1.0),
         ], p=0.5),
 
         # 색상 및 대비의 급격한 변화
