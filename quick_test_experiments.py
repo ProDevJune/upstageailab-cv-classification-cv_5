@@ -23,59 +23,93 @@ class QuickTestRunner:
     def create_test_config(self, model_name: str, category: str) -> str:
         """테스트용 설정 파일 생성 (매우 짧은 실행 시간)"""
         
-        # 기본 설정 로드
-        base_config_path = self.project_root / "codes/config_v2.yaml"
+        # 기본 설정 로드 - 실제 config.yaml을 기반으로 함
+        base_config_path = self.project_root / "codes/config.yaml"
         
         try:
             with open(base_config_path, 'r', encoding='utf-8') as f:
                 config = yaml.safe_load(f)
-        except:
-            # 기본 설정 생성
+        except Exception as e:
+            print(f"⚠️ config.yaml 로드 실패: {e}")
+            # 최소한의 기본 설정
             config = {
-                'data_dir': './data',
-                'train_data': 'train0705a.csv',
-                'epochs': 1,  # 테스트용: 1 에포크만
-                'batch_size': 16,  # 작은 배치
-                'image_size': 224,  # 작은 이미지
-                'lr': 0.001,
-                'patience': 1,
-                'wandb': {'log': False},  # WandB 비활성화
-                'val_split_ratio': 0.8,  # 작은 validation set
-                'mixed_precision': False,  # 안정성 우선
-                'test_TTA': False,
-                'val_TTA': False
+                'model_name': 'resnet50.tv2_in1k',
+                'pretrained': True,
+                'fine_tuning': 'full',
+                'criterion': 'CrossEntropyLoss',
+                'optimizer_name': 'AdamW',
+                'lr': 0.0001,
+                'weight_decay': 0.00001,
+                'scheduler_name': 'CosineAnnealingLR',
+                'random_seed': 256,
+                'n_folds': 0,
+                'val_split_ratio': 0.15,
+                'stratify': True,
+                'image_size': 224,
+                'norm_mean': [0.5, 0.5, 0.5],
+                'norm_std': [0.5, 0.5, 0.5],
+                'class_imbalance': {'aug_class': [1, 13, 14], 'max_samples': 78},
+                'online_augmentation': True,
+                'augmentation': {'eda': True, 'dilation': True, 'erosion': False, 'mixup': False, 'cutmix': False},
+                'TTA': True,
+                'mixed_precision': True,
+                'timm': {'activation': None},
+                'custom_layer': {},
+                'epochs': 10000,
+                'patience': 20,
+                'batch_size': 32,
+                'wandb': {'project': 'upstage-img-clf', 'log': True},
+                'data_dir': '/data/ephemeral/home/upstageailab-cv-classification-cv_5/data',
+                'train_data': 'train0705a.csv'
             }
         
-        # 테스트용 설정 오버라이드
-        test_config = config.copy()
-        test_config.update({
-            'model_name': model_name,
-            'epochs': 2,  # verbose 검증을 위해 2 에포크로 설정
-            'batch_size': min(config.get('batch_size', 32), 8),  # 더 작은 배치로 빠른 실행
-            'patience': 2,  # epochs와 맞춤
-            'wandb': {'log': False},  # WandB 비활성화
-            'val_split_ratio': 0.9,  # validation 데이터 더 최소화 (90% train, 10% val)
-            'experiment_id': f"test_{category}_{model_name.replace('.', '_')}_{datetime.now().strftime('%H%M%S')}",
+        # 테스트용으로 수정할 설정들만 오버라이드 (실제 설정은 그대로 유지)
+        test_overrides = {
+            'model_name': model_name,  # 테스트할 모델로 변경
+            'epochs': 1,  # 1 에포크만 테스트
+            'batch_size': 4,  # 작은 배치 (너무 작으면 에러 발생 가능)
+            'image_size': 128,  # 작은 이미지 크기 (64는 너무 작을 수 있음)
+            'patience': 1,  # 조기 종료 빠르게
+            'wandb': {'project': 'test-run', 'log': False},  # WandB 비활성화
+            'val_split_ratio': 0.95,  # 훈련 95%, 검증 5% (빠른 테스트)
             'mixed_precision': False,  # 안정성 우선
-            'class_imbalance': False,  # 테스트용: 클래스 불균형 처리 비활성화
-            'online_augmentation': False,  # 테스트용: 증강 비활성화
+            'class_imbalance': False,  # 복잡한 증강 비활성화
+            'online_augmentation': False,  # 온라인 증강 비활성화
             'dynamic_augmentation': {'enabled': False},  # 동적 증강 비활성화
-            'val_TTA': False,  # 테스트용: TTA 비활성화
-            'test_TTA': False  # 테스트용: TTA 비활성화
-        })
+            'augmentation': {
+                'eda': False,
+                'dilation': False, 
+                'erosion': False,
+                'mixup': False,
+                'cutmix': False
+            },
+            'TTA': False,  # TTA 비활성화
+            'val_TTA': False,  # validation TTA 비활성화
+            'test_TTA': False,  # test TTA 비활성화
+            'weighted_random_sampler': False,  # weighted sampler 비활성화
+            'custom_layer': {'drop': 0.2, 'activation': 'ReLU', 'head_type': 'complex'},  # custom layer 설정
+            'scheduler_params': {'T_max': 100, 'min_lr': 0, 'max_lr': 0.01, 'step_size': 50, 'gamma': 0.1, 'factor': 0.1},  # scheduler 파라미터
+            'tta_dropout': False,  # TTA dropout 비활성화
+            'data_dir': './data',  # 상대 경로로 변경
+            'train_data': 'train0705a.csv',  # 훈련 데이터 파일명
+            'experiment_id': f"test_{category}_{model_name.replace('.', '_')}_{datetime.now().strftime('%H%M%S')}"
+        }
+        
+        # 기본 설정을 테스트 설정으로 업데이트
+        config.update(test_overrides)
         
         # 카테고리별 테스트 설정
         if category == 'optimizer':
-            test_config['optimizer_name'] = 'SGD'
-            test_config['lr'] = 0.01
+            config['optimizer_name'] = 'SGD'
+            config['lr'] = 0.01
         elif category == 'loss_function':
-            test_config['criterion'] = 'CrossEntropyLoss'
+            config['criterion'] = 'CrossEntropyLoss'
         elif category == 'scheduler':
-            test_config['scheduler_name'] = 'StepLR'
+            config['scheduler_name'] = 'StepLR'
         
         # 임시 파일 생성
         with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
-            yaml.dump(test_config, f, default_flow_style=False)
+            yaml.dump(config, f, default_flow_style=False)
             return f.name
     
     def run_quick_test(self, model_name: str, category: str) -> dict:
@@ -119,7 +153,7 @@ class QuickTestRunner:
                 cwd=str(self.project_root),
                 capture_output=True,
                 text=True,
-                timeout=300,  # 5분 타임아웃
+                timeout=600,  # 10분 타임아웃으로 늘림
                 env=env  # 수정된 환경변수 사용
             )
             end_time = time.time()

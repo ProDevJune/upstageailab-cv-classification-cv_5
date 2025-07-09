@@ -83,3 +83,4 @@ wandb:
 
 # Paths
 data_dir: "/data/ephemeral/home/upstageailab-cv-classification-cv_5/data"
+train_data: "train0705a.csv"  # 훈련 데이터 파일명

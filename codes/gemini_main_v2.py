@@ -49,6 +49,9 @@ except ImportError as e:
     raise
 
 if __name__ == "__main__":
+    # run 변수를 전역 스코프에서 초기화
+    run = None
+    
     try:
         # python 파일 실행할 때 config.yaml 파일 이름을 입력받아서 설정 파일을 지정한다.
         parser = argparse.ArgumentParser(description="Run deep learning training with specified configuration.")
@@ -93,7 +96,7 @@ if __name__ == "__main__":
         aug_str_parts = ""
         if cfg.online_augmentation:
             aug_str_parts += "on"
-            if cfg.dynamic_augmentation and cfg.dynamic_augmentation['enabled']:
+            if hasattr(cfg, 'dynamic_augmentation') and cfg.dynamic_augmentation and cfg.dynamic_augmentation.get('enabled', False):
                 aug_str_parts += "daug"                
             else:
                 # 일반 augmentation 기법들만 나열
@@ -111,12 +114,11 @@ if __name__ == "__main__":
             f"{aug_str_parts}-"  # 개선된 증강 문자열
             f"cv{cfg.n_folds}-"
             f"clsaug_{1 if cfg.class_imbalance else 0}-"
-            f"vTTA_{1 if cfg.val_TTA else 0}-"
-            f"tTTA_{1 if cfg.test_TTA else 0}-"
+            f"vTTA_{1 if getattr(cfg, 'val_TTA', False) else 0}-"
+            f"tTTA_{1 if getattr(cfg, 'test_TTA', cfg.TTA if hasattr(cfg, 'TTA') else False) else 0}-"
             f"MP_{1 if cfg.mixed_precision else 0}"
         )
 
-        run = None 
         if hasattr(cfg, 'wandb') and cfg.wandb['log']:
             run = wandb.init(
                 project=cfg.wandb['project'],
@@ -175,7 +177,7 @@ if __name__ == "__main__":
                         train_df = train_df.reset_index(drop=True)
                     # validation 데이터를 offline으로 eda 증강을 적용
                     val_augmented_ids, augmented_labels = [], []
-                    if cfg.val_TTA:
+                    if getattr(cfg, 'val_TTA', False):
                         val_augmented_ids, augmented_labels = augment_validation(cfg, val_df)
                         val_aug_df = pd.DataFrame({
                             "ID": val_augmented_ids,
@@ -259,7 +261,7 @@ if __name__ == "__main__":
                         cfg=cfg,
                         run=run,
                         show=False,
-                        savepath=os.path.join(cfg.submission_dir, f"val_confusion_matrix{'_TTA' if cfg.val_TTA else ''}_Fold{fold}.png")
+                        savepath=os.path.join(cfg.submission_dir, f"val_confusion_matrix{'_TTA' if getattr(cfg, 'val_TTA', False) else ''}_Fold{fold}.png")
                     )
                     folds_val_f1.append(val_f1)
                 finally:
@@ -359,7 +361,7 @@ if __name__ == "__main__":
 
             # validation 데이터를 offline으로 eda 증강을 적용
             val_augmented_ids, augmented_labels = [], []
-            if cfg.val_TTA:
+            if getattr(cfg, 'val_TTA', False):
                 val_augmented_ids, augmented_labels = augment_validation(cfg, val_df)
                 val_aug_df = pd.DataFrame({
                     "ID": val_augmented_ids,
@@ -409,6 +411,10 @@ if __name__ == "__main__":
             optimizer = get_optimizer(model, cfg)
             scheduler = get_scheduler(optimizer, cfg, steps_per_epoch=len(train_loader))
 
+            # verbose 설정: 테스트 모드인 경우 1, 일반 실험인 경우 1
+            is_test_mode = hasattr(cfg, 'experiment_id') and 'test_' in cfg.experiment_id
+            verbose_setting = 1 if cfg.epochs == 1 else min(1, cfg.epochs - 1)
+            
             trainer = TrainModule(
                 model=model,
                 criterion=criterion,
@@ -417,7 +423,7 @@ if __name__ == "__main__":
                 train_loader=train_loader,
                 valid_loader=val_loader,
                 cfg=cfg,
-                verbose=1,
+                verbose=verbose_setting,
                 run=run
             )
 
@@ -445,7 +451,7 @@ if __name__ == "__main__":
                 cfg=cfg, 
                 run=run, 
                 show=False, 
-                savepath=os.path.join(cfg.submission_dir, f"val_confusion_matrix{'_TTA' if cfg.val_TTA else ''}.png")
+                savepath=os.path.join(cfg.submission_dir, f"val_confusion_matrix{'_TTA' if getattr(cfg, 'val_TTA', False) else ''}.png")
             )
             print("📢 Validation F1-score:",val_f1)
 
@@ -458,7 +464,7 @@ if __name__ == "__main__":
         # Inference
         test_df = pd.read_csv(os.path.join(cfg.data_dir, "sample_submission.csv"))
 
-        if cfg.test_TTA:
+        if getattr(cfg, 'test_TTA', getattr(cfg, 'TTA', False)):
             test_dataset_raw = ImageDataset(test_df, os.path.join(cfg.data_dir, "test"), transform=raw_transform)
             test_loader_raw = DataLoader(test_dataset_raw, batch_size=cfg.batch_size, shuffle=False, num_workers=8, pin_memory=True)
             print("Running TTA on test set...")
@@ -502,12 +508,20 @@ if __name__ == "__main__":
             run.log_artifact(artifact)
             run.finish()
 
+    except Exception as e:
+        print(f"❌ 실행 중 오류 발생: {e}")
+        import traceback
+        traceback.print_exc()
+        if 'run' in locals() and run:
+            run.finish()
+        raise
+
     finally:
         # 작업 디렉토리 복원
         if 'original_cwd' in locals():
             os.chdir(original_cwd)
             
-        if run:
+        if 'run' in locals() and run:
             run.finish()
         # augmented_ids가 정의된 경우에만 삭제
         if 'augmented_ids' in locals() and augmented_ids:

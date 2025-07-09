@@ -66,7 +66,7 @@ class TrainModule():
 		required_attrs = ['scheduler_name','patience', 'epochs']
 		for attr in required_attrs:
 			assert hasattr(cfg, attr), f"AttributeError: There's no '{attr}' attribute in cfg."
-		assert verbose > 0 and verbose < cfg.epochs, f"Logging frequency({verbose}) MUST BE smaller than EPOCHS({cfg.epochs}) and positive value."
+		assert verbose > 0 and (verbose <= cfg.epochs), f"Logging frequency({verbose}) MUST BE smaller than or equal to EPOCHS({cfg.epochs}) and positive value."
 		
 		self.model = model
 		self.criterion = criterion
@@ -146,7 +146,7 @@ class TrainModule():
 		return epoch_loss, epoch_acc, epoch_f1  # classification		
 	
 	def validation_step(self):
-		if self.cfg.tta_dropout: 
+		if getattr(self.cfg, 'tta_dropout', False): 
 			# inference 시에도 dropout을 유지하여 마치 앙상블하는 것 같은 효과를 준다.
 			self.model.train()
 		else:

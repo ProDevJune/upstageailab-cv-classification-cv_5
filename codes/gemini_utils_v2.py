@@ -97,9 +97,15 @@ class TimmWrapper(nn.Module):
             act_layer=get_activation(cfg.timm['activation']),
             **additional_options
         )
-        self.dropout = nn.Dropout(p=cfg.custom_layer['drop'])
-        self.activation = get_activation(cfg.custom_layer['activation'])()
-        if cfg.custom_layer['head_type'] == "simple_dropout":
+        # custom_layer 설정 안전하게 접근
+        custom_layer = getattr(cfg, 'custom_layer', {})
+        self.dropout = nn.Dropout(p=custom_layer.get('drop', 0.2))
+        activation_name = custom_layer.get('activation', 'ReLU')
+        activation_class = get_activation(activation_name)
+        self.activation = activation_class() if activation_class is not None else nn.ReLU()
+        head_type = custom_layer.get('head_type', 'complex')
+        
+        if head_type == "simple_dropout":
             self.classifier = nn.Sequential(
                 self.dropout,
                 nn.Linear(self.backbone.num_features, 17)
@@ -207,9 +213,9 @@ class LabelSmoothingLoss(nn.Module):
 
 def get_criterion(cfg, class_weights=None):
     CRITERIONS = {
-        "CrossEntropyLoss" : nn.CrossEntropyLoss(label_smoothing=cfg.label_smooth, weight=class_weights),
+        "CrossEntropyLoss" : nn.CrossEntropyLoss(label_smoothing=getattr(cfg, 'label_smooth', 0.0), weight=class_weights),
         "FocalLoss": FocalLoss(weight=class_weights),
-        "LabelSmoothingLoss": LabelSmoothingLoss(classes=17, smoothing=cfg.label_smooth, weight=class_weights)
+        "LabelSmoothingLoss": LabelSmoothingLoss(classes=17, smoothing=getattr(cfg, 'label_smooth', 0.1), weight=class_weights)
     }
     return CRITERIONS[cfg.criterion]
 
@@ -298,19 +304,17 @@ class CosineAnnealingWarmupRestarts(_LRScheduler):
             param_group['lr'] = lr
 
 def get_scheduler(optimizer, cfg, steps_per_epoch):
-    # scheduler_params = {k: v for k, v in vars(cfg.scheduler_params).items()}
-    # if cfg.scheduler_name == 'OneCycleLR':
-    #     scheduler_params['steps_per_epoch'] = steps_per_epoch
-    #     scheduler_params['epochs'] = cfg.epochs
+    # scheduler_params 안전하게 접근
+    scheduler_params = getattr(cfg, 'scheduler_params', {})
     
     # StepLR, ExponentialLR, CosineAnnealingLR, OneCycleLR, ReduceLROnPlateau
     SCHEDULERS = {
-        'StepLR': lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1),
-        'ExponentialLR': lr_scheduler.ExponentialLR(optimizer, gamma=0.1),
-        'CosineAnnealingLR': lr_scheduler.CosineAnnealingLR(optimizer, T_max=cfg.scheduler_params['T_max'], eta_min=cfg.scheduler_params['min_lr']),
-        'OneCycleLR': lr_scheduler.OneCycleLR(optimizer, max_lr=cfg.scheduler_params['max_lr'], steps_per_epoch=steps_per_epoch, epochs=cfg.epochs),
-        'ReduceLROnPlateau': lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=cfg.patience-5, min_lr=cfg.scheduler_params['min_lr']),
-        'CosineAnnealingWarmupRestarts': CosineAnnealingWarmupRestarts(optimizer, first_cycle_steps=cfg.scheduler_params['T_max'], cycle_mult=1.0, max_lr=cfg.scheduler_params['max_lr'], min_lr=cfg.scheduler_params['min_lr'], warmup_steps=3, gamma=0.9)
+        'StepLR': lr_scheduler.StepLR(optimizer, step_size=scheduler_params.get('step_size', 50), gamma=scheduler_params.get('gamma', 0.1)),
+        'ExponentialLR': lr_scheduler.ExponentialLR(optimizer, gamma=scheduler_params.get('gamma', 0.1)),
+        'CosineAnnealingLR': lr_scheduler.CosineAnnealingLR(optimizer, T_max=scheduler_params.get('T_max', 1000), eta_min=scheduler_params.get('min_lr', 0)),
+        'OneCycleLR': lr_scheduler.OneCycleLR(optimizer, max_lr=scheduler_params.get('max_lr', 0.01), steps_per_epoch=steps_per_epoch, epochs=cfg.epochs),
+        'ReduceLROnPlateau': lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=scheduler_params.get('factor', 0.1), patience=cfg.patience-5, min_lr=scheduler_params.get('min_lr', 0)),
+        'CosineAnnealingWarmupRestarts': CosineAnnealingWarmupRestarts(optimizer, first_cycle_steps=scheduler_params.get('T_max', 1000), cycle_mult=1.0, max_lr=scheduler_params.get('max_lr', 0.01), min_lr=scheduler_params.get('min_lr', 0), warmup_steps=3, gamma=0.9)
     }
     return SCHEDULERS[cfg.scheduler_name]
 
