@@ -96,7 +96,7 @@ run_test "Train 데이터 디렉토리" "python -c 'import os; assert os.path.ex
 
 run_test "Test 데이터 디렉토리" "python -c 'import os; assert os.path.exists(\"data/test\"), \"Test dir missing\"; print(\"Test dir OK:\", len(os.listdir(\"data/test\")), \"files\")'"
 
-run_test "CSV 파일들" "python -c 'import pandas as pd; train_df = pd.read_csv(\"data/train.csv\") if os.path.exists(\"data/train.csv\") else None; print(\"CSV files found\")'"
+run_test "CSV 파일들" "python -c 'import os, pandas as pd; train_df = pd.read_csv(\"data/train.csv\") if os.path.exists(\"data/train.csv\") else None; print(\"CSV files found\")'"
 
 # 8. 빠른 학습 테스트 (선택적)
 echo -e "\n${YELLOW}8. 빠른 학습 테스트 (30초 제한)${NC}"
