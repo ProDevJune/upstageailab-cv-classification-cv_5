@@ -9,7 +9,7 @@ fine_tuning: "full" # fine-tuning 방법론
 
 # Loss Function
 criterion: 'FocalLoss' # CrossEntropyLoss, FocalLoss, LabelSmoothingLoss
-class_weighting: False # class에 가중치를 두어 Loss 계산
+class_weighting: True # class에 가중치를 두어 Loss 계산
 label_smooth: 0.0
 # Optimizer
 # optimizer name: SGD, RMSprop, Momentum, NAG, Adam, AdamW, NAdam, RAdam, Adafactor
@@ -47,10 +47,10 @@ norm_mean: [0.5, 0.5, 0.5]
 norm_std: [0.5, 0.5, 0.5]
 
 # Techniques
-weighted_random_sampler: False
+weighted_random_sampler: True
 class_imbalance: 
-  # aug_class: [1, 13, 14]
-  # max_samples: 70
+  aug_class: [1, 13, 14]
+  max_samples: 150
 online_augmentation: True
 online_aug: # Model B에선 mixup / cutmix 증강을 활용
   mixup: True 
@@ -99,7 +99,7 @@ custom_layer: # custom classifier head를 사용하고 싶은 경우 설정. Non
 
 # Training hyperparameters
 epochs: 1000 # max epoch
-patience: 7 # early stopping patience
+patience: 15 # early stopping patience
 batch_size: 64 # image_size, model_size, GPU RAM 에 따라 OOM이 발생하지 않도록 설정.
 
 # W&B
@@ -110,6 +110,6 @@ wandb:
   tags: ["v3", "hierarchical", "model_b"]  # 실험 분류용 태그
 
 # Paths
-# test_data_dir: "./data"
-data_dir: "./data"
+# test_data_dir: "./data/aug_data_1000_new1"
+data_dir: "./data/aug_data_1000_new1"
 train_data: train.csv

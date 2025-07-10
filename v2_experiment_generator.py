@@ -195,6 +195,16 @@ class V2ExperimentGenerator:
             for key, value in exp['overrides'].items():
                 config[key] = value
             
+            # 모델별 patience 적용
+            if exp['type'] == 'v2_1':
+                model_name = exp['overrides']['model_name']
+                if 'convnextv2_large' in model_name:
+                    config['patience'] = 40
+                elif 'convnextv2_base' in model_name:
+                    config['patience'] = 25
+                elif 'efficientnetv2_l' in model_name:
+                    config['patience'] = 35
+            
             # 실험별 설정 저장
             config_path = self.output_dir / "configs" / f"{exp['name']}.yaml"
             with open(config_path, 'w', encoding='utf-8') as f:

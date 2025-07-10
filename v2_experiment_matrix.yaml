@@ -10,10 +10,13 @@ v2_1_experiments:
     models:
       - name: "convnextv2_base"
         model_name: "convnextv2_base.fcmae_ft_in22k_in1k_384"
+        patience: 25
       - name: "convnextv2_large"  
         model_name: "convnextv2_large.fcmae_ft_in22k_in1k_384"
+        patience: 40
       - name: "efficientnetv2_l"
         model_name: "tf_efficientnetv2_l.in21k_ft_in1k"
+        patience: 35
     
     # 학습률 조합
     learning_rates:
